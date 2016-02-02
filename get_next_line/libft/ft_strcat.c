@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   strcat.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/23 15:35:36 by dvirgile          #+#    #+#             */
+/*   Updated: 2015/11/30 14:25:38 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+char	*ft_strcat(char *dest, const char *src)
 {
-	int pointeur;
-}					t_docker;
+	int i;
+	int dest_len;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	dest_len = 0;
+	i = 0;
+	while (dest[dest_len])
+	{
+		dest_len++;
+	}
+	while (src[i])
+	{
+		dest[dest_len + i] = src[i];
+		i++;
+	}
+	dest[dest_len + i] = '\0';
+	return (dest);
+}

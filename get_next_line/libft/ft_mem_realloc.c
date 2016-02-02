@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_mem_realloc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dtedgui <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/12/04 16:43:06 by dtedgui           #+#    #+#             */
+/*   Updated: 2015/12/04 20:44:46 by dtedgui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+char	*ft_mem_realloc(char *old, size_t size)
 {
-	int pointeur;
-}					t_docker;
+	char	*new;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	new = ft_strnew(size);
+	ft_memcpy(new, old, ft_strlen(old));
+	free(old);
+	return (new);
+}

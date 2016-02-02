@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/26 17:45:16 by dvirgile          #+#    #+#             */
+/*   Updated: 2015/12/03 17:36:24 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+char		*ft_strjoin(char const *s1, char const *s2)
 {
-	int pointeur;
-}					t_docker;
+	char	*fraiche;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	fraiche = (char *)malloc(sizeof(fraiche) * ft_strlen(s1) + ft_strlen(s2));
+	if (fraiche == NULL)
+		return (NULL);
+	ft_bzero(fraiche, (ft_strlen(s1) + ft_strlen(s2)));
+	fraiche = ft_strcat(fraiche, s1);
+	fraiche = ft_strcat(fraiche, s2);
+	return (fraiche);
+}

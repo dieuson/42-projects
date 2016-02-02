@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_power.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dtedgui <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/23 15:35:09 by dtedgui           #+#    #+#             */
+/*   Updated: 2015/11/23 15:35:12 by dtedgui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+int		ft_power(int nb, int power)
 {
-	int pointeur;
-}					t_docker;
-
-int					get_next_line(int const fd, char **line);
-
-#endif
+	if (power == 0)
+		return (1);
+	else if (power < 0)
+		return (0);
+	return (nb * ft_power(nb, power - 1));
+}

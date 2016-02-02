@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 13:28:11 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/01/19 13:46:03 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/02/02 13:10:51 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,16 @@ int					line_to_return(char **reste, char **line, int end)
 	char			*backslash;
 
 	backslash = ft_strchr(*reste, '\n');
-	if (end == 0 && !backslash && (*line = *reste) && !backslash)
+	if (ft_strcmp(*reste, "") == 0)
+	{
+		ft_memdel((void**)reste);
 		return (0);
+	}
+	if (end == 0 && !backslash && (*line = *reste) && !backslash)
+	{
+		*reste = NULL;
+		return (1);
+	}
 	if (!backslash)
 		return (2);
 	if (!(*line = ft_strnew(ft_strlen(*reste) - ft_strlen(backslash))))
@@ -48,11 +56,7 @@ int					read_all(int const fd, char **line)
 	free(buf);
 	ret = line_to_return(&reste[fd], line, val);
 	if (ret == -1 || val == -1)
-	{
-		ft_memdel((void**)&*line);
-		ft_memdel((void**)&reste[fd]);
 		return (-1);
-	}
 	if (ret == 2)
 		return (read_all(fd, line));
 	if (ret == 1 && val >= 0)

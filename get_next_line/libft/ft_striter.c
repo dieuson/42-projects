@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_striter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/26 16:25:30 by dvirgile          #+#    #+#             */
+/*   Updated: 2015/12/03 17:36:38 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+void	ft_striter(char *s, void (*f)(char *))
 {
-	int pointeur;
-}					t_docker;
+	int i;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	if (s != NULL && f != NULL)
+	{
+		i = 0;
+		while (s[i])
+		{
+			f(&s[i]);
+			i++;
+		}
+	}
+}

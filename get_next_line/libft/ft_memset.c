@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/26 15:07:13 by dvirgile          #+#    #+#             */
+/*   Updated: 2015/11/26 16:04:27 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include <string.h>
+#include "libft.h"
 
-typedef struct		s_docker
+void				*ft_memset(void *s, int c, size_t n)
 {
-	int pointeur;
-}					t_docker;
+	unsigned int	i;
+	char			*box;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	i = 0;
+	box = (char *)s;
+	while (i < n)
+	{
+		box[i] = c;
+		i++;
+	}
+	s = (void *)box;
+	return (s);
+}

@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/26 17:18:31 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/01/07 15:49:21 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+char		*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int pointeur;
-}					t_docker;
+	char	*fraiche;
+	int		e;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	fraiche = NULL;
+	if (s == NULL || f == NULL)
+		return (NULL);
+	e = 0;
+	if (!(fraiche = ft_strnew(ft_strlen(s))))
+		return (NULL);
+	while (s[e])
+	{
+		fraiche[e] = f(e, s[e]);
+		e++;
+	}
+	return (fraiche);
+}

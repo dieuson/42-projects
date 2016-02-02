@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/26 14:08:46 by dvirgile          #+#    #+#             */
+/*   Updated: 2015/11/30 14:38:24 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+void				*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	int pointeur;
-}					t_docker;
+	unsigned int	i;
+	char			*temp;
+	char			*temp2;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	i = 0;
+	temp2 = (char *)dst;
+	temp = (char *)src;
+	while (i < n)
+	{
+		temp2[i] = temp[i];
+		if (temp2[i] == (char)c)
+		{
+			dst = (void *)temp2;
+			return (dst + i + 1);
+		}
+		i++;
+	}
+	return (NULL);
+}

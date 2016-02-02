@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   strstr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/25 13:31:10 by dvirgile          #+#    #+#             */
+/*   Updated: 2015/12/03 17:33:59 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+char	*ft_strstr(const char *s1, const char *s2)
 {
-	int pointeur;
-}					t_docker;
+	int i;
+	int length;
+	int e;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	e = 0;
+	length = ft_strlen(s2);
+	i = 0;
+	if (length == 0)
+		return ((char *)s1);
+	while (s1[i] != '\0')
+	{
+		while (s1[i + e] == s2[e])
+		{
+			if (e == length - 1)
+				return ((char*)(s1 + i));
+			e++;
+		}
+		e = 0;
+		i++;
+	}
+	return (NULL);
+}

@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/26 17:31:59 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/01/07 15:40:50 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+char			*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	int pointeur;
-}					t_docker;
+	char		*fraiche;
+	unsigned	i;
+	int			e;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	fraiche = NULL;
+	if (s == NULL)
+		return (NULL);
+	e = 0;
+	i = start;
+	fraiche = ft_strnew(len);
+	if (fraiche == NULL)
+		return (NULL);
+	while (i < start + len)
+		fraiche[e++] = s[i++];
+	fraiche[e] = '\0';
+	return (fraiche);
+}

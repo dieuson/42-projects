@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/27 15:38:05 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/01/07 15:49:34 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+char				*ft_strnew(size_t size)
 {
-	int pointeur;
-}					t_docker;
+	char			*str;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	if (!(str = (char *)malloc(sizeof(char) * size + 1)))
+		return (NULL);
+	bzero(str, (size + 1));
+	return (str);
+}

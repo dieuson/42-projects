@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   memchr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 12:42:34 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/26 10:04:17 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/01/07 15:48:54 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 2
+#include "libft.h"
 
-typedef struct		s_docker
+void					*ft_memchr(const void *s, int c, size_t n)
 {
-	int pointeur;
-}					t_docker;
+	unsigned int		i;
+	unsigned char		*end;
+	unsigned char		tmp;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	i = 0;
+	tmp = (unsigned char)c;
+	end = (unsigned char *)s;
+	while (n--)
+	{
+		if (end[i] == tmp)
+			return ((void *)&end[i]);
+		i++;
+	}
+	return (NULL);
+}
