@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 13:28:11 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/02 13:10:51 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/02/03 14:39:47 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int					line_to_return(char **reste, char **line, int end)
 		ft_memdel((void**)reste);
 		return (0);
 	}
-	if (end == 0 && !backslash && (*line = *reste) && !backslash)
+	if (end == 0 && !backslash && (*line = *reste))
 	{
 		*reste = NULL;
 		return (1);
