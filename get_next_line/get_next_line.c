@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 13:28:11 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/03 14:39:47 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/02/09 10:08:06 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,21 @@ int					line_to_return(char **reste, char **line, int end)
 	char			*backslash;
 
 	backslash = ft_strchr(*reste, '\n');
-	if (ft_strcmp(*reste, "") == 0)
-	{
-		ft_memdel((void**)reste);
+	if (ft_strlen(*reste) <= 0 && !backslash && end == 0)
 		return (0);
-	}
-	if (end == 0 && !backslash && (*line = *reste))
+	if (!backslash && end == 0 && ft_strlen(*reste) > 0)
 	{
+		*line = *reste;
 		*reste = NULL;
 		return (1);
 	}
-	if (!backslash)
+	if (!backslash && end > 0)
 		return (2);
 	if (!(*line = ft_strnew(ft_strlen(*reste) - ft_strlen(backslash))))
 		return (-1);
 	ft_memdel((void**)&*line);
 	*line = ft_strsub(*reste, 0, (ft_strlen(*reste) - ft_strlen(backslash)));
-	*reste = ft_strsub(backslash, 1, ft_strlen(backslash - 1));
+	*reste = ft_strsub(backslash, 1, ft_strlen(backslash));
 	return (1);
 }
 
@@ -46,28 +44,29 @@ int					read_all(int const fd, char **line)
 	char			*tmp;
 
 	buf = ft_strnew(BUFF_SIZE + 1);
-	val = read(fd, buf, BUFF_SIZE);
-	tmp = reste[fd];
-	if (reste[fd])
-		reste[fd] = ft_strjoin(reste[fd], buf);
-	else
-		reste[fd] = ft_strdup(buf);
-	ft_memdel((void**)&tmp);
+	if ((val = read(fd, buf, BUFF_SIZE)) == -1)
+		return (-1);
+	tmp = reste[(fd % 256)];
+	if (reste[(fd % 256)])
+		reste[(fd % 256)] = ft_strjoin(reste[(fd % 256)], buf);
+	else if (!reste[fd % 256])
+		reste[(fd % 256)] = ft_strdup(buf);
 	free(buf);
-	ret = line_to_return(&reste[fd], line, val);
+	ft_memdel((void**)&tmp);
+	ret = line_to_return(&reste[(fd % 256)], line, val);
 	if (ret == -1 || val == -1)
 		return (-1);
 	if (ret == 2)
 		return (read_all(fd, line));
 	if (ret == 1 && val >= 0)
 		return (1);
-	ft_memdel((void**)&reste[fd]);
+	ft_memdel((void**)&reste[fd % 256]);
 	return (0);
 }
 
 int					get_next_line(int const fd, char **line)
 {
-	if (fd < 0 || fd == 2 || BUFF_SIZE <= 0 || !line)
+	if (fd < 0 || fd == 2 || BUFF_SIZE <= 0 || fd == 1)
 		return (-1);
 	return (read_all(fd, line));
 }
