@@ -6,7 +6,7 @@
 #    By: dvirgile <dvirgile@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/08/20 11:11:37 by dvirgile          #+#    #+#              #
-#    Updated: 2016/01/20 13:51:10 by dvirgile         ###   ########.fr        #
+#    Updated: 2016/02/09 10:19:24 by dvirgile         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -18,7 +18,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME):
-	gcc -Wall -Wextra -Werror -c -I./ $(SRC)
+	gcc -Wall -Wextra -Werror -c -I./includes $(SRC)
 	ar rcs $(NAME) $(OBJ)
 
 clean:
