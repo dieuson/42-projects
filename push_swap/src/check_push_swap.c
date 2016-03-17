@@ -21,7 +21,7 @@ int		check_push_swap(char **elements)
 int		check_doublon(int *tab)
 {
 	FT_INIT(int, i, 0);
-	FT_INIT(int, e, 0);
+	FT_INIT(int, e, 1);
 	while (tab[i])
 	{
 		while (tab[e])

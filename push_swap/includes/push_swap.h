@@ -6,19 +6,24 @@
 
 typedef struct		s_docker
 {
-	int pointeur;
-	int		**tab;
+	int 			len_a;
+	int 			len_b;
+	int 			**tab;
+	int 			*pos_tab;
 }					t_docker;
 
 int					check_push_swap(char **elements);
-int					init_tab(t_docker *data, int len, char **elements);
-char				*ft_strchr(const char *s, int c);
 int 				push_swap(int argc, char **elements);
+int					check_push_swap(char **elements);
+int					check_doublon(int *tab);
+void				ft_print_tab(int **tab);
+int 				*sort_int_tab(int *tab);
+
+void				ft_memdel(void **ap);
+char				*ft_strchr(const char *s, int c);
 void				ft_putnbr(int n);
 void				ft_putstr(char const *s);
 int					ft_atoi(const char *str);
 void				ft_putchar(char c);
-int					check_push_swap(char **elements);
-int					check_doublon(int *tab);
 
 #endif
