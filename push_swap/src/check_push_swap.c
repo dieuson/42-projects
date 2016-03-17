@@ -31,6 +31,7 @@ int		check_doublon(int *tab)
 			e++;
 		}
 		i++;
+		e = i + 1;
 	}
 	return (1);
 }

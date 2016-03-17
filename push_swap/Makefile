@@ -4,7 +4,9 @@ LFT = ./libft
 S = ./src/
 
 SRC = $(S)push_swap.c $(S)ft_atoi.c $(S)ft_putnbr.c $(S)ft_putstr.c \
-	$(S)ft_putchar.c $(S)ft_strchr.c $(S)check_push_swap.c $(S)ft_memdel.c
+	$(S)ft_putchar.c $(S)ft_strchr.c $(S)check_push_swap.c $(S)ft_memdel.c \
+	$(S)result_expected.c $(S)push_swap_moove.c
+
 DELETE = $(SRC:.c:.c~)
 CC = gcc -Wall -Wextra -Werror
 
