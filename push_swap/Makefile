@@ -5,16 +5,19 @@ S = ./src/
 
 SRC = $(S)push_swap.c $(S)ft_atoi.c $(S)ft_putnbr.c $(S)ft_putstr.c \
 	$(S)ft_putchar.c $(S)ft_strchr.c $(S)check_push_swap.c $(S)ft_memdel.c \
-	$(S)result_expected.c $(S)push_swap_moove.c
+	$(S)result_expected.c $(S)push_swap_moove.c $(S)tab_changes.c \
+	$(S)tab_copy.c
 
 DELETE = $(SRC:.c:.c~)
+#DELETEALL = ./src/ *.c~ Makefile~ ./includes/*.h~
 CC = gcc -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME):
 	@printf "\033[31mCompilation\033[0m "
-	@$(CC) $(SRC) ./includes/push_swap.h -o $(NAME)
+	@$(CC) $(SRC) -I ./includes/push_swap.h -o $(NAME)
+	@echo "\033[32m[OK]\033[0m"
 
 clean:
 	@printf "\033[31mNettoyage des dossiers\033[0m "

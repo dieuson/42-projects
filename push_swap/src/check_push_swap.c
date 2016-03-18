@@ -18,13 +18,13 @@ int		check_push_swap(char **elements)
 	return (1);
 }
 
-int		check_doublon(int *tab)
+int		check_doublon(int *tab, int len)
 {
 	FT_INIT(int, i, 0);
 	FT_INIT(int, e, 1);
-	while (tab[i])
+	while (i < len)
 	{
-		while (tab[e])
+		while (e < len)
 		{
 			if (tab[i] == tab[e])
 				return (0);

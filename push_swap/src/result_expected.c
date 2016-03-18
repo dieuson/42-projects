@@ -1,10 +1,10 @@
 #include "../includes/push_swap.h"
 
-void		print_result(int *result)
+void		print_result(int *result, int len)
 {
 	FT_INIT(int, i, 0);
 	ft_putstr("RESULT\n");
-	while (result[i])
+	while (i < len)
 	{
 			ft_putnbr(result[i]);
 			result[i + 1] ? ft_putstr(" ") : 0;
