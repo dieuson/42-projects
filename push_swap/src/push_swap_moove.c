@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:13:21 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/18 16:34:39 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/18 18:04:47 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,16 @@ int		m_sa(t_docker *data)
 	data->last_a = data->tab[0][data->len_a - 1];
 	if (data->len_b == 0)
 		data->last_b = data->last_a;
-	data->len_a = len_tab(data->tab[0], data->last_a, data);
-	data->len_b = data->last_a == data->last_b ? 0
-		: len_tab(data->tab[1], data->last_b, data);
 	return (1);
 }
 
 int		m_sb(t_docker *data)
 {
-	if (data->len_b < 2)
+	if (data->len_b < 2 || data->last_b == data->last_a)
 		return (0);
 	FT_INIT(int, tmp, 0);
+	if (tmp)
+		;
 	tmp = data->tab[1][data->len_b - 1];
 	data->tab[1][data->len_b - 1] = data->tab[1][data->len_b - 2];
 	data->tab[1][data->len_b - 2] = tmp;
@@ -83,51 +82,38 @@ int		m_pb(t_docker *data)
 	data->last_a = data->tab[0][data->len_a - 2];
 	data->last_b = data->tab[0][data->len_a - 1];
 	resize_tab(data, data->len_a - 1, data->len_b + 1);
-	data->len_a = (data->len_a == 1 ? 0
-				   : len_tab(data->tab[0], data->last_a, data));
-	data->len_b = (data->last_a == data->last_b ? 0
-				   : len_tab(data->tab[1], data->last_b, data));
+	data->len_a--;
+	data->len_b++;
 	if (data->len_a == 0)
 	{
 		data->empty = 'a';
-		data->last_a = 0;
+		data->last_a = -99;
 	}
 	return (1);
 }
 
 int		m_pa(t_docker *data)
 {
-	if (data->len_b < 1)
+	if (data->len_b <= 0)
 		return (0);
 	data->enum_moove = pa;
 	data->last_a = data->tab[1][data->len_b - 1];
-	data->last_b = data->tab[1][data->len_b - 2];
+	data->last_b = data->len_b > 1 ? data->tab[1][data->len_b - 2]
+		: data->last_a;
 	resize_tab(data, data->len_a + 1, data->len_b - 1);
-	data->len_a = (data->len_a == 1 ? 0
-				   : len_tab(data->tab[0], data->last_a, data));
-	data->len_b = (data->last_a == data->last_b ? 0
-				   : len_tab(data->tab[1], data->last_b, data));
-	if (data->len_b == 0)
-		data->last_b = data->len_a;
+	data->len_a++;
 	return (1);
 }
 
 int 	len_tab(int *tab, int last, t_docker *data)
 {
 	FT_INIT(int, i, 0);
-	if (data->len_a == 1)
-	{
-		while (tab[0] && tab[0] != data->pos_tab[i])
-			i++;
-		if (tab[0] != data->pos_tab[i])
-			return (0);
-	}
-	i = 0;
 	if (data)
 		;
-	while (tab[i] != last)
+	while (tab[i] != last && tab[i])
 		i++;
-	i++;
+	if (tab[i] == last)
+		i++;
 	return (i);
 }
 
@@ -144,7 +130,7 @@ int 	distrib(int **tab, t_docker *data)
 	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
 	ft_putstr("SA-------------------------\n\n");
 	/*----------SA----------*/
-		while (i < 4)
+		while (i < 8)
 	{
 	ft_putstr("PB-------------------------\n");
 	m_pb(data);
@@ -164,7 +150,7 @@ int 	distrib(int **tab, t_docker *data)
 	ft_putstr("SB-------------------------\n\n");
 	/*----------SB----------*/
 	/*----------PA----------*/
-	while (i < 6)
+	while (i < 8)
 	{
 	ft_putstr("PA-------------------------\n");
 	m_pa(data);
