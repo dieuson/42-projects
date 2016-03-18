@@ -14,6 +14,7 @@ typedef struct		s_docker
 	int 			neighbourg_more;
 	int 			**tab;
 	int 			*pos_tab;
+	int				empty;
 	enum {
 		sa = 1,
 		sb,
@@ -28,7 +29,7 @@ typedef struct		s_docker
 		rrr
 		}			enum_moove;
 }					t_docker;
-int					lem_tab(int *tab, int last, t_docker *data);
+int					len_tab(int *tab, int last, t_docker *data);
 void				tab_copy(int **src, int **dest, int len_a, int len_b);
 int					 init_tab(t_docker *data, int len, char **elements);
 int					check_push_swap(char **elements);

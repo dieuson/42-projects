@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:32:20 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/18 16:04:38 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/18 16:24:11 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int init_tab(t_docker *data, int len, char **elements)
 {
 	FT_INIT(int, i, 0);
 	data->len_a = len;
+	data->empty = 0;
 	data->len_b = 0;
 	data->neighbourg_less = 0;
 	data->neighbourg_more = 0;

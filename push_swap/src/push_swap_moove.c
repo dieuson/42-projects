@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:13:21 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/18 16:00:58 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/18 16:34:39 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	resize_tab(t_docker *data, int len_a, int len_b)
 
 int		m_sa(t_docker *data)
 {
-	if (data->len_a < 2)
+	if (data->empty == 'a')
 		return (0);
 	FT_INIT(int, tmp, 0);
 	tmp = data->tab[0][data->len_a - 1];
@@ -47,6 +47,9 @@ int		m_sa(t_docker *data)
 	data->last_a = data->tab[0][data->len_a - 1];
 	if (data->len_b == 0)
 		data->last_b = data->last_a;
+	data->len_a = len_tab(data->tab[0], data->last_a, data);
+	data->len_b = data->last_a == data->last_b ? 0
+		: len_tab(data->tab[1], data->last_b, data);
 	return (1);
 }
 
@@ -59,6 +62,9 @@ int		m_sb(t_docker *data)
 	data->tab[1][data->len_b - 1] = data->tab[1][data->len_b - 2];
 	data->tab[1][data->len_b - 2] = tmp;
 	data->last_b = data->tab[1][data->len_b - 1];
+	data->len_a = len_tab(data->tab[0], data->last_a, data);
+	data->len_b = data->last_a == data->last_b ? 0
+		: len_tab(data->tab[1], data->last_b, data);
 	return (1);
 }
 
@@ -71,15 +77,21 @@ int		m_ss(t_docker *data)
 
 int		m_pb(t_docker *data)
 {
-	FT_INIT(int, min, data->len_a);
 	if (data->len_a <= 0)
 		return (0);
 	data->enum_moove = pb;
 	data->last_a = data->tab[0][data->len_a - 2];
 	data->last_b = data->tab[0][data->len_a - 1];
-	if (min == 1)
-		data->len_a = 1;
 	resize_tab(data, data->len_a - 1, data->len_b + 1);
+	data->len_a = (data->len_a == 1 ? 0
+				   : len_tab(data->tab[0], data->last_a, data));
+	data->len_b = (data->last_a == data->last_b ? 0
+				   : len_tab(data->tab[1], data->last_b, data));
+	if (data->len_a == 0)
+	{
+		data->empty = 'a';
+		data->last_a = 0;
+	}
 	return (1);
 }
 
@@ -89,8 +101,14 @@ int		m_pa(t_docker *data)
 		return (0);
 	data->enum_moove = pa;
 	data->last_a = data->tab[1][data->len_b - 1];
-	data->last_b = data->tab[1][data->len_b - 1];
+	data->last_b = data->tab[1][data->len_b - 2];
 	resize_tab(data, data->len_a + 1, data->len_b - 1);
+	data->len_a = (data->len_a == 1 ? 0
+				   : len_tab(data->tab[0], data->last_a, data));
+	data->len_b = (data->last_a == data->last_b ? 0
+				   : len_tab(data->tab[1], data->last_b, data));
+	if (data->len_b == 0)
+		data->last_b = data->len_a;
 	return (1);
 }
 
@@ -119,46 +137,58 @@ int 	distrib(int **tab, t_docker *data)
 	data->len_a = len_tab(tab[0], data->last_a, data);
 	data->len_b = (data->last_a == data->last_b ? 0 : len_tab(tab[1], data->last_b, data));
 	ft_print_tab(data->tab, data);
-	/*----------PB----------*/
-	while (i < 8)
+	/*----------SA----------*/
+	ft_putstr("SA-------------------------\n");
+	m_sa(data);
+	ft_print_tab(data->tab, data);
+	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
+	ft_putstr("SA-------------------------\n\n");
+	/*----------SA----------*/
+		while (i < 4)
 	{
 	ft_putstr("PB-------------------------\n");
 	m_pb(data);
-	data->len_a = (data->len_a == 1 ? 0 : len_tab(data->tab[0], data->last_a, data));
-	data->len_b = (data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data));
 	ft_print_tab(data->tab, data);
 	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
 	ft_putstr("PB-------------------------\n\n");
 	i++;
 	}
-	/*----------PB----------*/
-	/*----------SA----------*/
-/*	ft_putstr("SA-------------------------\n");
-	m_sa(data);
-	data->len_a = len_tab(data->tab[0], data->last_a, data);
-	data->len_b = data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data);
-	ft_print_tab(data->tab, data);
-	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
-	ft_putstr("SA-------------------------\n\n");*/
-	/*----------SA----------*/
-	/*----------SB----------*//*
+	i = 0;
+	/*----------SB----------*/
 	ft_putstr("SB-------------------------\n");
 	m_sb(data);
 	data->len_a = len_tab(data->tab[0], data->last_a, data);
 	data->len_b = data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data);
 	ft_print_tab(data->tab, data);
 	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
-	ft_putstr("SB-------------------------\n\n");*/
+	ft_putstr("SB-------------------------\n\n");
 	/*----------SB----------*/
 	/*----------PA----------*/
-//	ft_putstr("PA-------------------------\n");
-//	m_pa(data);
-//	data->len_a = len_tab(data->tab[0], data->last_a, data);
-//	data->len_b = data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data);
-//	ft_print_tab(data->tab, data);
-//	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
-//	ft_putstr("PA-------------------------\n\n");
+	while (i < 6)
+	{
+	ft_putstr("PA-------------------------\n");
+	m_pa(data);
+	data->len_a = len_tab(data->tab[0], data->last_a, data);
+	data->len_b = data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data);
+	ft_print_tab(data->tab, data);
+	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
+	ft_putstr("PA-------------------------\n\n");
+	i++;
+	}
+	i = 0;
 	/*----------PA----------*/
+	/*----------PB----------*//*
+	while (i < 8)
+	{
+	ft_putstr("PB-------------------------\n");
+	m_pb(data);
+	ft_print_tab(data->tab, data);
+	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
+	ft_putstr("PB-------------------------\n\n");
+	i++;
+	}
+	i = 0;*/
+	/*----------PB----------*/
 //	m_sa(data);
 //	ft_print_tab(data->tab, data);
 //	m_sb(data);
