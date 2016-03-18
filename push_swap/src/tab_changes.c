@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:32:20 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/18 11:06:10 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/18 16:04:38 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		ft_print_tab(int **tab, t_docker *data)
 	ft_putstr("a");
 	while (i < 2)
 	{
-		while (e < len)
+		while (e < len && len > 0)
 		{
 			e < len ? ft_putstr(" ") : 0;
 			ft_putnbr(tab[i][e]);

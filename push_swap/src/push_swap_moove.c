@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:13:21 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/18 14:28:29 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/18 16:00:58 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,15 @@ int		m_ss(t_docker *data)
 
 int		m_pb(t_docker *data)
 {
-	if (data->len_a < 1)
+	FT_INIT(int, min, data->len_a);
+	if (data->len_a <= 0)
 		return (0);
 	data->enum_moove = pb;
 	data->last_a = data->tab[0][data->len_a - 2];
 	data->last_b = data->tab[0][data->len_a - 1];
+	if (min == 1)
+		data->len_a = 1;
 	resize_tab(data, data->len_a - 1, data->len_b + 1);
-	if (data->len_a == 1)
-		data->len_a = 0;
 	return (1);
 }
 
@@ -104,7 +105,9 @@ int 	len_tab(int *tab, int last, t_docker *data)
 			return (0);
 	}
 	i = 0;
-	while (tab[i] && tab[i] != last)
+	if (data)
+		;
+	while (tab[i] != last)
 		i++;
 	i++;
 	return (i);
@@ -116,45 +119,45 @@ int 	distrib(int **tab, t_docker *data)
 	data->len_a = len_tab(tab[0], data->last_a, data);
 	data->len_b = (data->last_a == data->last_b ? 0 : len_tab(tab[1], data->last_b, data));
 	ft_print_tab(data->tab, data);
-	/*----------SA----------*/
-	ft_putstr("SA-------------------------\n");
-	m_sa(data);
-	data->len_a = len_tab(data->tab[0], data->last_a, data);
-	data->len_b = data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data);
-	ft_print_tab(data->tab, data);
-	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
-	ft_putstr("SA-------------------------\n\n");
-	/*----------SA----------*/
-	/*----------SB----------*/
-	ft_putstr("SB-------------------------\n");
-	m_sb(data);
-	data->len_a = len_tab(data->tab[0], data->last_a, data);
-	data->len_b = data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data);
-	ft_print_tab(data->tab, data);
-	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
-	ft_putstr("SB-------------------------\n\n");
-	/*----------SB----------*/
 	/*----------PB----------*/
-	while (i < 10)
+	while (i < 8)
 	{
 	ft_putstr("PB-------------------------\n");
 	m_pb(data);
-	data->len_a = len_tab(data->tab[0], data->last_a, data);
-	data->len_b = data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data);
+	data->len_a = (data->len_a == 1 ? 0 : len_tab(data->tab[0], data->last_a, data));
+	data->len_b = (data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data));
 	ft_print_tab(data->tab, data);
 	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
 	ft_putstr("PB-------------------------\n\n");
 	i++;
 	}
 	/*----------PB----------*/
-	/*----------PA----------*/
-	ft_putstr("PA-------------------------\n");
-	m_pa(data);
+	/*----------SA----------*/
+/*	ft_putstr("SA-------------------------\n");
+	m_sa(data);
 	data->len_a = len_tab(data->tab[0], data->last_a, data);
 	data->len_b = data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data);
 	ft_print_tab(data->tab, data);
 	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
-	ft_putstr("PA-------------------------\n\n");
+	ft_putstr("SA-------------------------\n\n");*/
+	/*----------SA----------*/
+	/*----------SB----------*//*
+	ft_putstr("SB-------------------------\n");
+	m_sb(data);
+	data->len_a = len_tab(data->tab[0], data->last_a, data);
+	data->len_b = data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data);
+	ft_print_tab(data->tab, data);
+	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
+	ft_putstr("SB-------------------------\n\n");*/
+	/*----------SB----------*/
+	/*----------PA----------*/
+//	ft_putstr("PA-------------------------\n");
+//	m_pa(data);
+//	data->len_a = len_tab(data->tab[0], data->last_a, data);
+//	data->len_b = data->last_a == data->last_b ? 0 : len_tab(data->tab[1], data->last_b, data);
+//	ft_print_tab(data->tab, data);
+//	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
+//	ft_putstr("PA-------------------------\n\n");
 	/*----------PA----------*/
 //	m_sa(data);
 //	ft_print_tab(data->tab, data);
