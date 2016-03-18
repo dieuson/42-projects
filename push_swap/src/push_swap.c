@@ -25,7 +25,11 @@ int			push_swap(int argc, char **elements)
 		ft_memdel_tab(&data);
 		return (-2);
 	}
-//	ft_print_tab(data.tab, &data);
+	if (argc == 1)
+	{
+		ft_print_tab(data.tab, &data);
+		return(1);
+	}
 //	print_result(data.pos_tab, data.len_a);
 	distrib(data.tab, &data);
 //	ft_memdel_tab(&data);
