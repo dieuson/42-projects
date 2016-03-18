@@ -138,6 +138,56 @@ int		m_rb(t_docker *data)
 	return (1);
 }
 
+int		m_rr(t_docker *data)
+{
+	m_ra(data);
+	m_rb(data);
+	return (1);
+}
+
+int		m_rra(t_docker *data)
+{
+	if (data->len_a < 2)
+		return (0);
+	FT_INIT(int, i, 0);
+	FT_INIT(int, tmp2, data->tab[0][0]);
+	while (i < data->len_a)
+	{
+		data->tab[0][i] = data->tab[0][i + 1];
+		i++;
+	}
+	data->tab[0][data->len_a - 1] = tmp2;
+	data->last_a = data->tab[0][data->len_a - 1];
+	if (data->len_b == 0)
+		data->last_b = data->last_a;
+	return (1);
+}
+
+int		m_rrb(t_docker *data)
+{
+	if (data->len_b < 2)
+		return (0);
+	FT_INIT(int, i, 0);
+	FT_INIT(int, tmp2, data->tab[1][0]);
+	while (i < data->len_b)
+	{
+		data->tab[1][i] = data->tab[1][i + 1];
+		i++;
+	}
+	data->tab[1][data->len_b - 1] = tmp2;
+	data->last_b = data->tab[1][data->len_b - 1];
+	if (data->len_b == 0)
+		data->last_b = data->last_a;
+	return (1);
+}
+
+int		m_rrr(t_docker *data)
+{
+	m_rra(data);
+	m_rrb(data);
+	return (1);
+}
+
 int 	len_tab(int *tab, int last, t_docker *data)
 {
 	FT_INIT(int, i, 0);
@@ -191,6 +241,17 @@ int 	distrib(int **tab, t_docker *data)
 	i++;
 	}
 	i = 0;
+	while (i < 3)
+	{
+	ft_putstr("RRB-------------------------\n");
+	m_rrb(data);
+	ft_print_tab(data->tab, data);
+	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
+	ft_putstr("RRB------------------------\n\n");
+	i++;
+	}
+	i = 0;
+	i = 0;
 	while (i < 8)
 	{
 	ft_putstr("PA-------------------------\n");
@@ -213,8 +274,16 @@ int 	distrib(int **tab, t_docker *data)
 	i++;
 	}
 	i = 0;
-
-
+	while (i < 3)
+	{
+	ft_putstr("RRA-------------------------\n");
+	m_rra(data);
+	ft_print_tab(data->tab, data);
+	printf("len_a %d, len_b %d last_a = %d, last_b = %d\n",data->len_a, data->len_b, data->last_a, data->last_b);
+	ft_putstr("RRA-------------------------\n\n");
+	i++;
+	}
+	i = 0;
 	/*----------PA----------*/
 	/*----------PB----------*//*
 	while (i < 8)
