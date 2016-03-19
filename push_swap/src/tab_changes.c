@@ -46,10 +46,10 @@ void		ft_print_tab(int **tab, t_docker *data)
 	ft_putstr("a");
 	while (i < 2)
 	{
-		while (e < len && len > 0)
+		while (e < len && len > 0 && tab)
 		{
 			e < len ? ft_putstr(" ") : 0;
-			ft_putnbr(tab[i][e]);
+			ft_putnbr(data->tab[i][e]);
 			e++;
 		}
 		len = data->len_b;

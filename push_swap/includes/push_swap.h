@@ -38,10 +38,21 @@ int					check_doublon(int *tab, int len);
 void				ft_print_tab(int **tab, t_docker *data);
 int 				*sort_int_tab(int *tab);
 void				print_result(int *result, int len);
-int  				distrib(int **tab, t_docker *data);
-int					m_sa(t_docker *data);
-int					m_sb(t_docker *data);
 void		 		ft_memdel_tab(t_docker *data);
+
+int  				distrib(int **tab, t_docker *data);
+int					resize_tab(t_docker *data, int len_a, int len_b);
+int					m_pa(t_docker *data);
+int					m_sa(t_docker *data);
+int					m_ra(t_docker *data);
+int					m_rra(t_docker *data);
+int					m_pb(t_docker *data);
+int					m_sb(t_docker *data);
+int					m_rb(t_docker *data);
+int					m_rrb(t_docker *data);
+int					m_ss(t_docker *data);
+int					m_rr(t_docker *data);
+int					m_rrr(t_docker *data);
 
 void				ft_memdel(void **ap);
 char				*ft_strchr(const char *s, int c);
