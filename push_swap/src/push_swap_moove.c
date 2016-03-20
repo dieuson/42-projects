@@ -77,7 +77,7 @@ int 	distrib(int **tab, t_docker *data)
 		ft_print_tab(tab, data);
 		ft_putstr("RRB\n");
 	}
-	else if (!verif_tab(data->tab[0], data) && data->last_b >= tab[1][0] && data->last_b >= tab[1][data->len_b - 2] && data->last_a > data->last_b)
+	else if (!verif_tab(data->tab[0], data) && data->last_b >= tab[1][0] && data->last_b >= tab[1][data->len_b - 2])
 	{
 		ft_putstr("PA\n");
 		m_pa(data);
