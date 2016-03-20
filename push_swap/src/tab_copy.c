@@ -12,7 +12,7 @@ void	tab_copy(int **src, int **dest, int len_a, int len_b)
 			dest[i][e] = src[i][e];
 			e++;
 		}
-		len = len_b < 0 ? 0 : len_b;
+		len = len_b;
 		e = 0;
 		i++;
 	}

@@ -14,7 +14,7 @@
 
 int		m_sa(t_docker *data)
 {
-	if (data->empty == 'a')
+	if (data->len_a < 2)
 		return (0);
 	FT_INIT(int, tmp, 0);
 	tmp = data->tab[0][data->len_a - 1];
@@ -36,6 +36,7 @@ int		m_pa(t_docker *data)
 		: data->last_a;
 	resize_tab(data, data->len_a + 1, data->len_b - 1);
 	data->len_a++;
+	data->len_b--;
 	return (1);
 }
 
