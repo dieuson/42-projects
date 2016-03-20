@@ -34,7 +34,7 @@ int init_tab(t_docker *data, int len, char **elements)
 	data->last_a = data->tab[0][i - 1];
 	data->last_b = data->tab[0][i - 1];
 	data->tab[1] = NULL;
-	data->pos_tab = sort_int_tab(data->pos_tab);
+	data->pos_tab = sort_int_tab(data->pos_tab, data);
 	return (1);
 }
 

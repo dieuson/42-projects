@@ -36,7 +36,7 @@ int					check_push_swap(char **elements);
 int 				push_swap(int argc, char **elements);
 int					check_doublon(int *tab, int len);
 void				ft_print_tab(int **tab, t_docker *data);
-int 				*sort_int_tab(int *tab);
+int 				*sort_int_tab(int *tab, t_docker *data);
 void				print_result(int *result, int len);
 void		 		ft_memdel_tab(t_docker *data);
 

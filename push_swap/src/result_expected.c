@@ -13,16 +13,16 @@ void		print_result(int *result, int len)
 	ft_putstr("\n\n");
 }
 
-int 	*sort_int_tab(int *tab)
+int 	*sort_int_tab(int *tab, t_docker *data)
 {
 	FT_INIT(int, i, 0);
 	FT_INIT(int, e, 1);
 	FT_INIT(int, min, 0);
-	while (tab[i])
+	while (i < data->len_a)
 	{
-		while (tab[i] < tab[e] && tab[e])
+		while (tab[i] < tab[e] && e < data->len_a)
 			e++;
-		if (tab[i] > tab[e] && tab[e])
+		if (tab[i] > tab[e] && e < data->len_a)
 		{
 			min = tab[i];
 			tab[i] = tab[e];
