@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:13:21 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/18 18:04:47 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/21 14:49:13 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		m_sa(t_docker *data)
 	if (data->len_a < 2)
 		return (0);
 	FT_INIT(int, tmp, 0);
+	data->enum_moove = sa;
 	tmp = data->tab[0][data->len_a - 1];
 	data->tab[0][data->len_a - 1] = data->tab[0][data->len_a - 2];
 	data->tab[0][data->len_a - 2] = tmp;
@@ -46,6 +47,7 @@ int		m_ra(t_docker *data)
 		return (0);
 	FT_INIT(int, i, data->len_a - 1);
 	FT_INIT(int, tmp2, data->tab[0][data->len_a - 1]);
+	data->enum_moove = ra;
 	while (i > 0)
 	{
 		data->tab[0][i] = data->tab[0][i - 1];
@@ -64,6 +66,7 @@ int		m_rra(t_docker *data)
 		return (0);
 	FT_INIT(int, i, 0);
 	FT_INIT(int, tmp2, data->tab[0][0]);
+	data->enum_moove = rra;
 	while (i < data->len_a)
 	{
 		data->tab[0][i] = data->tab[0][i + 1];

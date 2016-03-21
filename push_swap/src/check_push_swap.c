@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_push_swap.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/21 15:06:43 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/21 15:07:06 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
 int		check_push_swap(char **elements)
@@ -13,10 +25,10 @@ int		check_push_swap(char **elements)
 				ft_putchar(elements[e][i]);
 				return (0);
 			}
-				i++;
+			i++;
 		}
-			e++;
-			i = 0;
+		e++;
+		i = 0;
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:13:21 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/18 18:04:47 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/21 14:50:49 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int		m_ss(t_docker *data)
 {
 	m_sa(data);
 	m_sb(data);
+	data->enum_moove = ss;
 	return (1);
 }
 
@@ -46,6 +47,7 @@ int		m_rr(t_docker *data)
 {
 	m_ra(data);
 	m_rb(data);
+	data->enum_moove = rr;
 	return (1);
 }
 
@@ -53,6 +55,7 @@ int		m_rrr(t_docker *data)
 {
 	m_rra(data);
 	m_rrb(data);
+	data->enum_moove = rrr;
 	return (1);
 }
 

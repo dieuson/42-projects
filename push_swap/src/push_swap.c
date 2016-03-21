@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:12:04 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/21 12:55:10 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/21 13:25:59 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ int			get_next_line(int const fd, char **line);
 int			push_swap(int argc, char **elements)
 {
 	t_docker data;
+
+	static int failed = 0;
+	static int ok = 0;
+	FT_INIT(int, i, 0);
 
 	if (!check_push_swap(elements))
 		return (-1);
@@ -35,15 +39,15 @@ int			push_swap(int argc, char **elements)
 		ft_print_tab(data.tab, &data);
 		return(1);
 	}
+	i = 0;
 //	print_result(data.pos_tab, data.len_a);
 	ft_putstr("------------------------------------------------------------------------\n");
 	distrib(data.tab, &data);
-	FT_INIT(int, i, 0);
 	if (verif_tab(data.tab[0], &data, 0) == 1)
 	{
 		ft_putcolor("\nOK\n", "GREEN");
 		ft_putcolor("INPUT ", "GREEN");
-		while (i < data.len_a)
+		while (i < data.len_final)
 		{
 			ft_putchar(elements[i][0]);
 			ft_putchar(' ');
@@ -51,24 +55,27 @@ int			push_swap(int argc, char **elements)
 		}
 		ft_putchar('\n');
 		ft_print_tab(data.tab, &data);
+		ok++;
 	}
 	else
 	{
 		ft_putcolor("\nFAILED\n", "RED");
 		ft_putcolor("INPUT ", "RED");
-		while (i < data.len_a)
+		while (i < data.len_final)
 		{
 			ft_putchar(elements[i][0]);
 			ft_putchar(' ');
 			i++;
 		}
 		ft_putchar('\n');
-		print_result(data.pos_tab, data.len_a);
+		print_result(data.pos_tab, data.len_final);
 		ft_putcolor("TON ERREUR\n", "RED");
 		ft_print_tab(data.tab, &data);
 		printf("last_a = %d attendu = %d, last_b = %d, len_a = %d, len_b = %d\n"
 			   , data.last_a, data.pos_tab[data.len_a - 1], data.last_b, data.len_a, data.len_b);
+		failed++;
 	}
+	printf("NB_FAILED = %d, NB_OK = %d\n", failed, ok);
 	ft_memdel_tab(&data);
 	ft_memdel((void*)&data.pos_tab);
 	return (0);
@@ -109,7 +116,7 @@ int main(int argc, char **argv)
 				if (ft_strchr("-+0123456789", elements[i]))
 				{
 					str[e][0] = elements[i];
-					str[e][1] = '\0';
+					//				str[e][1] = '\0';
 					e++;
 				}
 				i++;
