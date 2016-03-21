@@ -9,7 +9,10 @@ int		check_push_swap(char **elements)
 		while (elements[e][i])
 		{
 			if (!ft_strchr("-+0123456789", elements[e][i]))
+			{
+				ft_putchar(elements[e][i]);
 				return (0);
+			}
 				i++;
 		}
 			e++;

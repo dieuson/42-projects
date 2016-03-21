@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:32:20 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/18 16:24:11 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/21 12:38:18 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int init_tab(t_docker *data, int len, char **elements)
 		data->tab[0][i] = ft_atoi(elements[i]);
 		i++;
 	}
+	data->len_final = i;
 	data->last_a = data->tab[0][i - 1];
 	data->last_b = data->tab[0][i - 1];
 	data->tab[1] = NULL;

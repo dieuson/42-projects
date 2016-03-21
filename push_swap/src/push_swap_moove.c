@@ -6,22 +6,24 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:13:21 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/18 18:04:47 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/21 12:58:36 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 #include <stdio.h>
 
-int verif_tab(int *tab, t_docker *data)
+int verif_tab(int *tab, t_docker *data, int len)
 {
 	FT_INIT(int, i, 0);
-	while (data->pos_tab[i] && tab)
-	{ 
+	while (data->pos_tab[i] && i < (len ? len : data->len_final))
+	{
 		if (tab[i] != data->pos_tab[i])
 			return (0);
 		i++;
 	}
+	if (data->last_a != tab[i - 1])
+		return (0);
 	return (1);
 
 }
@@ -30,65 +32,58 @@ int 	distrib(int **tab, t_docker *data)
 	static int tours = 0;
 	if (tours == 0)
 	{
-		ft_print_tab(tab, data);
 		print_result(data->pos_tab, data->len_a);
 	}
 	if (data->len_a > 1 && data->last_a > tab[0][data->len_a - 2])
 	{
 		m_sa(data);
-		ft_print_tab(tab, data);
-		ft_putstr("SA\n");
+		ft_putstr("SA ");
 	}
-	else if (data->len_a > 1 && data->last_a > tab[0][0] && data->last_a > tab[0][data->len_a - 2])
+	else if (data->len_a > 1 && data->last_a > tab[0][0]
+			 && data->last_a > tab[0][data->len_a - 2])
 	{
 		m_ra(data);
-		ft_print_tab(tab, data);
-		ft_putstr("RA\n");
+		ft_putstr("RA ");
 	}
-	else if (data->len_a > 1 && data->last_a > tab[0][0])
+	else if (data->len_a > 1 && tab[0][0] < data->last_a  && data->last_a < tab[0][data->len_a - 2])
 	{
 		m_rra(data);
-		ft_print_tab(tab, data);
-		ft_putstr("RRA\n");
+		ft_putstr("RRA ");
 	}
-	else if (data->last_a >= data->last_b && data->last_a < data->tab[0][0] && !verif_tab(data->tab[0], data) && data->tab[0][data->len_a - 2] != data->pos_tab[data->len_a - 2] && data->last_b >=(data->len_b ? data->pos_tab[data->len_a] : data->last_b))
+	else if (data->len_a > 1 && data->last_a >= data->last_b && data->last_a < data->tab[0][0]
+			 && !verif_tab(data->tab[0], data, data->len_a))
 	{
 		m_pb(data);
-		ft_print_tab(data->tab, data);
-		ft_putstr("PB\n");
+		ft_putstr("PB ");
 	}
 	else if (data->len_b > 1 && data->last_b < tab[1][data->len_b - 2])
 	{
 		m_sb(data);
-		ft_print_tab(tab, data);
-		ft_putstr("SB\n");
+		ft_putstr("SB ");
 	}
-	else if (data->len_b > 1 && data->last_b < tab[1][0] && data->last_b < tab[1][data->len_b - 2])
+	else if (data->len_b > 1 && data->last_b < tab[1][0]
+			 && data->last_b < tab[1][data->len_b - 2])
 	{
-		ft_putstr("RB\n");
 		m_rb(data);
-		ft_print_tab(tab, data);
-		ft_putstr("RB\n");
+		ft_putstr("RB ");
 	}
 	else if (data->len_b > 1 && data->last_b < tab[1][0])
 	{
-		ft_putstr("RRB\n");
 		m_rrb(data);
-		ft_print_tab(tab, data);
-		ft_putstr("RRB\n");
+		ft_putstr("RRB ");
 	}
-	else if (!verif_tab(data->tab[0], data) && data->last_b >= tab[1][0] && data->last_b >= tab[1][data->len_b - 2])
+	else if (data->len_b && data->last_a >= data->last_b && data->last_a < data->tab[0][0]
+			 && verif_tab(data->tab[0], data, data->len_a))
 	{
-		ft_putstr("PA\n");
 		m_pa(data);
-		ft_print_tab(tab, data);
-		ft_putstr("PA\n");
+		ft_putstr("PA ");
 	}
-	printf("last_a = %d = %d\n", data->last_a, data->pos_tab[data->len_a - 1]);
-	printf("last_a = %d, last_b = %d, len_a = %d, len_b = %d\n", data->last_a, data->last_b, data->len_a, data->len_b);
 	tours++;
-	if (!verif_tab(data->tab[0], data) && tours <= 20)
-		distrib(data->tab, data);
-//	ft_putstr("tet5\n");
+	if (tours == 50)
+		ft_putstr("\nRISQUE SEGFAULT\n");
+	if (!verif_tab(data->tab[0], data, 0) && tours <= 50)
+			distrib(data->tab, data);
+	else
+		tours = 0;
 	return (1);
 }
