@@ -44,13 +44,17 @@ void		ft_print_tab(int **tab, t_docker *data)
 	FT_INIT(int, i, 0);
 	FT_INIT(int, e, 0);
 	FT_INIT(int, len, data->len_a);
-	ft_putstr("a");
+	ft_putstr("\na");
 	while (i < 2)
 	{
 		while (e < len && len > 0 && tab)
 		{
 			e < len ? ft_putstr(" ") : 0;
+			ft_putstr("\033[");
+			ft_putstr("33");
+			ft_putchar('m');
 			ft_putnbr(data->tab[i][e]);
+			ft_putstr("\033[0m");
 			e++;
 		}
 		len = data->len_b;

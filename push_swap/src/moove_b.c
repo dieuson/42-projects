@@ -38,10 +38,7 @@ int		m_pb(t_docker *data)
 	data->len_a--;
 	data->len_b++;
 	if (data->len_a <= 0)
-	{
-		data->empty = 'a';
 		data->last_a = -99;
-	}
 	return (1);
 }
 

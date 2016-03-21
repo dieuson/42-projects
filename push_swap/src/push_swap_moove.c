@@ -74,6 +74,7 @@ static	void	print_moove(t_docker *data)
 int				distrib(int **tab, t_docker *data)
 {
 	moove_aux(tab, data);
+	data->empty > 1 ? ft_print_tab(tab, data) : 0;
 	if (data->len_a > 1 && data->last_a > tab[0][data->len_a - 2])
 		m_sa(data);
 	else if (data->len_b > 1 && data->last_b < tab[1][data->len_b - 2])

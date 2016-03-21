@@ -19,7 +19,9 @@ int			push_swap(int argc, char **elements)
 	if (!check_push_swap(elements))
 		return (-1);
 	init_tab(&data, argc, elements);
-	if (!check_doublon(*data.tab, data.len_a))
+	data.empty = check_doublon(*data.tab, data.len_a);
+	ft_putnbr(data.empty);
+	if (!data.empty)
 	{
 		ft_memdel((void*)&data.pos_tab);
 		ft_memdel_tab(&data);

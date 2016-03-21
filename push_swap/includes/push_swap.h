@@ -31,6 +31,8 @@ typedef struct		s_docker
 		}			enum_moove;
 }					t_docker;
 
+void 				ft_add_color(int **tab, t_docker *data);
+int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strcat(char *dest, const char *src);
 int					verif_tab(int *tab, t_docker *data, int len);
 int					len_tab(int *tab, int last, t_docker *data);
