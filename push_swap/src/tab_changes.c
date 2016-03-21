@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/18 09:32:20 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/21 12:38:18 by dvirgile         ###   ########.fr       */
+/*   Created: 2016/03/21 15:20:40 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/21 15:21:02 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int init_tab(t_docker *data, int len, char **elements)
+int			init_tab(t_docker *data, int len, char **elements)
 {
 	FT_INIT(int, i, 0);
 	data->len_a = len;
@@ -62,7 +62,7 @@ void		ft_print_tab(int **tab, t_docker *data)
 	ft_putstr("\n");
 }
 
-void 		ft_memdel_tab(t_docker *data)
+void		ft_memdel_tab(t_docker *data)
 {
 	if (data->tab)
 	{

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   result_expected.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/21 15:19:11 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/21 15:20:14 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
 void		print_result(int *result, int len)
@@ -6,14 +18,14 @@ void		print_result(int *result, int len)
 	ft_putstr("RESULT\n");
 	while (i < len)
 	{
-			ft_putnbr(result[i]);
-			result[i + 1] ? ft_putstr(" ") : 0;
+		ft_putnbr(result[i]);
+		result[i + 1] ? ft_putstr(" ") : 0;
 		i++;
 	}
 	ft_putstr("\n\n");
 }
 
-int 	*sort_int_tab(int *tab, t_docker *data)
+int			*sort_int_tab(int *tab, t_docker *data)
 {
 	FT_INIT(int, i, 0);
 	FT_INIT(int, e, 1);
