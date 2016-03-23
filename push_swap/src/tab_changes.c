@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 15:20:40 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/23 14:40:40 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/23 14:49:02 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			init_tab(t_docker *data, int len, char **elements)
 {
-	FT_INIT(int, i, len - 1);
+	FT_INIT(int, i, len - 1 - (data->empty > 1 ? 1 : 0));
 	data->len_a = len - (data->empty > 1 ? 1 : 0);
 	data->len_b = 0;
 	data->enum_moove = 0;
@@ -24,11 +24,9 @@ int			init_tab(t_docker *data, int len, char **elements)
 	!(data->tab[0] = malloc(sizeof(int) * (len))) ||
 	!(data->tab[1] = malloc(sizeof(int) * (len - 1))))
 		return (0);
-	while (i > 0)
+	while (i >= 0 + (data->empty > 1 ? 1 : 0))
 	{
 		data->tab[0][i] = ft_atoi(elements[i]);
-		ft_putnbr(data->tab[0][i]);
-		ft_putstr("\n");
 		i--;
 	}
 	data->len_final = len;
