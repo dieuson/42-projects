@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 15:06:43 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/21 15:07:06 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/23 14:24:24 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int		check_push_swap(char **elements)
 {
 	FT_INIT(int, i, 0);
 	FT_INIT(int, e, 0);
-	FT_INIT(int, check, 0);
-	if (!ft_strcmp(elements[0],"-v") || !ft_strcmp(elements[0],"-c") 
+	FT_INIT(int, check, 1);
+	if (!ft_strcmp(elements[0],"-v") || !ft_strcmp(elements[0],"-c")
 		|| !ft_strcmp(elements[0],"-d"))
 	{
-		check = !ft_strcmp(elements[0],"-v") ? 1 : check;
-		check = !ft_strcmp(elements[0],"-c") ? 2 : check;
-		check = !ft_strcmp(elements[0],"-d") ? 3 : check;
+		check = (!ft_strcmp(elements[0],"-v") ? 2 : check);
+		check = (!ft_strcmp(elements[0],"-c") ? 3 : check);
+		check = (!ft_strcmp(elements[0],"-d") ? 4 : check);
 		elements++;
 	}
 	while (elements[e])
@@ -36,7 +36,7 @@ int		check_push_swap(char **elements)
 		e++;
 		i = 0;
 	}
-	return (1 + check);
+	return (check);
 }
 
 int		check_doublon(int *tab, int len)

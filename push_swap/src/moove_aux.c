@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:13:21 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/21 15:18:46 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/23 11:05:03 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,12 @@
 
 int		resize_tab(t_docker *data, int len_a, int len_b)
 {
-	FT_INIT(int**, tmp, NULL);
-	if (!(tmp = malloc(sizeof(int*) * 2)) ||
-	!(tmp[0] = malloc(sizeof(int) * (data->len_a))) ||
-	!(tmp[1] = malloc(sizeof(int) * (data->len_b))))
-		return (0);
-	tab_copy(data->tab, tmp, data->len_a, data->len_b);
-	ft_memdel_tab(data);
-	if (!(data->tab = malloc(sizeof(int*) * 2)) ||
-	!(data->tab[0] = malloc(sizeof(int) * (len_a))) ||
-	!(data->tab[1] = malloc(sizeof(int) * (len_b))))
-		return (0);
-	tab_copy(tmp, data->tab, len_a, len_b);
+	if (len_a || len_b)
+		len_a = len_b;
 	if (data->enum_moove == pb)
-		data->tab[1][data->len_b] = tmp[0][data->len_a - 1];
+		data->tab[1][data->len_b] = data->last_b;
 	else
-		data->tab[0][data->len_a] = tmp[1][data->len_b - 1];
-	ft_memdel((void*)&tmp[0]);
-	ft_memdel((void*)&tmp[1]);
+		data->tab[0][data->len_a] = data->last_a;
 	return (1);
 }
 
