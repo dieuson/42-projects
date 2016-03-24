@@ -31,20 +31,15 @@ typedef struct		s_docker
 		}			enum_moove;
 }					t_docker;
 
+void				print_moove(t_docker *data);
 void				ft_putcolor(t_docker *data, int ligne, int colonne);
-void 				ft_add_color(int **tab, t_docker *data);
 int					ft_strcmp(const char *s1, const char *s2);
-char				*ft_strcat(char *dest, const char *src);
 int					verif_tab(int *tab, t_docker *data, int len);
-int					len_tab(int *tab, int last, t_docker *data);
-void				tab_copy(int **src, int **dest, int len_a, int len_b);
 int					init_tab(t_docker *data, int len, char **elements);
 int					check_push_swap(char **elements);
 int 				push_swap(int argc, char **elements);
 int					check_doublon(int *tab, int len);
 void				ft_print_tab(int **tab, t_docker *data);
-int 				*sort_int_tab(int *tab, t_docker *data);
-void				print_result(int *result, int len);
 void		 		ft_memdel_tab(t_docker *data);
 
 int  				distrib(int **tab, t_docker *data);
@@ -65,8 +60,7 @@ void				ft_memdel(void **ap);
 char				*ft_strchr(const char *s, int c);
 void				ft_putnbr(int n);
 void				ft_putstr(char const *s);
-int					ft_atoi(const char *str);
+long int			ft_atoi(const char *str);
 void				ft_putchar(char c);
-void				*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif

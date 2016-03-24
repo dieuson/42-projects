@@ -6,7 +6,7 @@ S = ./src/
 SRC = $(S)push_swap.c $(S)ft_atoi.c $(S)ft_putnbr.c $(S)ft_putstr.c \
 	$(S)ft_putchar.c $(S)ft_strchr.c $(S)check_push_swap.c $(S)ft_memdel.c \
 	$(S)push_swap_moove.c $(S)tab_changes.c \
-	$(S)moove_a.c  $(S)moove_b.c \
+	$(S)moove_a.c  $(S)moove_b.c $(S)ft_strcat.c \
 	$(S)moove_aux.c $(S)ft_strcmp.c $(S)ft_putcolor.c \
 
 DELETE = $(SRC:.c:.c~)
