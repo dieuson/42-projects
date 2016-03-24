@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 15:20:40 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/23 14:49:02 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/24 10:06:44 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,23 @@
 
 int			init_tab(t_docker *data, int len, char **elements)
 {
-	FT_INIT(int, i, len - 1 - (data->empty > 1 ? 1 : 0));
-	data->len_a = len - (data->empty > 1 ? 1 : 0);
-	data->len_b = 0;
+	FT_INIT(int, i, 0);
 	data->enum_moove = 0;
 	data->neighbourg_less = 0;
 	data->neighbourg_more = 0;
 	if (!(data->tab = malloc(sizeof(int*) * 2)) ||
 	!(data->tab[0] = malloc(sizeof(int) * (len))) ||
-	!(data->tab[1] = malloc(sizeof(int) * (len - 1))))
+	!(data->tab[1] = malloc(sizeof(int) * (len))))
 		return (0);
-	while (i >= 0 + (data->empty > 1 ? 1 : 0))
+	while (len > 0 + (data->empty > 1 ? 1 : 0))
 	{
-		data->tab[0][i] = ft_atoi(elements[i]);
-		i--;
+		data->tab[0][i] = ft_atoi(elements[len - 1]);
+		i++;
+		len--;
 	}
-	data->len_final = len;
+	data->len_a = i;
+	data->len_b = 0;
+	data->len_final = i;
 	data->last_a = data->tab[0][i - 1];
 	data->last_b = data->tab[0][i - 1];
 	return (1);
