@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 14:15:33 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/23 14:17:18 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/24 11:18:12 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void		ft_putcolor(t_docker *data, int ligne, int colonne)
 {
 	FT_INIT(char *, color, "97");
 	FT_INIT(int, finish, 0);
-	if (data->empty == 3)
+	if (ligne || colonne)
+		;
+	if (data->empty == 4)
 	{
 		ft_putstr("\033[");
 		if (verif_tab(data->tab[0], data, data->len_a - 1))
@@ -47,13 +49,16 @@ void		ft_putcolor(t_docker *data, int ligne, int colonne)
 			color = "31"; //ROUGE
 		finish = 1;
 	}
-	else if (data->empty == 4)
+	else if (data->empty == 3)
 	{
-		if ((data->enum_moove == sa && !ligne &&(colonne == data->len_a - 2 || colonne == data->len_a - 1))||
-			(data->enum_moove == sb && ligne &&(colonne == data->len_b - 2 || colonne == data->len_b - 1)))
-		{
+		if (((data->enum_moove == sa || data->enum_moove == ss) && !ligne && (colonne == data->len_a - 2 || colonne == data->len_a - 1))||
+			((data->enum_moove == sb || data->enum_moove == ss) && ligne && (colonne == data->len_b - 2 || colonne == data->len_b - 1)) ||
+			((data->enum_moove == rra || data->enum_moove == ra || data->enum_moove == rr) && !ligne && (colonne == data->len_a - 1 || colonne == 0)) ||
+			((data->enum_moove == rrb || data->enum_moove == rb || data->enum_moove == rr) && ligne && (colonne == data->len_b - 1 || colonne == 0)) ||
+			(data->enum_moove == pa && !ligne && colonne == data->len_a - 1) || (data->enum_moove == pb && ligne && colonne == data->len_b - 1))
+			{
 			ft_putstr("\033[");
-			if (data->tab[ligne][colonne] == data->pos_tab[colonne])
+			if (verif_tab(data->tab[0], data, data->len_a - 1))
 				color = "92";
 			else
 				color = "31"; //ROUGE
