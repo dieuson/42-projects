@@ -6,13 +6,13 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 13:36:35 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/24 15:27:24 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/24 16:05:14 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int		push_swap(int argc, char **elements)
+int				push_swap(int argc, char **elements)
 {
 	t_docker data;
 
@@ -25,18 +25,15 @@ int		push_swap(int argc, char **elements)
 		ft_memdel_tab(&data);
 		return (-1);
 	}
-	if (argc == 1)
-	{
-		ft_print_tab(data.tab, &data);
+	if (argc == 1 || (verif_tab(data.tab[0], &data, data.len_a - 1)))
 		return (1);
-	}
 	distrib(data.tab, &data);
 	ft_putstr("\n");
 	ft_memdel_tab(&data);
 	return (0);
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	FT_INIT(int, err, 0);
 	if (argc > 1)
