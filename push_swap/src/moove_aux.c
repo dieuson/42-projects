@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:13:21 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/23 11:05:03 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/24 15:40:37 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,4 @@ int		m_rrr(t_docker *data)
 	m_rrb(data);
 	data->enum_moove = rrr;
 	return (1);
-}
-
-int		len_tab(int *tab, int last, t_docker *data)
-{
-	FT_INIT(int, i, 0);
-	if (data)
-		i = 0;
-	while (tab[i] != last && tab[i])
-		i++;
-	if (tab[i] == last)
-		i++;
-	return (i);
 }

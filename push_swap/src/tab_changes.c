@@ -6,15 +6,16 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 15:20:40 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/24 10:06:44 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/24 15:48:32 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int			init_tab(t_docker *data, int len, char **elements)
+int					init_tab(t_docker *data, int len, char **elements)
 {
 	FT_INIT(int, i, 0);
+	FT_INIT(long int, nb, 0);
 	data->enum_moove = 0;
 	data->neighbourg_less = 0;
 	data->neighbourg_more = 0;
@@ -24,7 +25,10 @@ int			init_tab(t_docker *data, int len, char **elements)
 		return (0);
 	while (len > 0 + (data->empty > 1 ? 1 : 0))
 	{
-		data->tab[0][i] = ft_atoi(elements[len - 1]);
+		nb = ft_atoi(elements[len - 1]);
+		if (nb < -2147483648 || nb > 2147483647)
+			return (0);
+		data->tab[0][i] = nb;
 		i++;
 		len--;
 	}
@@ -36,14 +40,32 @@ int			init_tab(t_docker *data, int len, char **elements)
 	return (1);
 }
 
-void		ft_print_tab(int **tab, t_docker *data)
+static void			print_details(t_docker *data, int nb)
 {
-	static int tours = 0;
+	if (data->empty > 0 && data->empty < 4)
+		ft_putstr("\n");
+	if (data->empty == 4)
+	{
+		if (verif_tab(data->tab[0], data, data->len_a - 1)
+			&& !data->len_b && nb == 1)
+			nb = 0;
+		ft_putstr("---------------------------------------\nmoove : ");
+		print_moove(data);
+		ft_putstr("	laps: ");
+		ft_putnbr(nb);
+		ft_putstr("			");
+		ft_putstr("\n---------------------------------------\n");
+	}
+}
+
+void				ft_print_tab(int **tab, t_docker *data)
+{
+	static int tours = 1;
+
 	FT_INIT(int, i, 0);
 	FT_INIT(int, e, 0);
 	FT_INIT(int, len, data->len_a);
-	if (data->enum_moove > 0)
-		ft_putstr("\n");
+	print_details(data, tours);
 	ft_putstr("a");
 	while (i < 2)
 	{
@@ -63,41 +85,9 @@ void		ft_print_tab(int **tab, t_docker *data)
 	tours++;
 	if (!verif_tab(data->tab[0], data, data->len_a - 1) || data->len_b)
 		ft_putstr("\n");
-	else
-		tours = 0;
 }
 
-/*
-void		ft_print_tab(int **tab, t_docker *data)
-{
-	static int tours = 0;
-	FT_INIT(int, i, 0);
-	FT_INIT(int, e, 0);
-	FT_INIT(int, len, data->len_a);
-	ft_putstr("\na");
-	while (i < 2)
-	{
-		while (e < len && len > 0 && tab)
-		{
-			e < len ? ft_putstr(" ") : 0;
-			ft_putcolor(data, i, e);
-			ft_putnbr(data->tab[i][e]);
-			ft_putstr("\033[0m");
-			e++;
-		}
-		len = data->len_b;
-		i++;
-		e = 0;
-		i == 1 ? ft_putstr("\nb") : 0;
-	}
-	tours++;
-	if (!verif_tab(data->tab[0], data, 0))
-		ft_putstr("\n");
-	else
-		tours = 0;
-		}*/
-
-void		ft_memdel_tab(t_docker *data)
+void				ft_memdel_tab(t_docker *data)
 {
 	if (data->tab)
 	{

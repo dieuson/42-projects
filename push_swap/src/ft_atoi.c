@@ -6,17 +6,17 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/25 10:15:56 by dvirgile          #+#    #+#             */
-/*   Updated: 2015/12/03 17:49:57 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/24 14:53:57 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int		ft_atoi(const char *str)
+long int		ft_atoi(const char *str)
 {
-	int	result;
-	int	i;
-	int	signe;
+	long int	result;
+	int			i;
+	int			signe;
 
 	signe = 1;
 	i = 0;

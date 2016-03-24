@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 09:13:21 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/23 12:10:19 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/24 15:40:22 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ int		m_sb(t_docker *data)
 	data->tab[1][data->len_b - 1] = data->tab[1][data->len_b - 2];
 	data->tab[1][data->len_b - 2] = tmp;
 	data->last_b = data->tab[1][data->len_b - 1];
-	data->len_a = len_tab(data->tab[0], data->last_a, data);
 	data->len_b = data->last_a == data->last_b ? 0
-		: len_tab(data->tab[1], data->last_b, data);
+		: data->len_b;
 	return (1);
 }
 
