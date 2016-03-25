@@ -6,27 +6,28 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 15:20:40 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/24 15:48:32 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/25 14:10:13 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int					init_tab(t_docker *data, int len, char **elements)
+int				init_tab(t_docker *data, int len, char **elements)
 {
 	FT_INIT(int, i, 0);
 	FT_INIT(long int, nb, 0);
 	data->enum_moove = 0;
-	data->neighbourg_less = 0;
-	data->neighbourg_more = 0;
 	if (!(data->tab = malloc(sizeof(int*) * 2)) ||
-	!(data->tab[0] = malloc(sizeof(int) * (len))) ||
-	!(data->tab[1] = malloc(sizeof(int) * (len))))
+	!(data->tab[0] = malloc(sizeof(int) * (len + 1))) ||
+	!(data->tab[1] = malloc(sizeof(int) * (len + 1))))
 		return (0);
 	while (len > 0 + (data->empty > 1 ? 1 : 0))
 	{
 		nb = ft_atoi(elements[len - 1]);
-		if (nb < -2147483648 || nb > 2147483647)
+		if (nb < -2147483648 || nb > 2147483647
+			|| (ft_strchr("+-", elements[len - 1][0])
+				&& (!ft_strchr("0123456789", elements[len - 1][1])
+					|| !elements[len - 1][1])))
 			return (0);
 		data->tab[0][i] = nb;
 		i++;
@@ -34,13 +35,12 @@ int					init_tab(t_docker *data, int len, char **elements)
 	}
 	data->len_a = i;
 	data->len_b = 0;
-	data->len_final = i;
 	data->last_a = data->tab[0][i - 1];
 	data->last_b = data->tab[0][i - 1];
 	return (1);
 }
 
-static void			print_details(t_docker *data, int nb)
+static void		print_details(t_docker *data, int nb)
 {
 	if (data->empty > 0 && data->empty < 4)
 		ft_putstr("\n");
@@ -58,7 +58,7 @@ static void			print_details(t_docker *data, int nb)
 	}
 }
 
-void				ft_print_tab(int **tab, t_docker *data)
+void			ft_print_tab(int **tab, t_docker *data)
 {
 	static int tours = 1;
 
@@ -87,7 +87,7 @@ void				ft_print_tab(int **tab, t_docker *data)
 		ft_putstr("\n");
 }
 
-void				ft_memdel_tab(t_docker *data)
+void			ft_memdel_tab(t_docker *data)
 {
 	if (data->tab)
 	{

@@ -6,13 +6,13 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 14:15:33 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/24 11:48:35 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/25 13:50:43 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static int		last_moove(t_docker *data, int ligne, int colonne)
+int				last_moove(t_docker *data, int ligne, int colonne)
 {
 	if (data->empty >= 3)
 	{
