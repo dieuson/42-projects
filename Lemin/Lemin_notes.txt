@@ -1,0 +1,40 @@
+<-------------- Lem-in -------------->
+
+		INSERTION DES DONNÉES
+
+La map peut être donnée en paramètre après le caractère '<'.
+La salle de start est juste après ##start et de end ##end.
+Le nombre de fourmis est donnée en premier.
+Les coordonnées de salles ne sont pas important si je ne fait pas
+la visualisation graphique.
+
+		TRAITEMENT DES DONNÉES
+
+Pour le nom des salles utiliser directement la chaîne de caractère sur 
+l'entrée standard ou le fichier.
+
+Utiliser Get_next_line, pour lire le fichier en paramètre.
+
+Prendre dès le début tous les chemins possible allant du début à la fin de la fourmillière.
+
+Utiliser un tableau qui stock la position de chaque fourmis en mouvement ou une liste chainée.
+
+Affichage:	Pour afficher le mouvement de chaque fourmis on lit le tableau qui stock les donnés.
+			Ou, si j'utilise une liste chainer parcourir la liste chainée et afficher les positions.
+
+A vérifier: Utiliser une liste chainer qui stock dans chaque maillon le numéro de la fourmi
+			et sa position actuelle.
+			Il y aura autant de maillons que de salles sur les parcours possible (peut être la "end"). 
+
+Attention:	Si je reçoit 1 000 000 de fourmis la liste chainée ou tableau peut faire n'importe quoi.
+			Solution:	On stock dans la liste chainée uniquement les fourmis en mouvement,
+						car une fois une fourmis arrivée on ne s'en occupe plus. 
+						Savoir le nombre de fourmi à faire bouger, qui sont encore dans la salle de départ.
+
+		SORTIE DU PROGRAMME
+
+Si la map est donnée en paramètre, il faut l'afficher avant sur la sortie standard.
+Afficher la position des fourmis en mouvements suivi d'un ' ' sauf pour la dernière '\n'.
+
+Remarque:	On ne ré-affiche pas la position d'une fourmi dans la salle "end".
+			On n'affiche pas la position de la fourmis quand elle est dans la salle "start".
