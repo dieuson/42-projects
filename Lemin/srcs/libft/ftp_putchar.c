@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ftp_putchar.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/01 09:37:21 by dvirgile         ###   ########.fr       */
+/*   Created: 2016/03/12 19:25:02 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 19:25:03 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "../libft/includes/libft.h"
-# define BUFF_SIZE 16
+#include "libftprintf.h"
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+int		ftp_putchar(uint32_t c)
+{
+	write(1, &c, 1);
+	return (1);
+}

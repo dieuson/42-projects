@@ -6,19 +6,19 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 19:03:46 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/12 19:03:49 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/01 09:36:18 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include "libftprintf.h"
 
 void				ft_bzero(void *s, size_t n);
 void				*ft_memset(void *b, int c, size_t len);

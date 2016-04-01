@@ -1,5 +1,6 @@
 <-------------- Lem-in -------------->
-
+ ./lem-in < ./test_lemin/example.map
+ 
 		INSERTION DES DONNÉES
 
 La map peut être donnée en paramètre après le caractère '<'.
@@ -15,8 +16,6 @@ l'entrée standard ou le fichier.
 
 Utiliser Get_next_line, pour lire le fichier en paramètre.
 
-Prendre dès le début tous les chemins possible allant du début à la fin de la fourmillière.
-
 Utiliser un tableau qui stock la position de chaque fourmis en mouvement ou une liste chainée.
 
 Affichage:	Pour afficher le mouvement de chaque fourmis on lit le tableau qui stock les donnés.
@@ -30,6 +29,8 @@ Attention:	Si je reçoit 1 000 000 de fourmis la liste chainée ou tableau peut 
 			Solution:	On stock dans la liste chainée uniquement les fourmis en mouvement,
 						car une fois une fourmis arrivée on ne s'en occupe plus. 
 						Savoir le nombre de fourmi à faire bouger, qui sont encore dans la salle de départ.
+
+Prendre dès le début tous les chemins possible allant du début à la fin de la fourmillière.
 
 		SORTIE DU PROGRAMME
 

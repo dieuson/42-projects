@@ -19,7 +19,7 @@ FILES_LEMIN = main.c
 SRC = $(GNL)$(FILES_GNL) $(LEMIN)$(FILES_LEMIN)
 BIN = $(FILES_GNL:.c=.o) $(FILES_LEMIN:.c=.o)
 
-INLCLUDES = -I $(LIBFT)libft.h -I $(GNL)get_next_line.h
+INLCLUDES = -I $(LIBFT)libft.h -I $(GNL)get_next_line.h -I ./includes/lem-in.h
 
 TILDE = $(SRC:.c=.c~) Makefile~
 
