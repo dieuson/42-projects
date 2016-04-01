@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_beginning.c                              :+:      :+:    :+:   */
+/*   ft_strtoupper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtedgui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/20 16:08:22 by dtedgui           #+#    #+#             */
-/*   Updated: 2015/12/20 16:08:26 by dtedgui          ###   ########.fr       */
+/*   Created: 2016/03/12 19:11:44 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 19:11:44 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 
-void	ft_lstadd_beginning(t_list **alst, t_list *new)
+char	*ft_strtoupper(char *str)
 {
-	if (alst && *alst)
+	int i;
+
+	i = 0;
+	if (str)
 	{
-		new->next = *alst;
-		*alst = new;
+		while (str[i])
+		{
+			str[i] = ft_toupper(str[i]);
+			i++;
+		}
 	}
+	return (str);
 }

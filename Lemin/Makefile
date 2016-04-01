@@ -10,29 +10,43 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME = fillit
+NAME = lem-in
+GNL = ./srcs/get_next_line/
+LIBFT = ./srcs/libft/
+LEMIN = ./srcs/
+FILES_GNL = get_next_line.c
+FILES_LEMIN = main.c
+SRC = $(GNL)$(FILES_GNL) $(LEMIN)$(FILES_LEMIN)
+BIN = $(FILES_GNL:.c=.o) $(FILES_LEMIN:.c=.o)
 
-SRC = get_next_line.c ../srcs/main.c
-BIN = get_next_line.o main.o
+INLCLUDES = -I $(LIBFT)libft.h -I $(GNL)get_next_line.h
 
-TILDE = $(SRC:.c=.c~) Makefile~ get_next_line.h~ get_next_line.h.gch
+TILDE = $(SRC:.c=.c~) Makefile~
 
 all: $(NAME)
 
 $(NAME):
-	@printf "\033[31mCompilation de la libft:\033[0m"
-	@make -C libft
-	@printf "\033[32m done!\n\033[0m"
-	@printf "\033[31mCompilation GNL:\033[0m"
-	@gcc -Wall -Wextra -Werror $(SRC) ./libft/includes/libft.h -c
-	@gcc -Wall -Wextra -Werror $(BIN) ./libft/libft.a ./libft/includes/libft.h -o get_next_line
+	@make -C $(LIBFT)
+	@printf "\033[31mCompilation $(NAME):\033[0m"
+	@gcc -Wall -Wextra -Werror $(SRC) $(INCLUDES) -c
+	@gcc -Wall -Wextra -Werror $(BIN) $(INCLUDES) $(LIBFT)libft.a -o $(NAME)
+	@mkdir bin_folder
+	@mv $(BIN) ./bin_folder
 	@printf "\033[32m done!\n\033[0m"
 
 clean:
-	@rm -rf $(TILDE) $(BIN)
+	@printf "\033[31mCleaning:\033[0m"
+	@rm -rf $(TILDE) ./bin_folder
+	@printf "\033[32m lem-in bin_folder\033[0m"
+	@make -C $(LIBFT) clean
+	@printf "\033[32m libft bin\033[0m"
+	@printf "\033[32m done!\n\033[0m"
 
 fclean: clean
+	@printf "\033[31mCleaning:\033[0m"
 	@rm -rf $(NAME)
-	@make -C libft/ fclean
+	@printf "\033[32m lem-in executable\033[0m"
+	@make -C $(LIBFT) fclean
+	@printf "\033[32m libft.a\n\033[0m"
 
 re: fclean all

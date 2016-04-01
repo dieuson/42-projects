@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrev.c                                        :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtedgui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/23 15:37:54 by dtedgui           #+#    #+#             */
-/*   Updated: 2015/11/25 15:17:49 by dtedgui          ###   ########.fr       */
+/*   Created: 2016/03/12 19:00:44 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 19:00:44 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strrev(char *str)
+int		ft_sqrt(int nb)
 {
+	int		x;
 	int		i;
-	int		length;
-	char	temp;
 
 	i = 0;
-	length = ft_strlen(str);
-	while (i < (length / 2))
+	x = 1;
+	while (i <= (nb / 2))
 	{
-		temp = str[i];
-		str[i] = str[length - i - 1];
-		str[length - i - 1] = temp;
+		if (x * x == nb)
+			return (x);
+		x = (x + nb / x) / 2;
 		i++;
 	}
-	str[length] = '\0';
-	return (str);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 15:06:32 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/25 14:11:33 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/29 08:34:03 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,10 @@ static int		moove_aux(int **tab, t_docker *data)
 		m_rrr(data);
 	else if (data->len_b > 2 && tab[1][0] > data->last_b)
 		m_rrb(data);
-	if (data->enum_moove)
+	if (data->enum_moove > 0)
 	{
 		print_moove(data);
+		data->empty > 1 ? ft_print_tab(data->tab, data) : 0;
 		return (1);
 	}
 	else

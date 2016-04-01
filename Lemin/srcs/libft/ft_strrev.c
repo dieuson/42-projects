@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_end.c                                    :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtedgui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/20 16:10:24 by dtedgui           #+#    #+#             */
-/*   Updated: 2015/12/20 16:28:06 by dtedgui          ###   ########.fr       */
+/*   Created: 2016/03/12 19:34:58 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 19:34:59 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_end(t_list **alst, t_list *new)
+char	*ft_strrev(char *str)
 {
-	t_list	*node;
+	int		i;
+	int		length;
+	char	temp;
 
-	if (*alst)
+	i = 0;
+	length = ft_strlen(str);
+	while (i < (length / 2))
 	{
-		node = *alst;
-		while (node->next)
-			node = node->next;
-		node->next = new;
+		temp = str[i];
+		str[i] = str[length - i - 1];
+		str[length - i - 1] = temp;
+		i++;
 	}
+	str[length] = '\0';
+	return (str);
 }

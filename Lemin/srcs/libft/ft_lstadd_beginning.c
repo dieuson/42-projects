@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_power.c                                         :+:      :+:    :+:   */
+/*   ft_lstadd_beginning.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtedgui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/23 15:35:09 by dtedgui           #+#    #+#             */
-/*   Updated: 2015/11/23 15:35:12 by dtedgui          ###   ########.fr       */
+/*   Created: 2016/03/12 19:32:35 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 19:32:35 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_power(int nb, int power)
+void	ft_lstadd_beginning(t_list **alst, t_list *new)
 {
-	if (power == 0)
-		return (1);
-	else if (power < 0)
-		return (0);
-	return (nb * ft_power(nb, power - 1));
+	if (alst && *alst)
+	{
+		new->next = *alst;
+		*alst = new;
+	}
 }

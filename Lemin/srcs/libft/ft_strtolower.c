@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_mem_realloc.c                                   :+:      :+:    :+:   */
+/*   ft_strtolower.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtedgui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/04 16:43:06 by dtedgui           #+#    #+#             */
-/*   Updated: 2015/12/04 20:44:46 by dtedgui          ###   ########.fr       */
+/*   Created: 2016/03/12 19:11:22 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 19:11:25 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 
-char	*ft_mem_realloc(char *old, size_t size)
+char	*ft_strtolower(char *str)
 {
-	char	*new;
+	int i;
 
-	new = ft_strnew(size);
-	ft_memcpy(new, old, ft_strlen(old));
-	free(old);
-	return (new);
+	i = 0;
+	if (str)
+	{
+		while (str[i])
+		{
+			str[i] = ft_tolower(str[i]);
+			i++;
+		}
+	}
+	return (str);
 }

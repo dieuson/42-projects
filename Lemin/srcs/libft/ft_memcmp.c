@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/09 09:48:00 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/30 15:19:33 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/01/07 15:36:53 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "./libft/includes/libft.h"
-# define BUFF_SIZE 16
+#include "libft.h"
 
-typedef struct		s_docker
+int					ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int pointeur;
-}					t_docker;
+	int				ret;
+	unsigned int	i;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-int					get_next_line(int const fd, char **line);
-
-#endif
+	i = 0;
+	ret = 0;
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	while (i < n)
+	{
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
+	}
+	return (0);
+}
