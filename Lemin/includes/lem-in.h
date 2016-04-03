@@ -26,17 +26,20 @@ typedef struct				s_check
 	char					*end_cell;
 	int						start;
 	int						end;
+	int						nb_args;
 }							t_check;
 
 typedef struct				s_cells
 {
 	char           			*name;
 	int						someone;
-	struct s_cells			*neighbor;
+	int 					pos_x;
+	int 					pos_y;
 	struct s_cells 			*next;
+	struct s_cells			*neighbor;
 }							t_cells;
 
-int					check_lemin(char *line, t_check *check);
+int					check_lemin(char *line, t_check *check, t_cells *cells);
 
 #endif
 
