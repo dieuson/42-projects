@@ -96,17 +96,28 @@ int 		verif_double(t_cells **cells, t_check *check)
 	return (1);
 }
 
-void 		cells_creation(t_cells **cells, char *line)
+void	ft_lstadd_lem(t_cells **alst, t_cells *new)
 {
-	t_cells *tmp;
-	char 	*reste;
-	char 	*reste_tmp;
-	FT_INIT(long int, nb, 0);
+	if (alst != NULL && *alst != NULL && new != NULL)
+	{
+		while ((*alst)->next != NULL)
+			*alst = (*alst)->next;
+		(*alst)->next = new;
+	}
+}
 
-	tmp = *cells;
+int 		cells_creation(t_cells **cells, char *line)
+{
+	char 	*reste_tmp;
+
+	FT_INIT(t_cells*, tmp, *cells);
+	FT_INIT(long int, nb, 0);
 	while (tmp->next && line)
 		tmp = tmp->next;
-	reste = ft_strchr(line, ' ');
+	tmp = malloc(sizeof(t_cells*));
+	while (*line == ' ' && *line)
+		line++;
+	FT_INIT(char *, reste, ft_strchr(line, ' '));
 	tmp->name =  ft_strsub(line, 0, (ft_strlen(line) - ft_strlen(reste)));
 	while (*reste == ' ' && *reste)
 		reste++;
@@ -120,45 +131,112 @@ void 		cells_creation(t_cells **cells, char *line)
 	nb = ft_atoi(reste_tmp);
 	tmp->pos_y = nb <= 2147483647 && nb >= 0 ? nb : -1;
 	free(reste);
-	tmp->next =  malloc(sizeof(t_cells));
+		while (tmp->next != NULL)
+	{
+		ft_putstr("test");
+		printf("tmp->name =%s|, pos_x =%d| pos_y =%d|, neighbor =%s|, neigpos_x =%d| neigpos_y =%d|\n", tmp->name, tmp->pos_x, tmp->pos_y, tmp->neighbor->name, tmp->neighbor->pos_x, tmp->neighbor->pos_y);	
+		tmp = tmp->next;
+	}
+	tmp->next = NULL;
+	if (tmp->pos_x < 0 || tmp->pos_y < 0)
+		return (0);
+	else
+		return (1);
+}
+
+int 		link_cells(t_cells **cells, char *line)
+{
+	char 	*name1;
+	char 	*name2;
+
+	FT_INIT(int, check, 0);
+	FT_INIT(t_cells*, tmp, *cells);
+	FT_INIT(t_cells*, test, *cells);
+	FT_INIT(t_cells*, tmp2, *cells);
+	while (*line == ' ' && *line)
+		line++;
+	FT_INIT(char *, reste, ft_strchr(line, '-'));
+	name1 = ft_strsub(line, 0, (ft_strlen(line) - ft_strlen(reste)));
+	name2 = ft_strsub(reste, 1, (ft_strlen(reste) - 1));
+	printf("name1 =%s, name2 =%s\n", name1, name2);
+	while (tmp->next && ft_strcmp(tmp->name, name1) != 0)
+		tmp = tmp->next;
+	if (!ft_strcmp(tmp->name, name1))
+		check++;
+	while (tmp2->next && ft_strcmp(tmp2->name, name2) != 0)
+		tmp2 = tmp2->next;
+	if (!ft_strcmp(tmp2->name, name2))
+			check++;
+	if (check != 2)
+		return (0);
+	ft_putstr("test\n");
+//	if (tmp->neighbor)
+		while (tmp->neighbor && tmp->neighbor->next)
+		{
+			ft_putstr("tmp tour\n");
+			tmp->neighbor = tmp->neighbor->next;
+		}
+			
+	ft_putstr("test2\n");
+//	if (tmp2->neighbor)
+	while (tmp2->neighbor && tmp2->neighbor->next)
+		{
+			ft_putstr("tmp2 tour\n");
+			tmp2->neighbor = tmp2->neighbor->next;
+		}
+	//ft_putstr("test2\n");
+//	tmp->neighbor =  malloc(sizeof(t_cells));
+	test = tmp;
+	tmp->neighbor = tmp2;
+	tmp->neighbor->next =  NULL;
+	ft_putstr("test3\n");
+//	tmp->neighbor->next =  malloc(sizeof(t_cells*));
+//	tmp2->neighbor =  malloc(sizeof(t_cells));
+	tmp2->neighbor = test;
+//	tmp2->neighbor->next = NULL;
+//	tmp2->neighbor->next = malloc(sizeof(t_cells));
+	ft_putstr("test4\n");
+
+//	tmp2->neighbor->next =  malloc(sizeof(t_cells*));
+	printf("tmp2->name =%s| neighbor =%s|, pos_x =%d| pos_y =%d|\n", tmp2->name, tmp2->neighbor->name, tmp2->neighbor->pos_x, tmp2->neighbor->pos_y);
+	printf("tmp->name =%s| neighbor =%s|, pos_x =%d| pos_y =%d|\n", tmp->name, tmp->neighbor->name, tmp->neighbor->pos_x, tmp->neighbor->pos_y);	
+	return (1);
 }
 
 int			build_list(t_cells **cells, t_check *check, char *line)
 {
 	FT_INIT(int, nb_args, check_nb_args(line));
-	t_cells *tmp;
 
 	if (nb_args == 3)
-		cells_creation(cells, line);
-	tmp = *cells;
-	nb_args = 0;
-	while (nb_args < check->nb_args)
+		if (!cells_creation(cells, line))
+			return (0);
+	if (nb_args == 3)
+		if (!verif_double(cells, check))
+			return (0);
+	if (nb_args == 1)
 	{
-		tmp = tmp->next;
-		nb_args++;
+		if (!link_cells(cells, line))
+			return (0);
+		else
+			ft_putstr("ok\n");
 	}
-	printf("name = %s pos_x = %d, pos_y = %d\n", tmp->name, tmp->pos_x, tmp->pos_y);
-	if (tmp->pos_x < 0 || tmp->pos_y < 0)
-		return (0);
-	if (!verif_double(cells, check))
-		return (0);
 	check->nb_args++;
 	return (1);
 }
 
-int			start_end_min(char *line, t_check *check, t_cells *cells, int laps)
+int			start_end_min(char *line, t_check *check, t_cells *cells)
 {
-	if (laps && !ft_strcmp("##start", line))
+	if (!ft_strcmp("##start", line))
 		return (check->start = 1);
-	if (laps && !ft_strcmp("##end", line))
+	if (!ft_strcmp("##end", line))
 		return (check->end = 1);
-	if (check->start && laps)
+	if (check->start)
 	{
 		check->start_cell = line;
 		check->start = 0;
 		return (build_list(&cells, check, line));
 	}
-	else if (check->end && laps)
+	else if (check->end)
 	{
 		check->end_cell = line;
 		check->end = 0;
@@ -176,7 +254,7 @@ int			check_lemin(char *line, t_check *check, t_cells *cells)
 	laps++;
 	if (laps == 1 && nb_args == 1 && nb_ants(line, check, laps))
 		return (1);
-	if (laps > 1 && start_end_min(line, check, cells, laps))
+	if (laps > 1 && start_end_min(line, check, cells))
 		return (1);
 	if (laps > 1 && nb_args <= 3)
 		return (build_list(&cells, check, line));
