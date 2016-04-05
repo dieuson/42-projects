@@ -15,11 +15,11 @@ GNL = ./srcs/get_next_line/
 LIBFT = ./srcs/libft/
 LEMIN = ./srcs/
 FILES_GNL = get_next_line.c
-FILES_LEMIN = main.c
-SRC = $(GNL)$(FILES_GNL) $(LEMIN)$(FILES_LEMIN)
+FILES_LEMIN = main.c parser.c build_list.c
+SRC = $(GNL)$(FILES_GNL) $(LEMIN)main.c  $(LEMIN)parser.c  $(LEMIN)build_list.c
 BIN = $(FILES_GNL:.c=.o) $(FILES_LEMIN:.c=.o)
 
-INLCLUDES = -I $(LIBFT)libft.h -I $(GNL)get_next_line.h -I ./includes/lem-in.h
+INLCLUDES = $(LIBFT)libft.h $(GNL)get_next_line.h ./includes/lem-in.h
 
 TILDE = $(SRC:.c=.c~) Makefile~
 
