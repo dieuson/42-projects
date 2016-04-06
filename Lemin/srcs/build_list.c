@@ -1,12 +1,12 @@
 #include "../includes/lem-in.h"
 
-t_cells		*create_first_cell(char *line)
+t_cells		*create_cells(char *line)
 {
 	char 	*reste_tmp;
 	t_cells *new;
 
 	FT_INIT(long int, nb, 0);
-	new = malloc(sizeof(t_cells));
+	new = (t_cells *)malloc(sizeof(t_cells));
 	while (*line == ' ' && *line)
 		line++;
 	FT_INIT(char *, reste, ft_strchr(line, ' '));

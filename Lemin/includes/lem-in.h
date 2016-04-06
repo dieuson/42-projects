@@ -7,7 +7,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:13:05 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/01 12:44:26 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/06 08:37:36 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ typedef struct				s_check
 	t_cells 				*start_list;
 }							t_check;
 
-int							check_lemin(char *line, t_check *check, t_cells *cells);
+int							check_lemin(char *line, t_check *check, t_cells **cells);
 int							build_list(t_cells **cells, t_check *check, char *line);
 int							check_nb_args(char *line);
 int 						verif_double(t_cells **cells, t_check *check);
 int 						link_cells(t_cells **cells, char *line);
-t_cells						*create_first_cell(char *line);
-t_cells 					*cells_creation(char *line);
+t_cells						*create_cells(char *line);
 int							start_end_min(char *line, t_check *check, t_cells *cells);
 int							nb_ants(char *line, t_check *check, long int laps);
 
