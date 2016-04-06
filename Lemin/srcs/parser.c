@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/06 08:02:38 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/06 09:15:22 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/06 10:34:37 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,15 @@ int			build_list(t_cells **cells, t_check *check, char *line)
 	FT_INIT(int, nb_args, check_nb_args(line));
 	if (nb_args == 3)
 	{
+		ft_putstr(line);
 		(*cells)->next = create_cells(line);
 		*cells = (*cells)->next;
+		if (check->start)
+			check->start_cell = (*cells)->name;
+		else if (check->end)
+			check->end_cell = (*cells)->name;
+		check->start = 0;
+		check->end = 0;
 	}
 	if (nb_args == 3 && !verif_double(cells, check))
 		return (0);
@@ -72,12 +79,10 @@ int			build_list(t_cells **cells, t_check *check, char *line)
 
 int			check_lemin(char *line, t_check *check, t_cells **cells)
 {
-	t_cells *tmp;
-
-	tmp = check->start_list;
+	FT_INIT(t_cells *, tmp, check->start_list);
 	while (tmp)
 	{
-		printf("print: itotal tmp->name =%s|, pos_x =%d| pos_y =%d|\n", tmp->name, tmp->pos_x, tmp->pos_y);
+		printf("print: total tmp->name =%s|, pos_x =%d| pos_y =%d|\n", tmp->name, tmp->pos_x, tmp->pos_y);
 		tmp = tmp->next;
 	}
 	FT_INIT(static int, laps, 0);
@@ -87,21 +92,26 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 	laps++;
 	if (laps == 1 && nb_args == 1 && nb_ants(line, check, laps))
 		return (1);
+	if (laps > 1 && start_end_min(line, check))
+	{
+		if (nb_args == 1)
+			return (laps = (laps == 2 ? 1 : laps));
+		else
+			return (0);
+	}
 	if (laps == 2 && nb_args == 3)
 	{
 		*cells = create_cells(line);
 		check->start_list = *cells;
+		if (check->start)
+			check->start_cell = (*cells)->name;
+		else if (check->end)
+			check->end_cell = (*cells)->name;
+		check->start = 0;
+		check->end = 0;
 		return (1);
 	}
-	if (laps > 1 && start_end_min(line, check, *cells))
+	if (laps > 2 && nb_args <= 3 && build_list(cells, check, line))
 		return (1);
-/*	if (laps > 2 && nb_args == 3)
-	{
-		(*cells)->next = create_cells(line);
-		(*cells) = (*cells)->next;
-		return (1);
-		}*/
-	if (laps > 2 && nb_args <= 3)
-		return (build_list(cells, check, line));
 	return (0);
 }

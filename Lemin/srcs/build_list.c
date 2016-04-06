@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_list.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/04/06 10:32:02 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/04/06 10:32:03 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/lem-in.h"
 
 t_cells		*create_cells(char *line)
@@ -86,23 +98,17 @@ int 		link_cells(t_cells **cells, char *line)
 	return (1);
 }
 
-int			start_end_min(char *line, t_check *check, t_cells *cells)
+int			start_end_min(char *line, t_check *check)
 {
-	if (!ft_strcmp("##start", line))
-		return (check->start = 1);
-	if (!ft_strcmp("##end", line))
-		return (check->end = 1);
-	if (check->start)
+	if (ft_strstr("##start", line))
 	{
-		check->start_cell = line;
-		check->start = 0;
-		return (build_list(&cells, check, line));
+		check->start = 1;
+		return (1);
 	}
-	else if (check->end)
+	else if (ft_strstr("##end", line))
 	{
-		check->end_cell = line;
-		check->end = 0;
-		return (build_list(&cells, check, line));
+		check->end = 1;
+		return (1);
 	}
 	return (0);
 }
