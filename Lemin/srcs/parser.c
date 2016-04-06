@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/06 08:02:38 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/06 10:34:37 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/06 14:25:01 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int 		verif_double(t_cells **cells, t_check *check)
 int			build_list(t_cells **cells, t_check *check, char *line)
 {
 	FT_INIT(int, nb_args, check_nb_args(line));
+	FT_INIT(t_cells *, tmp, check->start_list);
 	if (nb_args == 3)
 	{
 		ft_putstr(line);
@@ -71,7 +72,7 @@ int			build_list(t_cells **cells, t_check *check, char *line)
 	}
 	if (nb_args == 3 && !verif_double(cells, check))
 		return (0);
-	if (nb_args == 1 && !link_cells(cells, line))
+	if (nb_args == 1 && !link_cells(cells, &tmp, line))
 		return (0);
 	check->nb_args++;
 	return (1);
@@ -83,6 +84,11 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 	while (tmp)
 	{
 		printf("print: total tmp->name =%s|, pos_x =%d| pos_y =%d|\n", tmp->name, tmp->pos_x, tmp->pos_y);
+		while (tmp->neighbor->next)
+		{
+			printf("print: total tmp->neighbor->name =%s\n", tmp->neighbor->name);
+			tmp->neighbor = tmp->neighbor->next;
+		}
 		tmp = tmp->next;
 	}
 	FT_INIT(static int, laps, 0);

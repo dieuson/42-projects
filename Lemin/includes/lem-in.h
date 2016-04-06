@@ -7,7 +7,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:13:05 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/06 09:33:05 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/06 14:37:44 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # define MULTI(val_a, val_b, val_c)val_a = val_b = val_c
 #include <stdio.h>
 
+typedef struct				s_neighbor
+{
+	char           			*name;
+	struct s_neighbor		*next;
+	struct s_neighbor		*first;
+}							t_neighbor;
+
 typedef struct				s_cells
 {
 	char           			*name;
@@ -26,7 +33,7 @@ typedef struct				s_cells
 	int 					pos_x;
 	int 					pos_y;
 	struct s_cells 			*next;
-	struct s_cells			*neighbor;
+	t_neighbor				*neighbor;
 }							t_cells;
 
 typedef struct				s_check
@@ -44,7 +51,7 @@ int							check_lemin(char *line, t_check *check, t_cells **cells);
 int							build_list(t_cells **cells, t_check *check, char *line);
 int							check_nb_args(char *line);
 int 						verif_double(t_cells **cells, t_check *check);
-int 						link_cells(t_cells **cells, char *line);
+int 						link_cells(t_cells **cells, t_cells **start_list, char *line);
 t_cells						*create_cells(char *line);
 int							start_end_min(char *line, t_check *check);
 int							nb_ants(char *line, t_check *check, long int laps);

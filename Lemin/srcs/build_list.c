@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/06 10:32:02 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/06 10:32:03 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/06 14:49:14 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ t_cells		*create_cells(char *line)
 {
 	char 	*reste_tmp;
 	t_cells *new;
+	t_neighbor *test;
 
 	FT_INIT(long int, nb, 0);
 	new = (t_cells *)malloc(sizeof(t_cells));
+	test = (t_neighbor *)malloc(sizeof(t_neighbor));
 	while (*line == ' ' && *line)
 		line++;
 	FT_INIT(char *, reste, ft_strchr(line, ' '));
@@ -35,66 +37,76 @@ t_cells		*create_cells(char *line)
 	nb = ft_atoi(reste_tmp);
 	new->pos_y = nb <= 2147483647 && nb >= 0 ? nb : -1;
 	free(reste);
+	new->neighbor = test;
+	new->neighbor->next = NULL;
 	new->next = NULL;
 	return (new);
 }
 
-int 		link_cells(t_cells **cells, char *line)
+void		add_neighbor(t_cells **tmp, t_cells **start)
+{
+	t_neighbor	*new;
+
+	new = (t_neighbor *)malloc(sizeof(t_neighbor));
+	new->next = NULL;
+	new->name = (*tmp)->name;
+	while ((*start)->neighbor->next)
+		(*start)->neighbor = (*start)->neighbor->next;
+	if ((*start)->neighbor->next)
+	{
+		(*start)->neighbor->next = new;
+		(*start)->neighbor = (*start)->neighbor->next;
+	}
+	else
+	{
+		(*start)->neighbor->name = (*tmp)->name;
+		(*start)->neighbor->first = (*start)->neighbor;
+	}
+	(*start)->neighbor->next = NULL;
+	new->name = (*start)->name;
+	if ((*tmp)->neighbor->next)
+	{
+		while ((*tmp)->neighbor->next)
+			(*tmp)->neighbor = (*tmp)->neighbor->next;
+		(*tmp)->neighbor->next = new;
+		(*tmp)->neighbor = (*tmp)->neighbor->next;
+	}
+	else
+	{
+		(*tmp)->neighbor->name = (*start)->name;
+		(*tmp)->neighbor->first = (*tmp)->neighbor;
+	}
+	(*tmp)->neighbor->next = NULL;
+	(*tmp)->neighbor = (*tmp)->neighbor->first;
+	(*start)->neighbor = (*start)->neighbor->first;
+}
+
+int 		link_cells(t_cells **cells, t_cells **start_list, char *line)
 {
 	char 	*name1;
 	char 	*name2;
 
 	FT_INIT(int, check, 0);
-	FT_INIT(t_cells*, tmp, *cells);
-	FT_INIT(t_cells*, test, *cells);
-	FT_INIT(t_cells*, tmp2, *cells);
+	FT_INIT(t_cells*, tmp, *start_list);
+	FT_INIT(t_cells*, start, *start_list);
 	while (*line == ' ' && *line)
 		line++;
 	FT_INIT(char *, reste, ft_strchr(line, '-'));
 	name1 = ft_strsub(line, 0, (ft_strlen(line) - ft_strlen(reste)));
 	name2 = ft_strsub(reste, 1, (ft_strlen(reste) - 1));
-	printf("name1 =%s, name2 =%s\n", name1, name2);
-	while (tmp->next && ft_strcmp(tmp->name, name1) != 0)
+	if (!ft_strcmp(name1, name2))
+		return (0);
+	while (tmp->next && ft_strcmp(tmp->name, name2) != 0)
 		tmp = tmp->next;
-	if (!ft_strcmp(tmp->name, name1))
-		check++;
-	while (tmp2->next && ft_strcmp(tmp2->name, name2) != 0)
-		tmp2 = tmp2->next;
-	if (!ft_strcmp(tmp2->name, name2))
-			check++;
+	while (start->next && ft_strcmp(start->name, name1) != 0)
+		start = start->next;
+	if (!ft_strcmp(start->name, name1) && !ft_strcmp(tmp->name, name2))
+		check = 2;
 	if (check != 2)
 		return (0);
-	ft_putstr("test\n");
-//	if (tmp->neighbor)
-		while (tmp->neighbor && tmp->neighbor->next)
-		{
-			ft_putstr("tmp tour\n");
-			tmp->neighbor = tmp->neighbor->next;
-		}
-
-	ft_putstr("test2\n");
-//	if (tmp2->neighbor)
-	while (tmp2->neighbor && tmp2->neighbor->next)
-		{
-			ft_putstr("tmp2 tour\n");
-			tmp2->neighbor = tmp2->neighbor->next;
-		}
-	//ft_putstr("test2\n");
-//	tmp->neighbor =  malloc(sizeof(t_cells));
-	test = tmp;
-	tmp->neighbor = tmp2;
-	tmp->neighbor->next =  NULL;
-	ft_putstr("test3\n");
-//	tmp->neighbor->next =  malloc(sizeof(t_cells*));
-//	tmp2->neighbor =  malloc(sizeof(t_cells));
-	tmp2->neighbor = test;
-//	tmp2->neighbor->next = NULL;
-//	tmp2->neighbor->next = malloc(sizeof(t_cells));
-	ft_putstr("test4\n");
-
-//	tmp2->neighbor->next =  malloc(sizeof(t_cells*));
-	printf("tmp2->name =%s| neighbor =%s|, pos_x =%d| pos_y =%d|\n", tmp2->name, tmp2->neighbor->name, tmp2->neighbor->pos_x, tmp2->neighbor->pos_y);
-	printf("tmp->name =%s| neighbor =%s|, pos_x =%d| pos_y =%d|\n", tmp->name, tmp->neighbor->name, tmp->neighbor->pos_x, tmp->neighbor->pos_y);
+	add_neighbor(&tmp, &start);
+	if (cells)
+		return (1);
 	return (1);
 }
 

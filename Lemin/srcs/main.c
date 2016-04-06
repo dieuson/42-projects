@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:11:07 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/06 08:37:07 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/06 13:58:07 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void		init_struct(t_check *check, t_cells *cells)
 {
 //	cells->next = NULL;
+
 	cells = NULL;
 	check->ants = 0;
 	check->start = 0;
