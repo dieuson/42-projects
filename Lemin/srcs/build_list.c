@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/06 10:32:02 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/06 14:49:14 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/07 18:29:38 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ t_cells		*create_cells(char *line)
 {
 	char 	*reste_tmp;
 	t_cells *new;
-	t_neighbor *test;
 
 	FT_INIT(long int, nb, 0);
 	new = (t_cells *)malloc(sizeof(t_cells));
-	test = (t_neighbor *)malloc(sizeof(t_neighbor));
 	while (*line == ' ' && *line)
 		line++;
 	FT_INIT(char *, reste, ft_strchr(line, ' '));
@@ -37,48 +35,64 @@ t_cells		*create_cells(char *line)
 	nb = ft_atoi(reste_tmp);
 	new->pos_y = nb <= 2147483647 && nb >= 0 ? nb : -1;
 	free(reste);
-	new->neighbor = test;
-	new->neighbor->next = NULL;
 	new->next = NULL;
+	new->neighbor = NULL;
 	return (new);
 }
 
+int			len_tab(char **tab)
+{
+	FT_INIT(int, i, 0);
+	while (tab && tab[i])
+		i++;
+	return (i);
+}
+
+char		**tab_copy(char ***tab)
+{
+	char	**fraiche_tab;
+
+	FT_INIT(int, i, 0);
+	FT_INIT(int, tab_len, len_tab(*tab));
+	ft_putnbr(tab_len);
+	fraiche_tab = malloc(sizeof(fraiche_tab) * (tab_len + 1));
+	ft_putnbr(i);
+	i = 0;
+	while (tab && i < tab_len)
+	{
+		printf("\ncopy name = %s\n", *tab[i]);
+//		fraiche_tab[i] = (char*)ft_memcpy((void*)fraiche_tab[i], (void*)(*tab[i]), ft_strlen(*tab[i]));
+		fraiche_tab[i] = ft_strsub(*tab[i], 0, ft_strlen(*tab[i]));
+		printf("\ntab name = %s\n", fraiche_tab[i]);
+		i++;
+	}
+	return (fraiche_tab);
+}
 void		add_neighbor(t_cells **tmp, t_cells **start)
 {
-	t_neighbor	*new;
-
-	new = (t_neighbor *)malloc(sizeof(t_neighbor));
-	new->next = NULL;
-	new->name = (*tmp)->name;
-	while ((*start)->neighbor->next)
-		(*start)->neighbor = (*start)->neighbor->next;
-	if ((*start)->neighbor->next)
+	ft_putstr("test1");
+	FT_INIT(int, tab_len, len_tab((*tmp)->neighbor));
+	FT_INIT(int, i, 0);
+	ft_putstr("test");
+//	ft_putstr("before copy\n");
+	printf("\ntmp name = %s, start name = %s\n", (*tmp)->name, (*start)->name);
+	ft_putstr("debut copy");
+	(*tmp)->neighbor = tab_copy(&(*tmp)->neighbor);
+	(*tmp)->neighbor[tab_len] = ft_strsub((*start)->name, 0, ft_strlen((*start)->name) + 1);
+	ft_putstr("fin copy");
+	(*tmp)->neighbor[tab_len + 1] = NULL;
+	ft_putstr("test3");
+//	ft_putstr("after copy\n");
+	while ((*tmp)->neighbor[i])
 	{
-		(*start)->neighbor->next = new;
-		(*start)->neighbor = (*start)->neighbor->next;
+		ft_putnbr(i);
+		printf("\nname = %s, pos_i = %d, val_case = %s\n", (*tmp)->name, i, (*tmp)->neighbor[i]);
+		i++;
 	}
-	else
-	{
-		(*start)->neighbor->name = (*tmp)->name;
-		(*start)->neighbor->first = (*start)->neighbor;
-	}
-	(*start)->neighbor->next = NULL;
-	new->name = (*start)->name;
-	if ((*tmp)->neighbor->next)
-	{
-		while ((*tmp)->neighbor->next)
-			(*tmp)->neighbor = (*tmp)->neighbor->next;
-		(*tmp)->neighbor->next = new;
-		(*tmp)->neighbor = (*tmp)->neighbor->next;
-	}
-	else
-	{
-		(*tmp)->neighbor->name = (*start)->name;
-		(*tmp)->neighbor->first = (*tmp)->neighbor;
-	}
-	(*tmp)->neighbor->next = NULL;
-	(*tmp)->neighbor = (*tmp)->neighbor->first;
-	(*start)->neighbor = (*start)->neighbor->first;
+	ft_putstr("END NEIGH\n");
+//	(*tmp)->neighbor[tab_len - 1] = ft_strsub((*start)->name, 0, ft_strlen((*start)->name));
+	if ((*start)->name)
+		ft_putstr("FIRST LOOP\n\n");
 }
 
 int 		link_cells(t_cells **cells, t_cells **start_list, char *line)

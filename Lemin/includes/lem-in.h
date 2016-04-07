@@ -7,7 +7,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:13:05 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/06 14:37:44 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/07 16:01:23 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@
 # define MULTI(val_a, val_b, val_c)val_a = val_b = val_c
 #include <stdio.h>
 
-typedef struct				s_neighbor
-{
-	char           			*name;
-	struct s_neighbor		*next;
-	struct s_neighbor		*first;
-}							t_neighbor;
-
 typedef struct				s_cells
 {
 	char           			*name;
@@ -33,7 +26,7 @@ typedef struct				s_cells
 	int 					pos_x;
 	int 					pos_y;
 	struct s_cells 			*next;
-	t_neighbor				*neighbor;
+	char					**neighbor;
 }							t_cells;
 
 typedef struct				s_check

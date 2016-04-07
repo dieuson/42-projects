@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/06 08:02:38 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/06 14:25:01 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/07 16:02:43 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,6 @@ int			build_list(t_cells **cells, t_check *check, char *line)
 
 int			check_lemin(char *line, t_check *check, t_cells **cells)
 {
-	FT_INIT(t_cells *, tmp, check->start_list);
-	while (tmp)
-	{
-		printf("print: total tmp->name =%s|, pos_x =%d| pos_y =%d|\n", tmp->name, tmp->pos_x, tmp->pos_y);
-		while (tmp->neighbor->next)
-		{
-			printf("print: total tmp->neighbor->name =%s\n", tmp->neighbor->name);
-			tmp->neighbor = tmp->neighbor->next;
-		}
-		tmp = tmp->next;
-	}
 	FT_INIT(static int, laps, 0);
 	FT_INIT(int, nb_args, check_nb_args(line));
 	if (!nb_args)
@@ -117,7 +106,27 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 		check->end = 0;
 		return (1);
 	}
-	if (laps > 2 && nb_args <= 3 && build_list(cells, check, line))
-		return (1);
-	return (0);
+	if (laps > 2 && nb_args <= 3 && !build_list(cells, check, line))
+		return (0);/*
+	t_neighbor  *parse;
+
+	FT_INIT(t_cells *, tmp, check->start_list);
+	while (tmp)
+	{
+//		parse = (t_neighbor *)malloc(sizeof(tmp->neighbor->first));
+		parse = tmp->neighbor->first;
+		printf("print: total tmp->name =%s|, pos_x =%d| pos_y =%d|\n", tmp->name, tmp->pos_x, tmp->pos_y);
+//		if (tmp->neighbor->first)
+//			printf("first neighboor %s\n", tmp->neighbor->first->name);
+		while (parse->name)
+		{
+			printf("salle: %s, neighbor->name =%s\n", tmp->name, parse->name);
+			parse = parse->next;
+		}
+		tmp->neighbor = tmp->neighbor->first;
+//		free(parse);
+		tmp = tmp->next;
+	}
+//	ft_putstr("\n\n");*/
+	return (1);
 }
