@@ -26,7 +26,7 @@ typedef struct				s_cells
 	int 					pos_x;
 	int 					pos_y;
 	struct s_cells 			*next;
-	char					**neighbor;
+	char					*neighbor;
 }							t_cells;
 
 typedef struct				s_check
@@ -37,9 +37,11 @@ typedef struct				s_check
 	int						start;
 	int						end;
 	int						nb_args;
+	char 					***posibilites;
 	t_cells 				*start_list;
 }							t_check;
 
+int 						find_way(t_cells **cells, t_check *check);
 int							check_lemin(char *line, t_check *check, t_cells **cells);
 int							build_list(t_cells **cells, t_check *check, char *line);
 int							check_nb_args(char *line);

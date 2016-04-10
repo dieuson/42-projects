@@ -12,16 +12,14 @@
 
 #include "../includes/lem-in.h"
 
-void		init_struct(t_check *check, t_cells *cells)
+void		init_struct(t_check *check)
 {
-//	cells->next = NULL;
-
-	cells = NULL;
 	check->ants = 0;
 	check->start = 0;
 	check->end = 0;
 	check->nb_args = 0;
 	check->start_list = NULL;
+	check->posibilites = NULL;
 }
 
 int			nb_ants(char *line, t_check *check, long int laps)
@@ -51,10 +49,10 @@ int			main(void)
 	t_cells		*cells;
 
 	cells = NULL;
-	init_struct(&check, cells);
+	init_struct(&check);
 	while (get_next_line(0, &line))
 	{
-		if (!line || !check_lemin(line, &check, &cells))
+		if (!check_lemin(line, &check, &cells))
 		{
 			ft_putstr("ERROR\n");
 			return (-1);
@@ -67,5 +65,3 @@ int			main(void)
 	}
 	return (0);
 }
-
-

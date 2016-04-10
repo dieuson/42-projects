@@ -69,10 +69,10 @@ int			build_list(t_cells **cells, t_check *check, char *line)
 			check->end_cell = (*cells)->name;
 		check->start = 0;
 		check->end = 0;
+		if (!verif_double(cells, check))
+			return (0);
 	}
-	if (nb_args == 3 && !verif_double(cells, check))
-		return (0);
-	if (nb_args == 1 && !link_cells(cells, &tmp, line))
+	if (nb_args == 1 && (!check->start_cell || !check->end_cell || !link_cells(cells, &tmp, line)))
 		return (0);
 	check->nb_args++;
 	return (1);
@@ -82,8 +82,11 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 {
 	FT_INIT(static int, laps, 0);
 	FT_INIT(int, nb_args, check_nb_args(line));
+	laps = check->ants ? laps : 0;
 	if (!nb_args)
-		return (0);
+		return (find_way(cells, check));
+	if (line[0] == '#' && line[1] != '#')
+		return (1);
 	laps++;
 	if (laps == 1 && nb_args == 1 && nb_ants(line, check, laps))
 		return (1);
@@ -107,26 +110,6 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 		return (1);
 	}
 	if (laps > 2 && nb_args <= 3 && !build_list(cells, check, line))
-		return (0);/*
-	t_neighbor  *parse;
-
-	FT_INIT(t_cells *, tmp, check->start_list);
-	while (tmp)
-	{
-//		parse = (t_neighbor *)malloc(sizeof(tmp->neighbor->first));
-		parse = tmp->neighbor->first;
-		printf("print: total tmp->name =%s|, pos_x =%d| pos_y =%d|\n", tmp->name, tmp->pos_x, tmp->pos_y);
-//		if (tmp->neighbor->first)
-//			printf("first neighboor %s\n", tmp->neighbor->first->name);
-		while (parse->name)
-		{
-			printf("salle: %s, neighbor->name =%s\n", tmp->name, parse->name);
-			parse = parse->next;
-		}
-		tmp->neighbor = tmp->neighbor->first;
-//		free(parse);
-		tmp = tmp->next;
-	}
-//	ft_putstr("\n\n");*/
+		return (0);
 	return (1);
 }

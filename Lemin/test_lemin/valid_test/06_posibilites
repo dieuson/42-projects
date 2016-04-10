@@ -1,3 +1,4 @@
+#test
 145
 ##start
 salle1 2 5
@@ -14,8 +15,5 @@ salle2-salle1
 salle3-salle1
 salle4-salle1
 salle5-salle1
-salle1-salle6
-salle1-salle7
-salle1-salle8
-salle1-salle9
 salle2-salle3
+
