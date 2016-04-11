@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/26 10:58:57 by dvirgile          #+#    #+#             */
-/*   Updated: 2015/11/26 11:01:45 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/11 14:14:20 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_putstr(char const *s)
 	int i;
 
 	i = 0;
+	if (!s)
+		write(1, "(null)", 6);
 	while (s[i])
 	{
 		write(1, &s[i], 1);

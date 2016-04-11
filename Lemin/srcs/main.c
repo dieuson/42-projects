@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:11:07 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/07 10:09:09 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/11 10:28:20 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void		init_struct(t_check *check)
 	check->nb_args = 0;
 	check->start_list = NULL;
 	check->posibilites = NULL;
+	check->neighbor_tab = NULL;
 }
 
 int			nb_ants(char *line, t_check *check, long int laps)

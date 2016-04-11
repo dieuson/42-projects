@@ -7,7 +7,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:13:05 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/07 16:01:23 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/11 11:06:00 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,18 @@ typedef struct				s_check
 	int						start;
 	int						end;
 	int						nb_args;
+	char 					***neighbor_tab;
 	char 					***posibilites;
 	t_cells 				*start_list;
 }							t_check;
 
+//char						*find_args(const char *s, int c, int nb);
+char						*find_args(char ***tab, char *name, int nb);
 int 						find_way(t_cells **cells, t_check *check);
+void						create_neighor_tab(t_check *check);
+char						 ***new_tab(char ***tab);
+char						***copy_tab(char ***src, char ***dest);
+void						print_tab(char ***tab);
 int							check_lemin(char *line, t_check *check, t_cells **cells);
 int							build_list(t_cells **cells, t_check *check, char *line);
 int							check_nb_args(char *line);
