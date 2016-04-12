@@ -38,13 +38,14 @@ typedef struct				s_check
 	int						end;
 	int						nb_args;
 	char 					***neighbor_tab;
-	char 					***posibilites;
+	char 					**posibilites;
 	t_cells 				*start_list;
 }							t_check;
 
 //char						*find_args(const char *s, int c, int nb);
+char 						*find_neighbor(char *road, char *name, t_check *check);
 char						*find_args(char ***tab, char *name, int nb);
-int 						find_way(t_cells **cells, t_check *check);
+int 						find_way(t_check *check);
 void						create_neighor_tab(t_check *check);
 char						 ***new_tab(char ***tab);
 char						***copy_tab(char ***src, char ***dest);

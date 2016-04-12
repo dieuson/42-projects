@@ -84,7 +84,7 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 	FT_INIT(int, nb_args, check_nb_args(line));
 	laps = check->ants ? laps : 0;
 	if (!nb_args)
-		return (find_way(cells, check));
+		return (find_way(check));
 	if (line[0] == '#' && line[1] != '#')
 		return (1);
 	laps++;
