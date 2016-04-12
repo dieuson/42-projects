@@ -117,6 +117,7 @@ int 	find_way(t_check *check)
 	char *road;
 	char *cell;
 
+	FT_INIT(int, valid, 0);
 	create_neighor_tab(check);
 	cell = check->start_cell;
 	road = cell;
@@ -128,6 +129,8 @@ int 	find_way(t_check *check)
 		cell = find_neighbor(road, cell, check);
 		if (!cell || (ft_strstr(road, check->start_cell) && ft_strstr(road, check->end_cell)))
 		{
+			if (ft_strstr(road, check->start_cell) && ft_strstr(road, check->end_cell))
+				valid++;
 			store_road(check, road);
 			cell = new_cell(road, check);
 			road = ft_strsub(road, 0, (ft_strlen(road) - (ft_strlen(ft_strrchr(road, ' ')))));
@@ -140,5 +143,10 @@ int 	find_way(t_check *check)
 			road = ft_strjoin(road, cell);
 		}
 	}
+	ft_putstr("START All ROADS\n");
+	print_simple_tab(check->posibilites);
+	ft_putstr("END ALL ROAD\n");
+	if (!valid)
+		return (0);
 	return (1);
 }

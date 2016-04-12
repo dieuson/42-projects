@@ -11,20 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
-/*
-char		*find_args(const char *s, int c, int nb)
-{
-	char 	*arg;
-
-	if (!s)
-		return (NULL);
-	FT_INIT(char **, names, ft_strsplit(s, c));
-	if (names[nb])
-		arg = names[nb];
-	else
-		return (NULL);
-	return (arg);
-	}*/
 
 char		*find_args(char ***tab, char *name, int nb)
 {
@@ -73,7 +59,6 @@ char 		***new_tab(char ***tab)
 
 	FT_INIT(int, ligne, 0);
 	FT_INIT(int, colonne, 0);
-	// Attribution memoir a fraiche_tab
 	if (!tab)
 		return (fraiche_tab = (char ***)malloc(sizeof(char **) * 1));
 	while (tab[ligne])
@@ -88,7 +73,6 @@ char 		***new_tab(char ***tab)
 		colonne = 0;
 		ligne++;
 	}
-	// Copie du tableau
 	fraiche_tab = copy_tab(tab, fraiche_tab);
 	return (fraiche_tab);
 }
