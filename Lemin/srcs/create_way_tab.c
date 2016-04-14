@@ -1,45 +1,22 @@
 #include "../includes/lem-in.h"
 
-char 	*new_cell(char *road, t_check *check)
-{
-	char *cell_to_search;
-
-	road = ft_strsub(road, 0, (ft_strlen(road) - (ft_strlen(ft_strrchr(road, ' ')))));;
-	if (!ft_strrchr(road, ' '))
-		return (find_neighbor(road, check->start_cell, check));
-	cell_to_search = ft_strsub(ft_strrchr(road, ' '), 1, (ft_strlen(ft_strrchr(road, ' ')) - 1));
-	return (cell_to_search);
-}
-
-void 		print_simple_tab(char **tab)
+char  	**store_good_ways(char **tab, t_check *check)
 {
 	FT_INIT(int, ligne, 0);
+	tab = (char **)malloc(sizeof(char *));
+	tab[ligne] = one_good_road(check, ligne);
 	while (tab[ligne])
 	{
-		ft_putstr(tab[ligne]);
-		ft_putstr("\n");
 		ligne++;
-	}	
-}
-
-char 		**new_simple_tab(char **tab)
-{
-	char 	**fraiche_tab;
-
-	FT_INIT(int, ligne, 0);
-	if (!tab)
-		return (fraiche_tab = (char **)malloc(sizeof(char *) * 1));
-	while (tab[ligne])
-		ligne++;
-	fraiche_tab = (char **)malloc(sizeof(char *) * (ligne + 1));
-	ligne = 0;
-	while (tab[ligne])
-	{
-		fraiche_tab[ligne] = ft_strsub(tab[ligne], 0, ft_strlen(tab[ligne]));
-		ligne++;
+		tab = new_simple_tab(tab);
+		tab[ligne] = one_good_road(check, ligne);
+		tab[ligne + 1] = NULL;
 	}
-	fraiche_tab[ligne] = NULL;
-	return (fraiche_tab);
+	tab[ligne] = NULL;
+	tab[ligne + 1] = NULL;
+	short_way(tab);
+	del_over_road(tab);
+	return (tab);
 }
 
 void 	store_road(t_check *check, char *road)

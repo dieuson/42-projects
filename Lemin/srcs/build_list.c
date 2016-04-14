@@ -37,6 +37,7 @@ t_cells		*create_cells(char *line)
 	free(reste);
 	new->next = NULL;
 	new->neighbor = NULL;
+	new->route = NULL;
 	return (new);
 }
 

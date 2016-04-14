@@ -12,6 +12,32 @@
 
 #include "../includes/lem-in.h"
 
+char 		*one_good_road(t_check *check, int nb_arg)
+{
+	char 	*tmp;
+
+	FT_INIT(int, ligne, 0);
+	FT_INIT(int, tmp_nb_arg, 0);
+	while (check->posibilites[ligne])
+	{
+		if (ft_strstr(check->posibilites[ligne],
+		check->start_cell) &&
+		ft_strstr(check->posibilites[ligne],
+		check->end_cell))
+		{
+			if (tmp_nb_arg == nb_arg)
+			{
+				tmp = ft_strchr(check->posibilites[ligne], ' ');
+				tmp++;
+				return (tmp);
+			}
+			tmp_nb_arg++;
+		}
+		ligne++;
+	}
+	return (NULL);
+}
+
 char		*find_args(char ***tab, char *name, int nb)
 {
 	FT_INIT(int, ligne, 0);
@@ -22,23 +48,6 @@ char		*find_args(char ***tab, char *name, int nb)
 	if (!tab[ligne][nb])
 		return (NULL);
 	return (tab[ligne][nb]);
-}
-
-void 		print_tab(char ***tab)
-{
-	FT_INIT(int, ligne, 0);
-	FT_INIT(int, colonne, 0);
-	while (tab && tab[ligne])
-	{
-		while (tab[ligne][colonne])
-		{
-			ft_putstr(tab[ligne][colonne]);
-			colonne++;
-		}
-		colonne = 0;
-		ligne++;
-		ft_putstr("\n");
-	}
 }
 
 char 		***copy_tab(char ***src, char ***dest)

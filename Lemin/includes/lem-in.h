@@ -29,6 +29,7 @@ typedef struct				s_cells
 {
 	char           			*name;
 	char 					*someone;
+	char 					*route;
 	int 					pos_x;
 	int 					pos_y;
 	struct s_cells 			*next;
@@ -48,6 +49,12 @@ typedef struct				s_check
 	t_cells 				*start_list;
 }							t_check;
 
+char 						**short_way(char **tab);
+char 					 	**store_good_ways(char **tab, t_check *check);
+int 						nb_cells(char *road);
+char 						**del_over_road(char **tab);
+char 						*one_good_road(t_check *check, int nb_arg);
+char 						*new_cell(char *road, t_check *check);
 void 						print_simple_tab(char **tab);
 int 						distrib_moove_ant(t_check *check);
 char 						**new_simple_tab(char **tab);

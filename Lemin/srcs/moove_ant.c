@@ -12,56 +12,40 @@ char 		*named(t_check *check, t_ref *ref)
 	return (ant_name);
 }
 
-char 		*one_good_road(t_check *check, int nb_arg)
+char 		**short_way(char **tab)
 {
+	FT_INIT(char *, tmp, NULL);
 	FT_INIT(int, ligne, 0);
-	FT_INIT(int, tmp_nb_arg, 0);
-	while (check->posibilites[ligne])
-	{
-		if (ft_strstr(check->posibilites[ligne],
-		check->start_cell) &&
-		ft_strstr(check->posibilites[ligne],
-		check->end_cell))
-		{
-			if (tmp_nb_arg == nb_arg)
-				return (check->posibilites[ligne]);
-			tmp_nb_arg++;
-		}
-		ligne++;
-	}
-	return (NULL);
-}
-
-char  	**store_good_ways(char **tab, t_check *check)
-{
-	FT_INIT(int, ligne, 0);
-	tab = (char **)malloc(sizeof(char *));
-	tab[ligne] = one_good_road(check, ligne);
+	FT_INIT(int, ligne2, 1);
 	while (tab[ligne])
 	{
+		while (tab[ligne2])
+		{
+			if (nb_cells(tab[ligne2]) < nb_cells(tab[ligne]))
+			{
+				tmp = tab[ligne];
+				tab[ligne] = tab[ligne2];
+				tab[ligne2] = tmp;
+			}	
+			ligne2++;
+		}
 		ligne++;
-		tab = new_simple_tab(tab);
-		tab[ligne] = one_good_road(check, ligne);
-		tab[ligne + 1] = NULL;
+		ligne2 = ligne + 1;
 	}
 	return (tab);
 }
-
 
 int 		distrib_moove_ant(t_check *check)
 {
 	t_ref	ref;
 	t_cells *tmp;
 	char 	**good_roads;
-//	char 	*road;
 
 	good_roads = NULL;
 	tmp = check->start_list;
 	ref.name_ref = "L";
 	ref.nb_ants_ref = 1;
-	ft_putstr("segfault\n");
 	good_roads = store_good_ways(good_roads, check); 
-	ft_putstr("segfault1\n");
 	ft_putstr("All GOOD ROADS\n");
 	print_simple_tab(good_roads);
 	ft_putstr("END ALL GOOD ROAD\n");
@@ -69,10 +53,13 @@ int 		distrib_moove_ant(t_check *check)
 	while (stop < 2)
 	{
 	//	ft_putstr("test\n");
-		tmp->someone = named(check, &ref);
-		while (tmp)
+		tmp->someone = ft_strsub(named(check, &ref), 0, ft_strlen(named(check, &ref)));
+	//	ft_putstr("test1\n");
+		while (tmp->next)
 		{
+	//		ft_putstr("test2\n");
 			tmp = tmp->next;
+	//		ft_putstr("test3\n");
 		}
 	//	printf("tmp->someone =%s,\n", tmp->someone);
 		tmp = check->start_list;
