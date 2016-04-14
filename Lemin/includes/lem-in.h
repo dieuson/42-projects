@@ -19,10 +19,16 @@
 # define MULTI(val_a, val_b, val_c)val_a = val_b = val_c
 #include <stdio.h>
 
+typedef struct				s_ref
+{
+	char 					*name_ref;
+	int 					nb_ants_ref;
+}							t_ref;
+
 typedef struct				s_cells
 {
 	char           			*name;
-	int						someone;
+	char 					*someone;
 	int 					pos_x;
 	int 					pos_y;
 	struct s_cells 			*next;
@@ -42,7 +48,9 @@ typedef struct				s_check
 	t_cells 				*start_list;
 }							t_check;
 
-//char						*find_args(const char *s, int c, int nb);
+void 						print_simple_tab(char **tab);
+int 						distrib_moove_ant(t_check *check);
+char 						**new_simple_tab(char **tab);
 char 						*find_neighbor(char *road, char *name, t_check *check);
 char						*find_args(char ***tab, char *name, int nb);
 int 						find_way(t_check *check);

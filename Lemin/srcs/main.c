@@ -48,21 +48,25 @@ int			main(void)
 	char 		*line;
 	t_check		check;
 	t_cells		*cells;
-
+	int 		verif;
+	
 	cells = NULL;
+	line = NULL;
+	verif = 1;
 	init_struct(&check);
-	while (get_next_line(0, &line))
+	while (verif)
 	{
+		verif = get_next_line(0, &line);
 		if (!check_lemin(line, &check, &cells))
 		{
 			ft_putstr("ERROR\n");
 			return (-1);
 		}
-		else
+		else if (verif)
 		{
 			ft_putendl(line);
 			free(line);
 		}
 	}
-	return (0);
+	return (1);
 }
