@@ -49,10 +49,11 @@ typedef struct				s_check
 	t_cells 				*start_list;
 }							t_check;
 
+char 						*first(char *road);
 char 						**short_way(char **tab);
 char 					 	**store_good_ways(char **tab, t_check *check);
 int 						nb_cells(char *road);
-char 						**del_over_road(char **tab);
+char 						**del_over_road(char **tab, t_check *check);
 char 						*one_good_road(t_check *check, int nb_arg);
 char 						*new_cell(char *road, t_check *check);
 void 						print_simple_tab(char **tab);

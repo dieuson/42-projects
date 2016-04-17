@@ -31,15 +31,17 @@ char 		**new_simple_tab(char **tab)
 	return (fraiche_tab);
 }
 
-char 		*two_first(char *road)
+char 		*first(char *road)
 {
 	char 	*tmp;
 
 	tmp = NULL;
+	if (!road)
+		return (NULL);
 	if (ft_strchr(road, ' '))
 		tmp = ft_strchr(road, ' ');
 	else
-		return (NULL);
+		return (road);
 	return (ft_strsub(road, 0, (ft_strlen(road) - ft_strlen(ft_strchr(tmp, ' ')))));
 }
 
@@ -56,7 +58,55 @@ int 		nb_cells(char *road)
 	return (nb_arg);
 }
 
-char 		**del_over_road(char **tab)
+char 		**del_tab_line(char **tab, int line)
+{
+	while (tab[line])
+	{
+		tab[line] = tab[line + 1];
+		line++;
+	}
+	if (tab[line - 1])
+	{
+		free(tab[line - 1]);
+		tab[line - 1] = NULL;
+	}
+	return (tab);
+}
+
+char 		**del_second_par(char **tab, t_check *check)
+{
+	FT_INIT(int, line, 0);
+	FT_INIT(int, line2, 0);
+	FT_INIT(int, ref, 0);
+	while (tab[line2])
+		line2++;
+	line2--;
+	if (check->ants)
+		ref = line2;
+	while (line2 > 0 && tab[line2])
+	{
+		while (tab[line2] && tab[line])
+		{
+			if ((ft_strcmp(first(tab[line2]), first(tab[line]))
+			&& ft_strstr(tab[line2], first(tab[line]))) || (line2 != line 
+			&& !ft_strcmp(first(tab[line2]), first(tab[line]))))
+			{
+				del_tab_line(tab, line2);
+				line = 0;
+				ref--;
+				line2 = ref;
+				break;
+			}
+			else
+				line++;
+		}
+		line2 = line > 0 ? (line2 - 1) : ref;
+		line = 0;
+	}
+	return (tab);
+}
+
+char 		**del_over_road(char **tab, t_check *check)
 {
 	FT_INIT(int, ligne, 0);
 	FT_INIT(int, ligne2, 1);
@@ -64,16 +114,18 @@ char 		**del_over_road(char **tab)
 		ligne2++;
 	FT_INIT(int, ref_end, ligne2 - 1);
 	ligne2 = ref_end;
+	if (check->ants)
+		ref_end = ligne2;
 	while (ligne2 > 0 && tab[ligne2])
 	{
 		while (tab[ligne])
 		{
 			if ((tab[ligne] && tab[ligne2] && !ft_strncmp(tab[ligne],
-			tab[ligne2], ft_strlen(two_first(tab[ligne]))) && 
+			tab[ligne2], ft_strlen(first(tab[ligne]))) && 
 			(nb_cells(tab[ligne2]) > nb_cells(tab[ligne]))))
 			{
-					free(tab[ligne2]);
-					tab[ligne2] = NULL;
+
+					del_tab_line(tab, ligne2);
 					ref_end--;
 					ligne2 = ref_end;
 			}
@@ -82,5 +134,6 @@ char 		**del_over_road(char **tab)
 		ligne = 0;
 		ligne2--;
 	}
+	del_second_par(tab, check);
 	return (tab);
 }

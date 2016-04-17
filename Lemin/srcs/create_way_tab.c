@@ -15,7 +15,7 @@ char  	**store_good_ways(char **tab, t_check *check)
 	tab[ligne] = NULL;
 	tab[ligne + 1] = NULL;
 	short_way(tab);
-	del_over_road(tab);
+	del_over_road(tab, check);
 	return (tab);
 }
 
