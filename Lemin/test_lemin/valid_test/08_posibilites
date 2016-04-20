@@ -1,4 +1,4 @@
-145
+5
 ##start
 salle1 2 5
 salle2 3 4
@@ -11,6 +11,7 @@ salle7 30 40
 salle8 50 60
 salle9 90 80
 salle1-salle3
+salle1-salle2
 salle2-salle6
 salle4-salle5
 salle4-salle2
@@ -18,4 +19,3 @@ salle3-salle6
 salle8-salle3
 salle9-salle2
 salle9-salle5
-
