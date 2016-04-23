@@ -131,6 +131,18 @@ int 		go_ant(t_check *check, char *ant_name, char *next_cell)
 	return (1);
 }
 
+int 		ft_len_tab(char **tab)
+{
+	FT_INIT(int, ligne, 0);
+	while (tab && tab[ligne])
+		ligne++;
+	ligne--;
+	if (!ligne)
+		if (!ft_strchr(tab[ligne], ' '))
+				return (0);
+	return (1);
+}
+
 int 		verif_someone_lemin(t_check *check)
 {
 	t_cells *tmp;
@@ -145,7 +157,7 @@ int 		verif_someone_lemin(t_check *check)
 	return (0);
 }
 
-void 		print_ants_moves(t_check *check)
+void 		print_ants_moves(t_check *check, char **good_roads)
 {
 	t_cells *tmp;
 	static char *reste = NULL;
@@ -155,8 +167,8 @@ void 		print_ants_moves(t_check *check)
 	tmp = check->start_list;
 	if (reste)
 	{
-		route = ft_strdup(ft_strchr(reste, ' ') + 1);
-		free(reste);
+		route = ft_strdup(reste);
+		ft_memdel((void*)&reste);
 	}
 	while (nb <= check->ants)
 	{
@@ -164,6 +176,12 @@ void 		print_ants_moves(t_check *check)
 		{
 			if (tmp->someone && ft_atoi(ft_strchr(tmp->someone, 'L') + 1) == nb)
 			{
+				if (!ft_len_tab(good_roads))
+				{
+					route = ft_strdup(tmp->someone);
+					route = ft_strjoin(route, "-");
+					route = ft_strjoin(route, tmp->name);
+				}
 				if (route && tmp->someone && tmp->route)
 				{
 					route = ft_strjoin(route, " ");
@@ -172,9 +190,14 @@ void 		print_ants_moves(t_check *check)
 					route = ft_strjoin(route, tmp->name);
 					if (!ft_strcmp(tmp->route, check->end_cell))
 					{
+//						printf("tmp->someone =%s, tmp->cell =%s, tmp->route =%s,\n", tmp->someone,tmp->name, tmp->route);
 						if (reste)
+						{
 							reste = ft_strjoin(reste, " ");
-						reste = ft_strjoin(reste, tmp->someone);
+							reste = ft_strjoin(reste, tmp->someone);						
+						}
+						else
+							reste = ft_strdup(tmp->someone);
 						reste = ft_strjoin(reste, "-");
 						reste = ft_strjoin(reste, tmp->route);
 					}
@@ -186,20 +209,21 @@ void 		print_ants_moves(t_check *check)
 					route = ft_strjoin(route, tmp->name);
 					if (!ft_strcmp(tmp->route, check->end_cell))
 					{
+//						printf("else tmp->someone =%s, tmp->cell =%s, tmp->route =%s,\n", tmp->someone,tmp->name, tmp->route);
 						reste = ft_strdup(tmp->someone);
 						reste = ft_strjoin(reste, "-");
 						reste = ft_strjoin(reste, tmp->route);
 					}
 				}
+//				printf("reste =%s,\n", reste);
 			}
 			tmp = tmp->next;
 		}
 		nb++;
 		tmp = check->start_list;
 	}
-	//ft_putstr("\nfin\n");
 	ft_putstr(route);
-	free(route);
+	ft_memdel((void*)&route);
 }
 
 int 		in_min_ants(t_check *check, char **good_roads)
@@ -244,8 +268,8 @@ int 		set_to_the_start(t_check *check, char **good_roads, t_ref *ref)
 	{
 		first_cell = ft_strsplit(good_roads[ligne], ' ');
 		tmp = find_cell(check, first_cell[0]);
-		free(tmp->someone);
-		free(first_cell);
+		ft_memdel((void*)tmp->someone);
+		ft_memdel((void*)first_cell);
 		tmp->someone = ft_strdup(named(check, ref));
 		if (!tmp->someone || ref->nb_ants_ref > check->ants)
 			return (0);
@@ -258,7 +282,7 @@ int 		moove_ants(t_check *check, t_ref *ref, char **good_roads)
 {
 	FT_INIT(int, nb_loops, 0);
 	FT_INIT(int, verif_someone, 1);
-	while (verif_someone)
+	while (verif_someone || (!verif_someone && !ft_len_tab(good_roads) && ref->nb_ants_ref <= check->ants))
 	{
 		in_min_ants(check, good_roads);
 		if (ref->nb_ants_ref <= check->ants)
@@ -266,12 +290,12 @@ int 		moove_ants(t_check *check, t_ref *ref, char **good_roads)
 			set_to_the_start(check, good_roads, ref);
 //			ft_putstr("test7\n");
 		}
-		ft_putstr("All GOOD ROADS\n");
-		print_simple_tab(good_roads);
-		ft_putstr("END ALL GOOD ROAD\n");
+//		ft_putstr("All GOOD ROADS\n");
+//		print_simple_tab(good_roads);
+//		ft_putstr("END ALL GOOD ROAD\n");
 	//	printf("loops =%d,\n", nb_loops);
-	//	print_list(check);
-		print_ants_moves(check);
+//		print_list(check);
+		print_ants_moves(check, good_roads);
 		ft_putstr("\n");
 		verif_someone = verif_someone_lemin(check);
 		nb_loops++;
