@@ -15,11 +15,16 @@ GNL = ./srcs/get_next_line/
 LIBFT = ./srcs/libft/
 LEMIN = ./srcs/
 FILES_GNL = get_next_line.c
-FILES_LEMIN = main.c parser.c build_list.c
-SRC = $(GNL)$(FILES_GNL) $(LEMIN)main.c  $(LEMIN)parser.c  $(LEMIN)build_list.c
+FILES_LEMIN = main.c parser.c build_list.c create_way_tab.c\
+moove_ant.c  create_neighbor_tab.c display_functions.c create_way_tools.c \
+ant_routes.c moove_ant_tools.c del_over_ways.c
+SRC = $(GNL)$(FILES_GNL) $(LEMIN)main.c $(LEMIN)parser.c $(LEMIN)build_list.c\
+$(LEMIN)create_way_tab.c $(LEMIN)create_neighbor_tab.c $(LEMIN)moove_ant.c \
+$(LEMIN)display_functions.c $(LEMIN)create_way_tools.c $(LEMIN)ant_routes.c \
+$(LEMIN)moove_ant_tools.c $(LEMIN)del_over_ways.c
 BIN = $(FILES_GNL:.c=.o) $(FILES_LEMIN:.c=.o)
 
-INLCLUDES = $(LIBFT)libft.h $(GNL)get_next_line.h ./includes/lem-in.h
+INLCLUDES = $(LIBFT)libft.h $(GNL)get_next_line.h ./includes/lem-in.h 	
 
 TILDE = $(SRC:.c=.c~) Makefile~
 

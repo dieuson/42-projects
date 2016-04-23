@@ -5,7 +5,7 @@ int 		go_ant(t_check *check, char *ant_name, char *next_cell)
 	t_cells *tmp;
 
 	tmp = check->start_list;
-	if (!ant_name || !next_cell)
+	if (!ant_name || !next_cell || !ft_strcmp(next_cell, check->end_cell))
 		return (0);
 	while (tmp)
 	{

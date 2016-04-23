@@ -20,9 +20,12 @@ void	ft_putstr(char const *s)
 	i = 0;
 	if (!s)
 		write(1, "(null)", 6);
-	while (s[i])
+	else
 	{
-		write(1, &s[i], 1);
-		i++;
+		while (s[i])
+		{
+			write(1, &s[i], 1);
+			i++;
+		}	
 	}
 }

@@ -2,7 +2,7 @@
 
 void 		set_road(char **route, char **reste, t_cells *tmp, char *end_cell)
 {
-	if (tmp->route && end_cell && ft_strcmp(tmp->name, end_cell))
+	if (tmp->route && end_cell)
 	{
 		if (*route)
 		{
@@ -14,7 +14,8 @@ void 		set_road(char **route, char **reste, t_cells *tmp, char *end_cell)
 		*route = ft_strjoin(*route, "-");
 		*route = ft_strjoin(*route, tmp->name);
 	}
-	if (tmp->route && end_cell && !ft_strcmp(tmp->route, end_cell))
+	if (tmp->route && end_cell && ft_strcmp(tmp->name, end_cell) 
+	&& !ft_strcmp(tmp->route, end_cell))
 	{
 		if (*reste)
 		{
@@ -56,14 +57,14 @@ void 		print_ants_moves(t_check *check, char **good_roads)
 	}
 	while (nb <= check->ants)
 	{
-		tmp = find_and_nb(nb, check);
-		if (tmp && !ft_len_tab(good_roads))
+		tmp = find_and_nb(nb, check);			
+		if (tmp && good_roads && !ft_strcmp(tmp->name, check->end_cell)
+ 		 && !ft_strcmp(tmp->name, good_roads[0]))
 		{
-			route = ft_strdup(tmp->someone);
-			route = ft_strjoin(route, "-");
-			route = ft_strjoin(route, tmp->name);
+			ft_memdel((void*)&tmp->route);
+			tmp->route = ft_strdup(check->end_cell);
 		}
-		else if (tmp)
+		if (tmp)
 			set_road(&route, &reste, tmp, check->end_cell);
 		nb++;
 	}
