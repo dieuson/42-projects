@@ -76,6 +76,8 @@ int 	find_way(t_check *check)
 	FT_INIT(int, valid, 0);
 	FT_INIT(char *, cell, check->start_cell);
 	FT_INIT(char *, road, cell);
+	if (!check->start_cell || !check->end_cell || !check->links)
+		return (0);
 	create_neighor_tab(check);
 	while (cell)
 	{
@@ -89,10 +91,7 @@ int 	find_way(t_check *check)
 			road = ft_strsub(road, 0, (ft_strlen(road) - (ft_strlen(ft_strrchr(road, ' ')))));
 		}
 		else
-		{
-			road = ft_strjoin(road, " ");
-			road = ft_strjoin(road, cell);
-		}
+			road = ft_strjoin(road, ft_strjoin(" ", cell));
 	}
 	if (!valid)
 		return (0);

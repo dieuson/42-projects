@@ -71,15 +71,15 @@ int 		add_neighbor(t_cells **first, t_cells **second)
 	return (1);
 }
 
-int 		link_cells(t_cells **cells, t_cells **second_list, char *line)
+int 		link_cells(t_cells *start, t_check *check, char *line)
 {
 	char 	*name1;
 	char 	*name2;
 
-	FT_INIT(int, check, 0);
-	FT_INIT(t_cells*, first, *second_list);
-	FT_INIT(t_cells*, second, *second_list);
-	while (*line == ' ' && *line)
+	FT_INIT(int, checkin, 0);
+	FT_INIT(t_cells*, first, start);
+	FT_INIT(t_cells*, second, start);
+	while (*line && *line == ' ')
 		line++;
 	FT_INIT(char *, reste, ft_strchr(line, '-'));
 	name1 = ft_strsub(line, 0, (ft_strlen(line) - ft_strlen(reste)));
@@ -91,12 +91,11 @@ int 		link_cells(t_cells **cells, t_cells **second_list, char *line)
 	while (second->next && ft_strcmp(second->name, name1) != 0)
 		second = second->next;
 	if (!ft_strcmp(second->name, name1) && !ft_strcmp(first->name, name2))
-		check = 2;
-	if (check != 2)
+		checkin = 2;
+	if (checkin != 2)
 		return (0);
 	add_neighbor(&first, &second);
-	if (cells)
-		return (1);
+	check->links = 1;
 	return (1);
 }
 
