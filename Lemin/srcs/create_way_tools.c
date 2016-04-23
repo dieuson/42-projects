@@ -57,3 +57,31 @@ int 		nb_cells(char *road)
 	}
 	return (nb_arg);
 }
+
+int 		*store_length_line(char **good_roads, int *line_length_min)
+{
+	FT_INIT(int, line, 0);
+	FT_INIT(int*, line_length, NULL);
+	while (good_roads[line])
+		line++;
+	line_length = (int*)malloc(sizeof(int) * line);
+	line = 0;
+	while (good_roads[line])
+	{
+		line_length[line] = nb_cells(good_roads[line]);
+		line++;
+	}
+	line = 0;
+	*line_length_min = line_length[0];
+	while (line_length[line])
+	{
+		if (line_length[line] < *line_length_min)
+		{
+			*line_length_min = line_length[line];
+			line = 0;
+		}
+		else
+			line++;
+	}
+	return (line_length);
+}

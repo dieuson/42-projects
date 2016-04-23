@@ -55,16 +55,22 @@ int 		set_to_the_start(t_check *check, char **good_roads, t_ref *ref)
 	char 	**first_cell;
 
 	FT_INIT(int, ligne, 0);
+	FT_INIT(int, reste_ant, check->ants - ref->nb_ants_ref + 1);
 	tmp = check->start_list;
 	while (good_roads[ligne] && ref->nb_ants_ref <= check->ants)
 	{
-		first_cell = ft_strsplit(good_roads[ligne], ' ');
-		tmp = find_cell(check, first_cell[0]);
-		ft_memdel((void*)&tmp->someone);
-		ft_memdel((void*)&first_cell);
-		tmp->someone = ft_strdup(named(check, ref));
-		if (!tmp->someone || ref->nb_ants_ref > check->ants)
-			return (0);
+		if (check->line_length[ligne] <= reste_ant 
+		|| (check->line_length[ligne] >= reste_ant 
+		&& check->line_length[ligne] == check->line_length_min))
+		{
+			first_cell = ft_strsplit(good_roads[ligne], ' ');
+			tmp = find_cell(check, first_cell[0]);
+			ft_memdel((void*)&tmp->someone);
+			ft_memdel((void*)&first_cell);
+			tmp->someone = ft_strdup(named(check, ref));
+			if (!tmp->someone || ref->nb_ants_ref > check->ants)
+				return (0);
+		}
 		ligne++;
 	}
 	return (1);
@@ -105,6 +111,8 @@ int 		distrib_moove_ant(t_check *check)
 	ref.nb_ants_ref = 1;
 	good_roads = store_good_ways(good_roads, check); 
 	put_route(check, good_roads);
+	check->line_length = 
+	store_length_line(good_roads, &check->line_length_min);
 //	print_list(check);
 	ft_putstr("All GOOD ROADS\n");
 	print_simple_tab(good_roads);

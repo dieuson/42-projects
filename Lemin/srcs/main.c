@@ -19,6 +19,8 @@ void		init_struct(t_check *check)
 	check->end = 0;
 	check->links = 0;
 	check->nb_args = 0;
+	check->line_length_min = 0;
+	check->line_length = NULL;
 	check->start_cell = NULL;
 	check->end_cell = NULL;
 	check->start_list = NULL;

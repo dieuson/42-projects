@@ -44,12 +44,15 @@ typedef struct				s_check
 	int						start;
 	int						end;
 	int						links;
+	int 					line_length_min;
 	int						nb_args;
+	int 					*line_length;
 	char 					***neighbor_tab;
 	char 					**posibilites;
 	t_cells 				*start_list;
 }							t_check;
 
+int 						*store_length_line(char **good_roads, int *line_length_min);
 int 						verif_someone_lemin(t_check *check);
 char 						*named(t_check *check, t_ref *ref);
 void 						print_ants_moves(t_check *check, char **good_roads);
