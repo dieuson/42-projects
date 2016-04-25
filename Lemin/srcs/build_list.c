@@ -101,9 +101,9 @@ int 		link_cells(t_cells *start, t_check *check, char *line)
 
 int			start_end_min(char *line, t_check *check)
 {
-	if (ft_strstr("##start", line))
+	if (!ft_strcmp("##start", line))
 		return (check->start = 1);
-	else if (ft_strstr("##end", line))
+	else if (!ft_strcmp("##end", line))
 		return (check->end = 1);
 	return (0);
 }

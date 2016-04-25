@@ -50,36 +50,29 @@ int			nb_ants(char *line, t_check *check, long int laps)
 
 int			check_lemin(char *line, t_check *check, t_cells **cells)
 {
-	FT_INIT(static int, laps, 0);
 	FT_INIT(int, nb_args, check_nb_args(line));
-	laps = check->ants ? laps : 0;
-	if (!nb_args)
+	if (!line)
 		return (find_way(check));
 	if (line[0] == '#' && line[1] != '#')
 		return (1);
-	laps++;
-	if (laps == 1 && nb_args == 1 && nb_ants(line, check, laps))
+	if (!check->ants && nb_args == 1 && nb_ants(line, check, 1))
 		return (1);
-	if (laps > 1 && start_end_min(line, check))
+	if (check->ants && start_end_min(line, check))
+		return (nb_args == 1 ? 1 : 0);
+	if (check->ants && !*cells && nb_args == 3)
+		MULTI(check->start_list, *cells, create_cells(line));
+	if (nb_args == 3 && (check->start || check->end))
 	{
-		if (nb_args == 1)
-			return (laps = (laps == 2 ? 1 : laps));
-		else
-			return (0);
-	}
-	if (laps == 2 && nb_args == 3)
-	{
-		*cells = create_cells(line);
-		check->start_list = *cells;
+		build_list(cells, check, line);
 		if (check->start)
-			check->start_cell = (*cells)->name;
+			check->start_cell = ft_strdup((*cells)->name);
 		else if (check->end)
-			check->end_cell = (*cells)->name;
-		check->start = 0;
-		check->end = 0;
+			check->end_cell = ft_strdup((*cells)->name);
+		MULTI(check->start, check->end, 0);
 		return (1);
 	}
-	if (laps > 2 && nb_args <= 3 && !build_list(cells, check, line))
+	if (check->ants && check->start_list 
+	&& nb_args <= 3 && !build_list(cells, check, line))
 		return (0);
 	return (1);
 }
@@ -106,7 +99,7 @@ int			main(void)
 		else if (verif)
 		{
 			ft_putendl(line);
-			free(line);
+			ft_memdel((void*)&line);
 		}
 	}
 	return (1);

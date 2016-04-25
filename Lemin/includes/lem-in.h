@@ -52,6 +52,10 @@ typedef struct				s_check
 	t_cells 				*start_list;
 }							t_check;
 
+int 						calc_last_ligne(t_check *check, t_ref *ref);
+int 						send_last_ligne(int *result, t_check *check, t_ref *ref);
+t_cells 					*find_ant_nb(int nb, t_check *check);
+void 						print_route(char **route, char *someone, char *name);
 int 						*store_length_line(char **good_roads, int *line_length_min);
 int 						verif_someone_lemin(t_check *check);
 char 						*named(t_check *check, t_ref *ref);

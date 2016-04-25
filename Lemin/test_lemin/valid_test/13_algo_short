@@ -13,6 +13,11 @@ salle9 90 80
 salle10 80 90
 salle11 91 81
 salle12 92 82
+salle13 93 83
+salle14 94 84
+salle15 95 85
+salle16 96 86
+salle17 97 87
 salle1-salle2
 salle1-salle5
 salle2-salle3
@@ -22,6 +27,15 @@ salle9-salle10
 salle10-salle5
 salle1-salle6
 salle6-salle7
-salle7-salle5
 salle1-salle8
+salle1-salle11
+salle11-salle12
+salle12-salle13
+salle1-salle14
+salle14-salle15
+salle15-salle16
+salle16-salle17
 salle8-salle5
+salle17-salle13
+salle13-salle17
+salle17-salle13

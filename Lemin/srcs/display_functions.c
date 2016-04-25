@@ -1,35 +1,34 @@
 #include "../includes/lem-in.h"
 
-void 		set_road(char **route, char **reste, t_cells *tmp, char *end_cell)
+void 		print_simple_tab(char **tab)
 {
-	if (tmp->route && end_cell)
+	FT_INIT(int, ligne, 0);
+	while (tab[ligne])
 	{
-		if (*route)
-		{
-			*route = ft_strjoin(*route, " ");
-			*route = ft_strjoin(*route, tmp->someone);
-		}
-		else if (!*route)
-			*route = ft_strdup(tmp->someone);
-		*route = ft_strjoin(*route, "-");
-		*route = ft_strjoin(*route, tmp->name);
-	}
-	if (tmp->route && end_cell && ft_strcmp(tmp->name, end_cell) 
-	&& !ft_strcmp(tmp->route, end_cell))
+		ft_putstr(tab[ligne]);
+		ft_putstr("\n");
+		ligne++;
+	}	
+}
+
+void 		print_tab(char ***tab)
+{
+	FT_INIT(int, ligne, 0);
+	FT_INIT(int, colonne, 0);
+	while (tab && tab[ligne])
 	{
-		if (*reste)
+		while (tab[ligne][colonne])
 		{
-			*reste = ft_strjoin(*reste, " ");
-			*reste = ft_strjoin(*reste, tmp->someone);		
+			ft_putstr(tab[ligne][colonne]);
+			colonne++;
 		}
-		else
-			*reste = ft_strdup(tmp->someone);
-		*reste = ft_strjoin(*reste, "-");
-		*reste = ft_strjoin(*reste, tmp->route);
+		colonne = 0;
+		ligne++;
+		ft_putstr("\n");
 	}
 }
 
-t_cells 	*find_and_nb(int nb, t_check *check)
+t_cells 	*find_ant_nb(int nb, t_check *check)
 {
 	t_cells *tmp;
 
@@ -43,31 +42,15 @@ t_cells 	*find_and_nb(int nb, t_check *check)
 	return (NULL);
 }
 
-void 		print_ants_moves(t_check *check, char **good_roads)
+void 		print_route(char **route, char *someone, char *name)
 {
-	static char *reste = NULL;
-	t_cells *tmp;
-
-	FT_INIT(int, nb, 1);
-	FT_INIT(char*, route, NULL);
-	if (reste)
-	{
-		route = ft_strdup(reste);
-		ft_memdel((void*)&reste);
-	}
-	while (nb <= check->ants)
-	{
-		tmp = find_and_nb(nb, check);			
-		if (tmp && good_roads && !ft_strcmp(tmp->name, check->end_cell)
- 		 && !ft_strcmp(tmp->name, good_roads[0]))
+	if (*route)
 		{
-			ft_memdel((void*)&tmp->route);
-			tmp->route = ft_strdup(check->end_cell);
+			*route = ft_strjoin(*route, " ");
+			*route = ft_strjoin(*route, someone);
 		}
-		if (tmp)
-			set_road(&route, &reste, tmp, check->end_cell);
-		nb++;
-	}
-	ft_putstr(route);
-	ft_memdel((void*)&route);
+		else if (!*route)
+			*route = ft_strdup(someone);
+		*route = ft_strjoin(*route, "-");
+		*route = ft_strjoin(*route, name);
 }

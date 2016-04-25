@@ -59,7 +59,6 @@ int			build_list(t_cells **cells, t_check *check, char *line)
 	FT_INIT(int, nb_args, check_nb_args(line));
 	if (nb_args == 3)
 	{
-		ft_putstr(line);
 		(*cells)->next = create_cells(line);
 		*cells = (*cells)->next;
 		if (check->start)

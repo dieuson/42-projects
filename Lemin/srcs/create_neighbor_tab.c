@@ -107,7 +107,4 @@ void 		create_neighor_tab(t_check *check)
 		}
 		tmp = tmp->next;
 	}
-	printf("all neighbor\n");
-	print_tab(check->neighbor_tab);
-	printf("FIN all neighbor\n");
 }
