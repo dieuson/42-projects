@@ -16,7 +16,10 @@ int					line_to_return(char **reste, char **line, int end)
 {
 	char			*backslash;
 
-	backslash = ft_strchr(*reste, '\n');
+	if (ft_strchr(*reste, '\n'))
+		backslash = ft_strdup(ft_strchr(*reste, '\n'));
+	else
+		backslash = NULL;
 	if (ft_strlen(*reste) <= 0 && !backslash && end == 0)
 		return (0);
 	if (!backslash && end == 0 && ft_strlen(*reste) > 0)
@@ -31,7 +34,9 @@ int					line_to_return(char **reste, char **line, int end)
 		return (-1);
 	ft_memdel((void**)&*line);
 	*line = ft_strsub(*reste, 0, (ft_strlen(*reste) - ft_strlen(backslash)));
-	*reste = ft_strsub(backslash, 1, ft_strlen(backslash));
+	ft_memdel((void**)&(*reste));
+	*reste = ft_strdup(backslash + 1);
+	ft_memdel((void**)&backslash);	
 	return (1);
 }
 
@@ -58,7 +63,7 @@ int					read_all(int const fd, char **line)
 		return (-1);
 	if (ret == 2)
 		return (read_all(fd, line));
-	if (ret == 1 && val >= 0)
+	if (ret == 1 && val >= 0)	
 		return (1);
 	ft_memdel((void**)&reste[fd % 256]);
 	return (0);
