@@ -32,6 +32,23 @@ int			check_nb_args(char *line)
 	return (nb_args);
 }
 
+int			start_end_min(char *line, t_check *check)
+{
+	if (line && !ft_strcmp("##start", line))
+		return (check->start = 1);
+	else if (line && !ft_strcmp("##end", line))
+		return (check->end = 1);
+	return (0);
+}
+
+int			len_tab(char **tab)
+{
+	FT_INIT(int, i, 0);
+	while (tab && tab[i])
+		i++;
+	return (i);
+}
+
 int 		verif_double(t_cells **cells, t_check *check)
 {
 	FT_INIT(int, nb_args, 0);
@@ -51,28 +68,5 @@ int 		verif_double(t_cells **cells, t_check *check)
 		nb_args--;
 		tmp = tmp->next;
 	}
-	return (1);
-}
-
-int			build_list(t_cells **cells, t_check *check, char *line)
-{
-	FT_INIT(int, nb_args, check_nb_args(line));
-	if (nb_args == 3)
-	{
-		(*cells)->next = create_cells(line);
-		*cells = (*cells)->next;
-		if (check->start)
-			check->start_cell = (*cells)->name;
-		else if (check->end)
-			check->end_cell = (*cells)->name;
-		check->start = 0;
-		check->end = 0;
-		if (!verif_double(cells, check))
-			return (0);
-	}
-	if (nb_args == 1 && (!check->start_cell 
-	|| !check->end_cell || !link_cells(check->start_list, check, line)))
-		return (0);
-	check->nb_args++;
 	return (1);
 }

@@ -2,33 +2,23 @@
 
 char 	*new_cell(char *road, t_check *check)
 {
-	char *cell_to_search;
+	char *cell;
+	char *to_del;
 
-	road = ft_strsub(road, 0, (ft_strlen(road) - (ft_strlen(ft_strrchr(road, ' ')))));;
 	if (!ft_strrchr(road, ' '))
-		return (find_neighbor(road, check->start_cell, check));
-	cell_to_search = ft_strsub(ft_strrchr(road, ' '), 1, (ft_strlen(ft_strrchr(road, ' ')) - 1));
-	return (cell_to_search);
-}
-
-char 		**new_simple_tab(char **tab)
-{
-	char 	**fraiche_tab;
-
-	FT_INIT(int, ligne, 0);
-	if (!tab)
-		return (fraiche_tab = (char **)malloc(sizeof(char *) * 1));
-	while (tab[ligne])
-		ligne++;
-	fraiche_tab = (char **)malloc(sizeof(char *) * (ligne + 1));
-	ligne = 0;
-	while (tab[ligne])
-	{
-		fraiche_tab[ligne] = ft_strsub(tab[ligne], 0, ft_strlen(tab[ligne]));
-		ligne++;
-	}
-	fraiche_tab[ligne] = NULL;
-	return (fraiche_tab);
+		return (NULL);
+	cell = ft_strsub(road, 0, (ft_strlen(road) - (ft_strlen(ft_strrchr(road, ' ')))));;
+	if (!ft_strrchr(cell, ' '))
+		{
+			to_del = cell;
+			cell = find_neighbor(cell, check->start_cell, check);
+			ft_strdel(&to_del);
+			return (cell);
+		}
+	to_del = cell;
+	cell = ft_strsub(ft_strrchr(cell, ' '), 1, (ft_strlen(ft_strrchr(cell, ' ')) - 1));
+	ft_strdel(&to_del);
+	return (cell);
 }
 
 char 		*first(char *road)
@@ -41,7 +31,7 @@ char 		*first(char *road)
 	if (ft_strchr(road, ' '))
 		tmp = ft_strchr(road, ' ');
 	else
-		return (road);
+		return (ft_strdup(road));
 	return (ft_strsub(road, 0, (ft_strlen(road) - ft_strlen(ft_strchr(tmp, ' ')))));
 }
 
@@ -58,30 +48,26 @@ int 		nb_cells(char *road)
 	return (nb_arg);
 }
 
-int 		*store_length_line(char **good_roads, int *line_length_min)
+int 	bad_cell(t_check *check, char *road, char *cell)
 {
-	FT_INIT(int, line, 0);
-	FT_INIT(int*, line_length, NULL);
-	while (good_roads[line])
-		line++;
-	line_length = (int*)malloc(sizeof(int) * line);
-	line = 0;
-	while (good_roads[line])
+	if (!check->posibilites)
+		return (1);
+	FT_INIT(int, ligne, 0);
+	road = ft_strjoin(road, " ");
+	FT_INIT(char*, to_del, road);
+	road = ft_strjoin(road, cell);
+	ft_strdel(&to_del);
+	while (check->posibilites[ligne])
 	{
-		line_length[line] = nb_cells(good_roads[line]);
-		line++;
-	}
-	line = 0;
-	*line_length_min = line_length[0];
-	while (line_length[line])
-	{
-		if (line_length[line] < *line_length_min)
+		if (!ft_strcmp(road, check->posibilites[ligne]))
 		{
-			*line_length_min = line_length[line];
-			line = 0;
+			ft_strdel(&road);
+			return (0);
 		}
-		else
-			line++;
+		ligne++;
 	}
-	return (line_length);
+	ft_strdel(&road);
+	if (!check->posibilites[ligne])
+		return (-1);
+	return (1);
 }

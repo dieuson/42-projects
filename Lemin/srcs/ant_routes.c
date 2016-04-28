@@ -25,29 +25,32 @@ char 		**short_way(char **tab)
 
 void 		put_route(t_check *check, char **good_roads)
 {
-	t_cells *tmp;
-	char 	*cell;
-
 	FT_INIT(int, ligne, 0);
-	tmp = check->start_list;
+	FT_INIT(char*, cell, NULL);
+	FT_INIT(char*, first_cell, NULL);
+	FT_INIT(t_cells*, tmp, check->start_list);
 	while (good_roads[ligne])
 	{
 		cell = good_roads[ligne];
 		while (tmp)
 		{
-			if (!(first(cell)) || !ft_strchr(cell, ' '))
+			first_cell = first(cell);
+			if (!first_cell || !ft_strchr(cell, ' '))
 				break;
-			if (!ft_strcmp(first(cell), tmp->name))
+			if (!ft_strcmp(first_cell, tmp->name))
 			{
 				cell = ft_strchr(cell, ' ') + 1;
 				tmp->route = first(cell);
 				tmp = check->start_list;
 			}
+			ft_strdel(&first_cell);
 			tmp = tmp->next;
 		}
+		ft_strdel(&first_cell);
 		ligne++;
 		tmp = check->start_list;
 	}
+	ft_strdel(&first_cell);
 }
 
 t_cells		*find_cell(t_check *check, char *cell_name)
@@ -79,8 +82,12 @@ char 		*ft_strrnchr(char *str, int c, int nb)
 			end++;
 	end--;
 	if (nb > end || end < 0)
+	{
+		free_simple_tab(&tab);
 		return (NULL);
+	}
 	tmp_str = ft_strdup(tab[end - nb]);
+	free_simple_tab(&tab);
 	if (tmp_str)
 		return (tmp_str);
 	else

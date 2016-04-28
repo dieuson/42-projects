@@ -44,13 +44,23 @@ t_cells 	*find_ant_nb(int nb, t_check *check)
 
 void 		print_route(char **route, char *someone, char *name)
 {
+	char 	*to_del;
+
 	if (*route)
 		{
+			to_del = *route;
 			*route = ft_strjoin(*route, " ");
+			ft_strdel(&to_del);
+			to_del = *route;
 			*route = ft_strjoin(*route, someone);
+			ft_strdel(&to_del);
 		}
 		else if (!*route)
 			*route = ft_strdup(someone);
+		to_del = *route;
 		*route = ft_strjoin(*route, "-");
+		ft_strdel(&to_del);
+		to_del = *route;
 		*route = ft_strjoin(*route, name);
+		ft_strdel(&to_del);
 }

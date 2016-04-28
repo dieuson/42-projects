@@ -11,7 +11,7 @@ int 		go_ant(char **route, t_check *check, char *ant, char *next_cell)
 	{
 		if (!ft_strcmp(tmp->name, next_cell))
 		{
-			ft_memdel((void*)&tmp->someone);
+			ft_strdel(&tmp->someone);
 			tmp->someone = ft_strdup(ant);
 			print_route(route, tmp->someone, tmp->name);
 			break;
@@ -32,7 +32,7 @@ int 		in_min_ants(char **route, t_check *check, t_ref *ref)
 		if (tmp)
 		{
 			go_ant(route, check, tmp->someone, tmp->route);
-			ft_memdel((void*)&tmp->someone);			
+			ft_strdel(&tmp->someone);			
 		}
 		nb_ants++;
 		tmp = find_ant_nb(nb_ants, check);
@@ -54,8 +54,8 @@ int 		set_to_the_start(char **route, t_check *check, char **good_roads, t_ref *r
 			first_cell = ft_strsplit(good_roads[ligne], ' ');
 			tmp = find_cell(check, first_cell[0]);
 			ft_memdel((void*)&tmp->someone);
-			ft_memdel((void*)&first_cell);
-			tmp->someone = ft_strdup(named(check, ref));
+			free_simple_tab(&first_cell);
+			tmp->someone = named(check, ref);
 			print_route(route, tmp->someone, tmp->name);
 			addition += check->line_length[ligne];
 			if (!tmp->someone || ref->nb_ants_ref > check->ants)
@@ -88,17 +88,17 @@ int 		distrib_moove_ant(t_check *check)
 {
 	t_ref	ref;
 	t_cells *tmp;
-	char 	**good_roads;
 
-	good_roads = NULL;
+	FT_INIT(char**, good_roads, NULL);
 	tmp = check->start_list;
 	ref.name_ref = "L";
 	ref.nb_ants_ref = 1;
-	good_roads = store_good_ways(good_roads, check); 
+	good_roads = store_good_ways(check); 
 	put_route(check, good_roads);
 	check->line_length = 
 	store_length_line(good_roads, &check->line_length_min);
 	moove_ants(check, &ref, good_roads);
+	free_simple_tab(&good_roads);
 	if (ref.nb_ants_ref || tmp)
 		return (1);
 	return (0);

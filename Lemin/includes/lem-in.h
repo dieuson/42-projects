@@ -52,42 +52,45 @@ typedef struct				s_check
 	t_cells 				*start_list;
 }							t_check;
 
-int 						calc_last_ligne(t_check *check, t_ref *ref);
-int 						send_last_ligne(int *result, t_check *check, t_ref *ref);
-t_cells 					*find_ant_nb(int nb, t_check *check);
-void 						print_route(char **route, char *someone, char *name);
-int 						*store_length_line(char **good_roads, int *line_length_min);
-int 						verif_someone_lemin(t_check *check);
-char 						*named(t_check *check, t_ref *ref);
-void 						print_ants_moves(t_check *check, char **good_roads);
+
+void 		print_tab(char ***tab); /////////
+void 		print_simple_tab(char **tab); ///
+
+int							check_nb_args(char *line);
+int 						find_way(t_check *check);
+int							start_end_min(char *line, t_check *check);
+int							build_list(t_cells **cells, t_check *check, char *line);
+void 						free_struct(t_check *check);
+void		 				free_chaine(t_cells **cells);
+void 						store_road(t_check *check, char *road);
+void 						create_neighor_tab(t_check *check);
+char						*find_args(char ***tab, char *name, int nb);
+char 						*one_good_road(t_check *check, int nb_arg);
+char 						**short_way(char **tab);
 void 						put_route(t_check *check, char **good_roads);
-int 						ft_len_tab(char **tab);
 t_cells						*find_cell(t_check *check, char *cell_name);
 char 						*ft_strrnchr(char *str, int c, int nb);
-char 						*first(char *road);
-char 						**short_way(char **tab);
-char 					 	**store_good_ways(char **tab, t_check *check);
-int 						nb_cells(char *road);
-char 						**del_over_road(char **tab, t_check *check);
-char 						*one_good_road(t_check *check, int nb_arg);
-char 						*new_cell(char *road, t_check *check);
-void 						print_simple_tab(char **tab);
-int 						distrib_moove_ant(t_check *check);
-char 						**new_simple_tab(char **tab);
-char 						*find_neighbor(char *road, char *name, t_check *check);
-char						*find_args(char ***tab, char *name, int nb);
-int 						find_way(t_check *check);
-void						create_neighor_tab(t_check *check);
-char						 ***new_tab(char ***tab);
-char						***copy_tab(char ***src, char ***dest);
-void						print_tab(char ***tab);
-int							check_lemin(char *line, t_check *check, t_cells **cells);
-int							build_list(t_cells **cells, t_check *check, char *line);
-int							check_nb_args(char *line);
+int 						ft_len_tab(char **tab);
 int 						verif_double(t_cells **cells, t_check *check);
-int 						link_cells(t_cells *start, t_check *check, char *line);
-t_cells						*create_cells(char *line);
-int							start_end_min(char *line, t_check *check);
-int							nb_ants(char *line, t_check *check, long int laps);
+int 						bad_cell(t_check *check, char *road, char *cell);
+char 						*new_cell(char *road, t_check *check);
+int 						distrib_moove_ant(t_check *check);
+void 						free_simple_tab(char ***tab);
+char 						***new_tab(char ****tab);
+void 						free_simple_tab(char ***tab);
+char 						**new_simple_tab(char ***tab);
+void 						print_route(char **route, char *someone, char *name);
+t_cells 					*find_ant_nb(int nb, t_check *check);
+int 						calc_last_ligne(t_check *check, t_ref *ref);
+char 						*named(t_check *check, t_ref *ref);
+int 						verif_someone_lemin(t_check *check);
+char 					 	**store_good_ways(t_check *check);
+int 						*store_length_line(char **good_roads, int *line_length_min);
+int 						nb_cells(char *road);
+char 						*first(char *road);
+char 						*find_neighbor(char *road, char *name, t_check *check);
+char 						**del_over_road(char **tab, t_check *check);
+void 						free_simple_int_tab(int **tab);
+void 						free_tab(char ****tab);
 
 #endif

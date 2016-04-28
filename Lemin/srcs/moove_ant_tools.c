@@ -3,11 +3,17 @@
 char 		*named(t_check *check, t_ref *ref)
 {
 	char 	*ant_name;
+	char 	*to_del;
+	char 	*nb_ref;
 
 	if (ref->nb_ants_ref > check->ants)
 		return (NULL);
-	ant_name = ref->name_ref;
-	ant_name = ft_strjoin(ant_name, ft_itoa(ref->nb_ants_ref));
+	ant_name = ft_strdup(ref->name_ref);
+	to_del = ant_name;
+	nb_ref = ft_itoa(ref->nb_ants_ref);
+	ant_name = ft_strjoin(ant_name, nb_ref);
+	ft_strdel(&to_del);
+	ft_strdel(&nb_ref);
 	ref->nb_ants_ref++;
 	return (ant_name);
 }
@@ -26,21 +32,32 @@ int 		verif_someone_lemin(t_check *check)
 	return (0);
 }
 
-int 		send_last_ligne(int *result, t_check *check, t_ref *ref)
+void 		free_simple_int_tab(int **tab)
+{
+	FT_INIT(int, colonne, 0);
+	while ((*tab) && (*tab)[colonne])
+	{
+		free(&(*tab)[colonne]);
+		colonne++;
+	}
+}	
+
+int 		send_last_ligne(int **result, t_check *check, t_ref *ref)
 {
 	FT_INIT(int, nb, 0);
 	FT_INIT(int, min, 0);
 	FT_INIT(int, line, 0);
 	FT_INIT(int, nb_ants, (check->ants - ref->nb_ants_ref) + 1);
-	while (result[line])
+	while ((*result)[line])
 	{
-		if (ft_abs(nb_ants - result[line]) <= ft_abs(nb_ants - min))
+		if (ft_abs(nb_ants - (*result)[line]) <= ft_abs(nb_ants - min))
 		{
-			min = result[line];
+			min = (*result)[line];
 			nb = line;
 		}
 		line++;
 	}
+	free_simple_int_tab(result);
 	return (nb);
 }
 
@@ -67,5 +84,5 @@ int 		calc_last_ligne(t_check *check, t_ref *ref)
 		line2 = line;
 		addition = 0;
 	}
-	return (send_last_ligne(result, check, ref));
+	return (send_last_ligne(&result, check, ref));
 }

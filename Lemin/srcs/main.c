@@ -59,16 +59,15 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 		return (1);
 	if (check->ants && start_end_min(line, check))
 		return (nb_args == 1 ? 1 : 0);
-	if (check->ants && !*cells && nb_args == 3)
-		MULTI(check->start_list, *cells, create_cells(line));
-	if (nb_args == 3 && (check->start || check->end))
+	if (check->ants && nb_args == 3 && (check->start || check->end))
 	{
 		build_list(cells, check, line);
 		if (check->start)
 			check->start_cell = ft_strdup((*cells)->name);
 		else if (check->end)
 			check->end_cell = ft_strdup((*cells)->name);
-		MULTI(check->start, check->end, 0);
+		check->start = 0;
+		check->end = 0;
 		return (1);
 	}
 	if (check->ants && check->start_list 
@@ -82,11 +81,10 @@ int			main(void)
 	char 		*line;
 	t_check		check;
 	t_cells		*cells;
-	int 		verif;
-	
+
 	cells = NULL;
 	line = NULL;
-	verif = 1;
+	FT_INIT(int, verif, 1);
 	init_struct(&check);
 	while (verif)
 	{
@@ -94,6 +92,8 @@ int			main(void)
 		if (!check_lemin(line, &check, &cells))
 		{
 			ft_putstr("ERROR\n");
+			free_struct(&check);
+			free_chaine(&check.start_list);
 			return (-1);
 		}
 		else if (verif)
@@ -102,5 +102,7 @@ int			main(void)
 			ft_memdel((void*)&line);
 		}
 	}
+	free_struct(&check);
+	free_chaine(&(check.start_list));
 	return (1);
 }
