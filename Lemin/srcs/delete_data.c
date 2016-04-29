@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:44:53 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 10:48:48 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 15:41:46 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,4 @@ void		free_chaine(t_cells **cells, t_check *check)
 	ft_strdel(&check->end_cell);
 	free_tab(&check->neighbor_tab);
 	free_simple_tab(&(check->posibilites));
-	free_simple_int_tab(&check->line_length);
 }

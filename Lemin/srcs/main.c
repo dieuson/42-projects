@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:11:07 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 10:49:31 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 15:43:20 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 		return (1);
 	if (check->ants && start_end_min(line, check))
 		return (nb_args == 1 ? 1 : 0);
-	if (check->ants && nb_args == 3 && (check->start || check->end))
+	if (check->ants && nb_args == 3
+	&& (check->start || check->end || !(*cells)))
 	{
 		build_list(cells, check, line);
 		if (check->start)

@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:45:17 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 10:46:08 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 14:34:59 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,5 @@ void		print_route(char **route, char *someone, char *name)
 	to_del = *route;
 	*route = ft_strjoin(*route, "-");
 	ft_strdel(&to_del);
-	to_del = *route;
 	*route = ft_strjoin(*route, name);
-	ft_strdel(&to_del);
 }

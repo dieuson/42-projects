@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/11 08:56:56 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 10:38:23 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 15:38:46 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void			create_neighor_tab(t_check *check)
 	char		*neighbor_ligne;
 	char		*to_del;
 
-	neighbor_ligne = NULL;
 	FT_INIT(int, ligne, 0);
 	tmp = check->start_list;
+	neighbor_ligne = NULL;
 	check->neighbor_tab = NULL;
 	while (tmp)
 	{

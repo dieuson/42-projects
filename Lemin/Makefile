@@ -6,7 +6,7 @@
 #    By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/29 10:25:01 by dvirgile          #+#    #+#              #
-#    Updated: 2016/04/29 10:58:55 by dvirgile         ###   ########.fr        #
+#    Updated: 2016/04/29 11:45:01 by dvirgile         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -36,7 +36,7 @@ all: $(NAME)
 $(NAME):
 	@make -C $(LIBFT)
 	@printf "\033[31mCompilation $(NAME):\033[0m"
-	@gcc -Wall -Wextra -Werror -g3 $(SRC) $(INCLUDES) -c
+	@gcc -Wall -Wextra -Werror -g $(SRC) $(INCLUDES) -c
 	@gcc -Wall -Wextra -Werror $(BIN) $(INCLUDES) $(LIBFT)libft.a -o $(NAME)
 	@mkdir bin_folder
 	@mv $(BIN) ./bin_folder

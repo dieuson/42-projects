@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:59:41 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 11:00:24 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 15:42:51 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int			send_last_ligne(int **result, t_check *check, t_ref *ref)
 		}
 		line++;
 	}
-	free_simple_int_tab(result);
 	return (nb);
 }
 
