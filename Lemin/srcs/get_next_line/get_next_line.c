@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 13:28:11 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/02/09 10:08:06 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 10:46:54 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int					line_to_return(char **reste, char **line, int end)
 	*line = ft_strsub(*reste, 0, (ft_strlen(*reste) - ft_strlen(backslash)));
 	ft_memdel((void**)&(*reste));
 	*reste = ft_strdup(backslash + 1);
-	ft_memdel((void**)&backslash);	
+	ft_memdel((void**)&backslash);
 	return (1);
 }
 
@@ -63,7 +63,7 @@ int					read_all(int const fd, char **line)
 		return (-1);
 	if (ret == 2)
 		return (read_all(fd, line));
-	if (ret == 1 && val >= 0)	
+	if (ret == 1 && val >= 0)
 		return (1);
 	ft_memdel((void**)&reste[fd % 256]);
 	return (0);

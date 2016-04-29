@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   store_data.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/04/29 11:01:17 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/04/29 11:01:34 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/lem-in.h"
 
-char  	**store_good_ways(t_check *check)
+char		**store_good_ways(t_check *check)
 {
 	FT_INIT(int, ligne, 0);
 	FT_INIT(char**, tab, NULL);
@@ -16,7 +28,7 @@ char  	**store_good_ways(t_check *check)
 	return (tab);
 }
 
-void 	store_road(t_check *check, char *road)
+void		store_road(t_check *check, char *road)
 {
 	FT_INIT(int, ligne, 0);
 	while (check->posibilites && check->posibilites[ligne])

@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   moove_ant_tools.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/04/29 10:59:41 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/04/29 11:00:24 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/lem-in.h"
 
-char 		*named(t_check *check, t_ref *ref)
+char		*named(t_check *check, t_ref *ref)
 {
-	char 	*ant_name;
-	char 	*to_del;
-	char 	*nb_ref;
+	char	*ant_name;
+	char	*to_del;
+	char	*nb_ref;
 
 	if (ref->nb_ants_ref > check->ants)
 		return (NULL);
@@ -18,9 +30,9 @@ char 		*named(t_check *check, t_ref *ref)
 	return (ant_name);
 }
 
-int 		verif_someone_lemin(t_check *check)
+int			verif_someone_lemin(t_check *check)
 {
-	t_cells *tmp;
+	t_cells	*tmp;
 
 	tmp = check->start_list;
 	while (tmp)
@@ -32,7 +44,7 @@ int 		verif_someone_lemin(t_check *check)
 	return (0);
 }
 
-void 		free_simple_int_tab(int **tab)
+void		free_simple_int_tab(int **tab)
 {
 	FT_INIT(int, colonne, 0);
 	while ((*tab) && (*tab)[colonne])
@@ -40,9 +52,9 @@ void 		free_simple_int_tab(int **tab)
 		free(&(*tab)[colonne]);
 		colonne++;
 	}
-}	
+}
 
-int 		send_last_ligne(int **result, t_check *check, t_ref *ref)
+int			send_last_ligne(int **result, t_check *check, t_ref *ref)
 {
 	FT_INIT(int, nb, 0);
 	FT_INIT(int, min, 0);
@@ -61,7 +73,7 @@ int 		send_last_ligne(int **result, t_check *check, t_ref *ref)
 	return (nb);
 }
 
-int 		calc_last_ligne(t_check *check, t_ref *ref)
+int			calc_last_ligne(t_check *check, t_ref *ref)
 {
 	FT_INIT(int, line, 0);
 	FT_INIT(int*, result, NULL);
@@ -75,7 +87,7 @@ int 		calc_last_ligne(t_check *check, t_ref *ref)
 	{
 		while (line2 >= 0 && check->line_length[line2])
 		{
-			addition += (check->line_length[line] + 1) 
+			addition += (check->line_length[line] + 1)
 			- check->line_length[line2];
 			line2--;
 		}

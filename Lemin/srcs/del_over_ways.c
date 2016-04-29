@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   del_over_ways.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/04/29 10:42:57 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/04/29 10:44:35 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/lem-in.h"
 
-char 		**del_tab_line(char **tab, int line)
+char		**del_tab_line(char **tab, int line)
 {
 	while (tab[line])
 	{
@@ -22,20 +34,20 @@ int			verif_deleted_line(char *line, char *line2, t_check *check)
 		if (last_cell && ft_strcmp(last_cell, check->end_cell)
 		&& ft_strstr(line2, last_cell))
 		{
-			ft_strdel(&last_cell);			
+			ft_strdel(&last_cell);
 			return (1);
 		}
 		nb_arg++;
 		ft_strdel(&last_cell);
 		last_cell = ft_strrnchr(line, ' ', nb_arg);
 		if (!last_cell)
-			break;
+			break ;
 		ft_memdel((void*)&last_cell);
 	}
 	return (0);
 }
 
-char 		**del_second_par(char **tab, t_check *check)
+char		**del_second_par(char **tab, t_check *check)
 {
 	FT_INIT(int, line, 0);
 	FT_INIT(char*, to_del, NULL);
@@ -47,9 +59,9 @@ char 		**del_second_par(char **tab, t_check *check)
 		{
 			to_del = ft_strrnchr(tab[line], ' ', 0);
 			if (!to_del)
-				break;
+				break ;
 			ft_strdel(&to_del);
-			if (ft_strcmp(tab[line], tab[line2]) && 
+			if (ft_strcmp(tab[line], tab[line2]) &&
 			verif_deleted_line(tab[line], tab[line2], check))
 			{
 				del_tab_line(tab, line2);
@@ -63,17 +75,17 @@ char 		**del_second_par(char **tab, t_check *check)
 	return (tab);
 }
 
-int 		compare_cells(int line, int line2, char **tab, char *end_cell)
+int			compare_cells(int line, int line2, char **tab, char *end_cell)
 {
-	char 	*tab1;
-	char 	*tab2;
-	int 	verif;
+	char	*tab1;
+	char	*tab2;
+	int		verif;
 
 	verif = 0;
 	tab1 = first(tab[line]);
 	tab2 = first(tab[line2]);
 	if ((ft_strcmp(tab1, end_cell) && ft_strcmp(tab2, end_cell)
-	&& ft_strcmp(tab2, tab1) && ft_strstr(tab[line2], tab1)) || (line2 != line 
+	&& ft_strcmp(tab2, tab1) && ft_strstr(tab[line2], tab1)) || (line2 != line
 	&& !ft_strcmp(tab2, tab1)))
 		verif++;
 	ft_strdel(&tab1);
@@ -83,7 +95,7 @@ int 		compare_cells(int line, int line2, char **tab, char *end_cell)
 	return (0);
 }
 
-char 		**del_over_road(char **tab, t_check *check)
+char		**del_over_road(char **tab, t_check *check)
 {
 	FT_INIT(int, line, 0);
 	FT_INIT(int, ref, ft_len_tab(tab) - 1);
@@ -94,10 +106,10 @@ char 		**del_over_road(char **tab, t_check *check)
 		{
 			if (compare_cells(line, line2, tab, check->end_cell))
 			{
-					del_tab_line(tab, line2);
-					MULTI(line2, ref, ref - 1);
-					line = 0;
-					break;
+				del_tab_line(tab, line2);
+				MULTI(line2, ref, ref - 1);
+				line = 0;
+				break ;
 			}
 			else
 				line++;

@@ -6,18 +6,20 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/06 10:32:02 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/07 18:29:38 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 10:51:35 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-void 		set_as_none(t_cells **new)
+void		set_as_none(t_cells **new, char **reste, char **name)
 {
 	(*new)->next = NULL;
 	(*new)->neighbor = NULL;
 	(*new)->route = NULL;
 	(*new)->someone = NULL;
+	ft_strdel(&(*reste));
+	ft_strdel(&(*name));
 }
 
 t_cells		*create_cells(char *line)
@@ -27,29 +29,28 @@ t_cells		*create_cells(char *line)
 	while (line && *line == ' ')
 		line++;
 	FT_INIT(char *, reste, ft_strchr(line, ' '));
-	new->name =  ft_strsub(line, 0, (ft_strlen(line) - ft_strlen(reste)));
+	new->name = ft_strsub(line, 0, (ft_strlen(line) - ft_strlen(reste)));
 	while (reste && *reste == ' ')
 		reste++;
 	FT_INIT(char *, reste_tmp, ft_strdup(reste));
 	FT_INIT(char *, name, reste_tmp);
-	reste = ft_strsub(reste, 0, (ft_strlen(reste) - ft_strlen(ft_strchr(reste, ' '))));
+	reste = ft_strsub(reste, 0, (ft_strlen(reste)
+	- ft_strlen(ft_strchr(reste, ' '))));
 	nb = ft_atoi(reste);
-	new->pos_x =  nb <= 2147483647 && nb >= 0 ? nb : -1;
-	reste_tmp = ft_strsub(reste_tmp, ft_strlen(reste), (ft_strlen(reste_tmp) - ft_strlen(reste)));
+	new->pos_x = nb <= 2147483647 && nb >= 0 ? nb : -1;
+	reste_tmp = ft_strsub(reste_tmp, ft_strlen(reste),
+	(ft_strlen(reste_tmp) - ft_strlen(reste)));
 	ft_strdel(&name);
 	name = reste_tmp;
 	while (reste_tmp && *reste_tmp == ' ')
 		reste_tmp++;
 	nb = ft_atoi(reste_tmp);
 	new->pos_y = nb <= 2147483647 && nb >= 0 ? nb : -1;
-	ft_strdel(&reste);
-	ft_strdel(&name);
-	set_as_none(&new);
+	set_as_none(&new, &reste, &name);
 	return (new);
 }
 
-
-int 		add_neighbor(t_cells **first, t_cells **second)
+int			add_neighbor(t_cells **first, t_cells **second)
 {
 	if ((*first)->neighbor && ft_strstr((*first)->neighbor, (*second)->name))
 		return (0);
@@ -76,7 +77,7 @@ int 		add_neighbor(t_cells **first, t_cells **second)
 	return (1);
 }
 
-int 		link_cells(t_cells *start, t_check *check, char *line)
+int			link_cells(t_cells *start, t_check *check, char *line)
 {
 	FT_INIT(int, checkin, 0);
 	FT_INIT(t_cells*, first, start);
@@ -84,7 +85,7 @@ int 		link_cells(t_cells *start, t_check *check, char *line)
 	while (*line && *line == ' ')
 		line++;
 	FT_INIT(char *, reste, ft_strchr(line, '-'));
-	FT_INIT(char*, name1, ft_strsub(line, 0, 
+	FT_INIT(char*, name1, ft_strsub(line, 0,
 	(ft_strlen(line) - ft_strlen(reste))));
 	FT_INIT(char*, name2, ft_strsub(reste, 1, (ft_strlen(reste) - 1)));
 	if (!ft_strcmp(name1, name2))
@@ -116,7 +117,7 @@ int			build_list(t_cells **cells, t_check *check, char *line)
 	}
 	else if (!*cells && nb_args == 3)
 		MULTI(check->start_list, *cells, create_cells(line));
-	if (nb_args == 1 && (!check->start_cell 
+	if (nb_args == 1 && (!check->start_cell
 	|| !check->end_cell || !link_cells(check->start_list, check, line)))
 		return (0);
 	check->nb_args++;

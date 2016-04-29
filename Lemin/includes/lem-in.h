@@ -7,7 +7,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:13:05 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/11 11:06:00 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 10:50:32 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ int							check_nb_args(char *line);
 int 						find_way(t_check *check);
 int							start_end_min(char *line, t_check *check);
 int							build_list(t_cells **cells, t_check *check, char *line);
-void 						free_struct(t_check *check);
-void		 				free_chaine(t_cells **cells);
+void		 				free_chaine(t_cells **cells, t_check *check);
 void 						store_road(t_check *check, char *road);
 void 						create_neighor_tab(t_check *check);
 char						*find_args(char ***tab, char *name, int nb);

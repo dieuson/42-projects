@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:11:07 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/11 10:28:20 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 10:49:31 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 		check->end = 0;
 		return (1);
 	}
-	if (check->ants && check->start_list 
+	if (check->ants && check->start_list
 	&& nb_args <= 3 && !build_list(cells, check, line))
 		return (0);
 	return (1);
@@ -78,7 +78,7 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 
 int			main(void)
 {
-	char 		*line;
+	char		*line;
 	t_check		check;
 	t_cells		*cells;
 
@@ -92,8 +92,7 @@ int			main(void)
 		if (!check_lemin(line, &check, &cells))
 		{
 			ft_putstr("ERROR\n");
-			free_struct(&check);
-			free_chaine(&check.start_list);
+			free_chaine(&check.start_list, &check);
 			return (-1);
 		}
 		else if (verif)
@@ -102,7 +101,6 @@ int			main(void)
 			ft_memdel((void*)&line);
 		}
 	}
-	free_struct(&check);
-	free_chaine(&(check.start_list));
+	free_chaine(&check.start_list, &check);
 	return (1);
 }

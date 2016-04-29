@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/01/04 17:52:26 by sgaudin           #+#    #+#              #
-#    Updated: 2016/02/09 09:52:04 by dvirgile         ###   ########.fr        #
+#    Created: 2016/04/29 10:25:01 by dvirgile          #+#    #+#              #
+#    Updated: 2016/04/29 10:58:55 by dvirgile         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
+
 
 NAME = lem-in
 GNL = ./srcs/get_next_line/
@@ -26,7 +27,7 @@ $(LEMIN)moove_ant_tools.c $(LEMIN)del_over_ways.c $(LEMIN)build_simple_tab.c \
 $(LEMIN)build_tab.c $(LEMIN)store_data.c $(LEMIN)delete_data.c
 BIN = $(FILES_GNL:.c=.o) $(FILES_LEMIN:.c=.o)
 
-INLCLUDES = $(LIBFT)libft.h $(GNL)get_next_line.h ./includes/lem-in.h 	
+INLCLUDES = $(LIBFT)libft.h $(GNL)get_next_line.h ./includes/lem-in.h
 
 TILDE = $(SRC:.c=.c~) Makefile~
 
@@ -35,7 +36,7 @@ all: $(NAME)
 $(NAME):
 	@make -C $(LIBFT)
 	@printf "\033[31mCompilation $(NAME):\033[0m"
-	@gcc -Wall -Wextra -Werror -g $(SRC) $(INCLUDES) -c
+	@gcc -Wall -Wextra -Werror -g3 $(SRC) $(INCLUDES) -c
 	@gcc -Wall -Wextra -Werror $(BIN) $(INCLUDES) $(LIBFT)libft.a -o $(NAME)
 	@mkdir bin_folder
 	@mv $(BIN) ./bin_folder

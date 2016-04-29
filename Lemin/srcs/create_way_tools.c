@@ -1,29 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_way_tools.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/04/29 10:41:11 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/04/29 10:42:43 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/lem-in.h"
 
-char 	*new_cell(char *road, t_check *check)
+char			*new_cell(char *road, t_check *check)
 {
-	char *cell;
-	char *to_del;
+	char		*cell;
+	char		*to_del;
 
 	if (!ft_strrchr(road, ' '))
 		return (NULL);
-	cell = ft_strsub(road, 0, (ft_strlen(road) - (ft_strlen(ft_strrchr(road, ' ')))));;
+	cell = ft_strsub(road, 0, (ft_strlen(road)
+	- (ft_strlen(ft_strrchr(road, ' ')))));
 	if (!ft_strrchr(cell, ' '))
-		{
-			to_del = cell;
-			cell = find_neighbor(cell, check->start_cell, check);
-			ft_strdel(&to_del);
-			return (cell);
-		}
+	{
+		to_del = cell;
+		cell = find_neighbor(cell, check->start_cell, check);
+		ft_strdel(&to_del);
+		return (cell);
+	}
 	to_del = cell;
-	cell = ft_strsub(ft_strrchr(cell, ' '), 1, (ft_strlen(ft_strrchr(cell, ' ')) - 1));
+	cell = ft_strsub(ft_strrchr(cell, ' '), 1,
+	(ft_strlen(ft_strrchr(cell, ' ')) - 1));
 	ft_strdel(&to_del);
 	return (cell);
 }
 
-char 		*first(char *road)
+char			*first(char *road)
 {
-	char 	*tmp;
+	char		*tmp;
 
 	tmp = NULL;
 	if (!road)
@@ -32,10 +46,11 @@ char 		*first(char *road)
 		tmp = ft_strchr(road, ' ');
 	else
 		return (ft_strdup(road));
-	return (ft_strsub(road, 0, (ft_strlen(road) - ft_strlen(ft_strchr(tmp, ' ')))));
+	return (ft_strsub(road, 0,
+	(ft_strlen(road) - ft_strlen(ft_strchr(tmp, ' ')))));
 }
 
-int 		nb_cells(char *road)
+int				nb_cells(char *road)
 {
 	FT_INIT(int, nb_arg, 0);
 	while (road)
@@ -48,7 +63,7 @@ int 		nb_cells(char *road)
 	return (nb_arg);
 }
 
-int 	bad_cell(t_check *check, char *road, char *cell)
+int				bad_cell(t_check *check, char *road, char *cell)
 {
 	if (!check->posibilites)
 		return (1);

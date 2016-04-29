@@ -6,15 +6,15 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/11 08:56:56 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/11 14:06:17 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 10:38:23 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-char 		*one_good_road(t_check *check, int nb_arg)
+char			*one_good_road(t_check *check, int nb_arg)
 {
-	char 	*tmp;
+	char		*tmp;
 
 	FT_INIT(int, ligne, 0);
 	FT_INIT(int, tmp_nb_arg, 0);
@@ -38,7 +38,7 @@ char 		*one_good_road(t_check *check, int nb_arg)
 	return (NULL);
 }
 
-char		*find_args(char ***tab, char *name, int nb)
+char			*find_args(char ***tab, char *name, int nb)
 {
 	FT_INIT(int, ligne, 0);
 	if (!tab)
@@ -50,12 +50,12 @@ char		*find_args(char ***tab, char *name, int nb)
 	return (tab[ligne][nb]);
 }
 
-void 		create_neighor_tab(t_check *check)
+void			create_neighor_tab(t_check *check)
 {
-	t_cells *tmp;
-	char 	*neighbor_ligne;
-	char 	*to_del;
-	
+	t_cells		*tmp;
+	char		*neighbor_ligne;
+	char		*to_del;
+
 	neighbor_ligne = NULL;
 	FT_INIT(int, ligne, 0);
 	tmp = check->start_list;

@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/06 08:02:38 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/07 16:02:43 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 11:00:52 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			len_tab(char **tab)
 	return (i);
 }
 
-int 		verif_double(t_cells **cells, t_check *check)
+int			verif_double(t_cells **cells, t_check *check)
 {
 	FT_INIT(int, nb_args, 0);
 	FT_INIT(t_cells *, tmp, check->start_list);

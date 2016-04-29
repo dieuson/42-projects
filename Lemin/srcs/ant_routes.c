@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ant_routes.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/04/29 10:26:29 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/04/29 10:31:28 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/lem-in.h"
 
-char 		**short_way(char **tab)
+char		**short_way(char **tab)
 {
 	FT_INIT(char *, tmp, NULL);
 	FT_INIT(int, ligne, 0);
@@ -14,7 +26,7 @@ char 		**short_way(char **tab)
 				tmp = tab[ligne];
 				tab[ligne] = tab[ligne2];
 				tab[ligne2] = tmp;
-			}	
+			}
 			ligne2++;
 		}
 		ligne++;
@@ -23,7 +35,7 @@ char 		**short_way(char **tab)
 	return (tab);
 }
 
-void 		put_route(t_check *check, char **good_roads)
+void		put_route(t_check *check, char **good_roads)
 {
 	FT_INIT(int, ligne, 0);
 	FT_INIT(char*, cell, NULL);
@@ -34,9 +46,8 @@ void 		put_route(t_check *check, char **good_roads)
 		cell = good_roads[ligne];
 		while (tmp)
 		{
-			first_cell = first(cell);
-			if (!first_cell || !ft_strchr(cell, ' '))
-				break;
+			if (!(first_cell = first(cell)) || !ft_strchr(cell, ' '))
+				break ;
 			if (!ft_strcmp(first_cell, tmp->name))
 			{
 				cell = ft_strchr(cell, ' ') + 1;
@@ -67,10 +78,10 @@ t_cells		*find_cell(t_check *check, char *cell_name)
 	return (NULL);
 }
 
-char 		*ft_strrnchr(char *str, int c, int nb)
+char		*ft_strrnchr(char *str, int c, int nb)
 {
-	char 	**tab;
-	char 	*tmp_str;
+	char	**tab;
+	char	*tmp_str;
 
 	FT_INIT(int, end, 0);
 	if (!str || !c)
@@ -79,7 +90,7 @@ char 		*ft_strrnchr(char *str, int c, int nb)
 	if (!tab)
 		return (NULL);
 	while (tab[end])
-			end++;
+		end++;
 	end--;
 	if (nb > end || end < 0)
 	{
@@ -94,7 +105,7 @@ char 		*ft_strrnchr(char *str, int c, int nb)
 		return (NULL);
 }
 
-int 		ft_len_tab(char **tab)
+int			ft_len_tab(char **tab)
 {
 	FT_INIT(int, ligne, 0);
 	while (tab && tab[ligne])
@@ -102,7 +113,7 @@ int 		ft_len_tab(char **tab)
 	ligne--;
 	if (!ligne)
 		if (!ft_strchr(tab[ligne], ' '))
-				return (0);
+			return (0);
 	ligne++;
 	return (ligne);
 }

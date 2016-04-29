@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_simple_tab.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/04/29 10:36:28 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/04/29 10:37:01 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/lem-in.h"
 
-void 		free_simple_tab(char ***tab)
+void		free_simple_tab(char ***tab)
 {
 	FT_INIT(int, colonne, 0);
 	while ((*tab) && (*tab)[colonne])
@@ -13,7 +25,7 @@ void 		free_simple_tab(char ***tab)
 	*tab = NULL;
 }
 
-char 		**copy_simple_tab(char **src, char **dest)
+char		**copy_simple_tab(char **src, char **dest)
 {
 	FT_INIT(int, colonne, 0);
 	while (src && src[colonne])
@@ -25,9 +37,9 @@ char 		**copy_simple_tab(char **src, char **dest)
 	return (dest);
 }
 
-char 		**new_simple_tab(char ***tab)
+char		**new_simple_tab(char ***tab)
 {
-	char 	**fraiche_tab;
+	char	**fraiche_tab;
 
 	FT_INIT(int, colonne, 0);
 	if (!tab || !(*tab))
