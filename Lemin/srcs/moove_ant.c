@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:52:05 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 15:39:42 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:07:03 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 int			go_ant(char **route, t_check *check, char *ant, char *next_cell)
 {

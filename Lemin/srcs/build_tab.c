@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:37:11 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 10:37:32 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:05:15 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 void		free_tab(char ****tab)
 {

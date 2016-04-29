@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:41:11 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 10:42:43 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:05:50 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 char			*new_cell(char *road, t_check *check)
 {

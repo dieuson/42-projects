@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/06 10:32:02 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 15:42:24 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:04:53 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 void		set_as_none(t_cells **new, char **reste, char **name)
 {

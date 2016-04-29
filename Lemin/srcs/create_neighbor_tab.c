@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/11 08:56:56 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 15:38:46 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:05:25 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 char			*one_good_road(t_check *check, int nb_arg)
 {

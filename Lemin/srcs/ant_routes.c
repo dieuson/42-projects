@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:26:29 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 10:31:28 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:04:40 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 char		**short_way(char **tab)
 {

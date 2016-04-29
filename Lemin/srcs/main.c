@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:11:07 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 15:43:20 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:27:45 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 void		init_struct(t_check *check)
 {
@@ -53,7 +53,8 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 	FT_INIT(int, nb_args, check_nb_args(line));
 	if (!line)
 		return (find_way(check));
-	if (line[0] == '#' && line[1] != '#')
+	if (ft_strchr(line, '#') &&
+	(ft_strcmp(line, "##start") && ft_strcmp(line, "##end")))
 		return (1);
 	if (!check->ants && nb_args == 1 && nb_ants(line, check, 1))
 		return (1);
@@ -67,8 +68,7 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 			check->start_cell = ft_strdup((*cells)->name);
 		else if (check->end)
 			check->end_cell = ft_strdup((*cells)->name);
-		check->start = 0;
-		check->end = 0;
+		MULTI(check->start, check->end, 0);
 		return (1);
 	}
 	if (check->ants && check->start_list
@@ -96,7 +96,7 @@ int			main(void)
 			free_chaine(&check.start_list, &check);
 			return (-1);
 		}
-		else if (verif)
+		if (verif)
 		{
 			ft_putendl(line);
 			ft_memdel((void*)&line);

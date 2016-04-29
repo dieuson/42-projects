@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:44:53 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 15:41:46 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:05:57 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 void		free_chaine(t_cells **cells, t_check *check)
 {

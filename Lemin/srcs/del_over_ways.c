@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:42:57 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 10:44:35 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:07:48 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 char		**del_tab_line(char **tab, int line)
 {

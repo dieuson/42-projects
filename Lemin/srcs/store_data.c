@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 11:01:17 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 11:46:29 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:07:33 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 char		**store_good_ways(t_check *check)
 {

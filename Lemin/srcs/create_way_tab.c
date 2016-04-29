@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:38:59 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 15:37:55 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:05:39 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 void		join_road(char **road, char **cell)
 {

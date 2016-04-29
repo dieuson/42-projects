@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/06 08:02:38 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 11:00:52 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:07:24 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 int			check_nb_args(char *line)
 {

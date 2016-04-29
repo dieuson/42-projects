@@ -6,11 +6,11 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:59:41 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 15:42:51 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/04/29 16:07:15 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lem_in.h"
 
 char		*named(t_check *check, t_ref *ref)
 {
