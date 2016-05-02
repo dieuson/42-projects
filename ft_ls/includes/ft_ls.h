@@ -12,15 +12,34 @@
 
 #ifndef FT_LS_H
 # define FT_LS_H
-# include <dirent.h>
+# include "../srcs/ft_printf/includes/ft_printf.h"
+# include <stdlib.h>
+# include <fcntl.h>
 # include <unistd.h>
+# include <dirent.h>
 # include <pwd.h>
 # include <grp.h>
-# include <attr/xattr.h>
-# include <attr/xattr.h>
-# include <time.h>
-# include <stdlib.h>
+# include <sys/stat.h>
+# include <sys/types.h>
 # include <errno.h>
-# include <string.h>
+# include <time.h>
+# include <stdio.h>
+#include <stdint.h>
+
+typedef struct				s_file
+{
+	char 					*path;
+	char					*name;
+	char					*date;
+	struct s_file			*next;
+	struct s_file			*prev;
+	struct s_file 			*directories;
+}							t_file;
+
+typedef struct				s_store
+{
+	char 					*flags;
+	t_file					*start_list;
+}							t_store;
 
 #endif

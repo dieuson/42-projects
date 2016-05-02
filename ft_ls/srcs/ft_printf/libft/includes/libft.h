@@ -6,12 +6,13 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 19:03:46 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/01 09:36:18 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/03/12 19:03:49 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -19,8 +20,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-void 				free_tab(char ****tab);
-void		 		free_simple_tab(char ***tab);
+void 				free_simple_tab(char ***tab);
 
 void				ft_bzero(void *s, size_t n);
 void				*ft_memset(void *b, int c, size_t len);
@@ -44,7 +44,7 @@ char				*ft_strnstr(const char *s1, const char *s2, size_t n);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 
-long int			ft_atoi(const char *str);
+int					ft_atoi(const char *str);
 int					ft_atoibase(char *nb, int base);
 
 int					ft_isalpha(int c);

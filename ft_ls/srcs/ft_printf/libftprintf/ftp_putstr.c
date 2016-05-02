@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ftp_putstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/26 10:58:57 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/11 14:14:20 by dvirgile         ###   ########.fr       */
+/*   Created: 2016/03/12 19:25:36 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 19:25:36 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <unistd.h>
+#include "libftprintf.h"
 
-void	ft_putstr(char const *s)
+int		ftp_putstr(uint8_t *str)
 {
-	int i;
-
-	i = 0;
-	if (!s)
-		write(1, "(null)", 6);
-	else
+	if (!str)
 	{
-		while (s[i])
-		{
-			write(1, &s[i], 1);
-			i++;
-		}	
+		write(1, "(null)", 6);
+		return (6);
 	}
+	write(1, str, ftp_strlen(str));
+	return (ftp_strlen(str));
 }
