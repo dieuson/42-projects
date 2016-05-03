@@ -75,20 +75,18 @@ $(NAME):
 	@printf "\033[31mCompilation de la libft\033[0m"
 	@make -C $(LFT)
 	@printf "\033[32m Library done !\n\033[0m"
-	@printf "\033[31mCompilation\033[0m "
+	@printf "\033[31mCompilation ft_printf\033[0m "
 	@$(CC) -c $(LIBSRC) $(SRC) $(CALLS) -I./includes/libft.h
 	@mv $(SRCBIN) $(L)
 	@ar rcs libftprintf.a $(SRCBIN_L) $(LIBFTBIN) ./includes/ft_printf.h
 	@printf "\033[32m[OK]\033[0m\n"
 
 clean:
-	@printf "\033[31mNettoyage des dossiers\033[0m "
 	@make -C $(LFT) clean
 	@rm -rf $(SRCBIN_L)
 	@echo "\033[32m[OK]\033[0m"
 
 fclean: clean
-	@printf "\033[31mNettoyage de tous les dossiers\033[0m "
 	@make -C $(LFT) fclean
 	@rm -rf libftprintf.a
 	@echo "\033[32m[OK]\033[0m"

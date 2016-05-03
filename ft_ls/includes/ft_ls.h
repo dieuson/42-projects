@@ -39,7 +39,22 @@ typedef struct				s_file
 typedef struct				s_store
 {
 	char 					*flags;
+	char 					*path;
+	char 					**args;
+	int	 					argc;
 	t_file					*start_list;
 }							t_store;
+
+int 						detect_flags(char ***argv, int argc,
+							t_store *store);
+int 						parse_dir(struct dirent* fd, char *file,
+							t_file *files, t_store *store);
+int							print_help();
+int 						error_flags(char c);
+int							build_list(t_file **files, struct dirent* fd,
+							t_store *store);
+void 						print_list(t_store *store);
+t_file						*sort_by_name(t_file *head, t_store *store);
+int 						perror_ls();
 
 #endif
