@@ -24,8 +24,7 @@ ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_lstnew.c \
 ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_sqrt.c \
 ft_capitalize.c ft_printbase.c ft_printhex.c ft_strtolower.c ft_strtoupper.c \
 ft_abs.c ft_print_list.c ft_lstadd_bottom.c ft_itoabase.c ft_putwchar.c \
-ft_atoibase.c ft_recursive_pow.c ft_putwstr.c build_simple_tab.c \
-build_tab.c
+ft_atoibase.c ft_recursive_pow.c ft_putwstr.c build_simple_tab.c build_tab.c \
 
 BINARY = $(SRC:.c=.o)
 

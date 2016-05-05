@@ -21,6 +21,9 @@
 # include <fcntl.h>
 
 void 				free_simple_tab(char ***tab);
+void 				free_tab(char ****tab);
+char 				**new_simple_tab(char ***tab);
+char 				***new_tab(char ****tab);
 
 void				ft_bzero(void *s, size_t n);
 void				*ft_memset(void *b, int c, size_t len);

@@ -12,19 +12,16 @@
 
 #include "libft.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+int						ft_strcmp(const char *s1, const char *s2)
 {
-	unsigned char	*ptr1;
-	unsigned char	*ptr2;
+	int					i;
+	unsigned char		*str1;
+	unsigned char		*str2;
 
-	if (!s1 || !s2)
-		return (0);
-	ptr1 = (unsigned char*)s1;
-	ptr2 = (unsigned char*)s2;
-	while (*ptr1 && *ptr2 && *ptr1 == *ptr2)
-	{
-		ptr1++;
-		ptr2++;
-	}
-	return ((*ptr1) - (*ptr2));
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	i = 0;
+	while (str1[i] == str2[i] && str1[i] != '\0' && str2[i] != '\0')
+		i++;
+	return (str1[i] - str2[i]);
 }
