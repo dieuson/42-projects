@@ -1,6 +1,6 @@
 #include "../includes/ft_ls.h"
 
-char 		**verif_tadoublons(char **ref)
+char 		**verif_dir_double(char **ref)
 {
 	FT_INIT(int, line, 0);
 	FT_INIT(int, line2, 1);
@@ -12,7 +12,7 @@ char 		**verif_tadoublons(char **ref)
 		{
 			if (ref[line] && ref[line2] && !ft_strcmp(ref[line], ref[line2]))
 			{
-				while (ref[line2 + 1])
+				while (ref[line2] && ref[line2 + 1])
 				{
 					ref[line2] = ref[line2 + 1];
 					line2++;
@@ -49,10 +49,10 @@ char 		**ft_strjoin_tab(char **t1, char **t2)
 		line++;
 	}
 	fraiche[len_t1] = NULL;
-	fraiche = verif_tadoublons(fraiche);
+	fraiche = verif_dir_double(fraiche);
 	return (fraiche);
 }
-
+/*
 int 		verif_tab_doublons(char **ref)
 {
 	FT_INIT(int, line, 0);
@@ -71,8 +71,7 @@ int 		verif_tab_doublons(char **ref)
 		line2 = line + 1;
 	}
 	return (1);
-}
-
+}*/
 
 char 		**flag_R(t_store *store, int nb_dir)
 {

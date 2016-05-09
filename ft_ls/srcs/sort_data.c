@@ -99,7 +99,7 @@ int 				nb_files(char *file, t_store *store)
 	DIR 			*rep;
 	struct dirent 	*fd;
 
-	FT_INIT(int, nb_args, 1);
+	FT_INIT(int, nb_args, 0);
 	if (!(rep = opendir(file)))
 		return (perror_ls());
 	while((fd = readdir(rep)))
@@ -120,7 +120,10 @@ int			sort_files(char *file, t_store *store, t_file **files)
 	struct dirent *fd;
 
 	FT_INIT(int, ligne, 0);
-	tab = (t_file**)malloc(sizeof(t_file*) *  nb_files(file, store));
+	FT_INIT(int, len, nb_files(file, store));
+	if (!len)
+		return (0);
+	tab = (t_file**)malloc(sizeof(t_file*) *  (len + 1));
 	if (!(rep = opendir(file)))
 		return (perror_ls());
 	while((fd = readdir(rep)))
