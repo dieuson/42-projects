@@ -7,30 +7,46 @@ char 		 **reject_flags(char ***args, int ligne, int argc)
 		(*args)[ligne] = (*args)[ligne + 1];
 		ligne++;
 	}
-//	 (*args)[ligne - 1] = NULL;
+	 (*args)[ligne] = NULL;
 	return (*args);
 }
 
-int 			store_flag(char ***argv, int argc, t_store *store, int ligne)
+int 		verif_flag_a(t_store *store, char *name)
+{
+	if (name[0] == '.')
+	{
+		if (store->flags && ft_strstr(store->flags, "a"))
+			return (1);	
+		else
+			return (0);
+	}
+	else
+		return (1);
+}
+
+int 			store_flag(char ***argv, int argc, t_store *store, int line)
 {
 	FT_INIT(int, colonne, 1);
-	if (!ft_strcmp((*argv)[ligne], "--help"))
+	if (!ft_strcmp((*argv)[line], "--help"))
 		return (print_help());
-	while ((*argv)[ligne][colonne])
+	while ((*argv)[line][colonne])
 	{
-		if (!ft_strchr("lartR", (*argv)[ligne][colonne]))
-			return (error_flags((*argv)[ligne][colonne]));
+		if (!ft_strchr("lartR", (*argv)[line][colonne]))
+			return (error_flags((*argv)[line][colonne]));
 		colonne++;
 	}
-	if (store->flags)
-		store->flags = ft_strjoin(store->flags, (*argv)[ligne]);
-	else
-		store->flags = ft_strdup((*argv)[ligne]);
-	*argv = reject_flags(&(*argv), ligne, argc);
+	if (!store->flags)
+		store->flags = ft_strdup("00000");
+	(store->flags)[0] = ft_strchr((*argv)[line], 'l') ? 'l': (store->flags)[0];
+	(store->flags)[1] = ft_strchr((*argv)[line], 'a') ? 'a': (store->flags)[1];
+	(store->flags)[2] = ft_strchr((*argv)[line], 'r') ? 'r': (store->flags)[2];
+	(store->flags)[3] = ft_strchr((*argv)[line], 't') ? 't': (store->flags)[3];
+	(store->flags)[4] = ft_strchr((*argv)[line], 'R') ? 'R': (store->flags)[4];
+	*argv = reject_flags(&(*argv), line, argc);
 	return (1);
 }
 
-char 			**verif_double(char **argv, int *argc)
+char 			**verif_double_flags(char **argv, int *argc)
 {
 	FT_INIT(int, ligne, 0);
 	FT_INIT(int, ligne2, 0);
@@ -69,11 +85,7 @@ int 			detect_flags(char ***argv, int argc, t_store *store)
 		ligne++;
 	}
 	(*argv)[argc] = NULL;
-	*argv = verif_double(*argv, &argc);
-	store->argc = (argc - 1) <= 0 ? 0 : (argc - 1);
-//	ft_printf("nb args =%d,\n", store->argc);
-//	ft_putstr("argv\n");
-//	print_simple_tab(*argv);
-//	ft_putstr("end argv\n");
+	*argv = verif_double_flags(*argv, &argc);
+	store->argc = argc;
 	return (1);
 }

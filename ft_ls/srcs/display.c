@@ -10,9 +10,16 @@ void 		print_data(t_store *store)
 	t_file *tmp;
 
 	tmp = store->start_list;
+	if (store->flags && ft_strstr(store->flags, "R"))
+	{
+		if (!ft_strcmp(tmp->path, "./"))
+			ft_printf(".:	\n");
+		else
+			ft_printf("%s\n", tmp->path);
+	}
 	while (tmp)
 	{
-		if (store->flags && ft_strstr(store->flags, "l"))
+		if (store->flags && ft_strchr(store->flags, 'l'))
 		{
 			ft_printf("%s ", tmp->rights);
 			ft_printf("%3d ", tmp->link);
@@ -22,9 +29,10 @@ void 		print_data(t_store *store)
 			print_date(tmp->date);
 		}
 		ft_printf("%s\n", tmp->name);
+	if (tmp->next && ft_strcmp(tmp->path, (tmp->next)->path))
+		ft_printf("\n%s:\n", (tmp->next)->path);
 		tmp = tmp->next;
 	}
-	ft_printf("\n");
 }
 
 void 		print_list(t_store *store)
@@ -43,7 +51,7 @@ void 		print_list(t_store *store)
 void		print_simple_tab(char **tab)
 {
 	FT_INIT(int, ligne, 0);
-	while (tab[ligne])
+	while (tab && tab[ligne])
 	{
 		ft_putstr(tab[ligne]);
 		ft_putstr("\n");

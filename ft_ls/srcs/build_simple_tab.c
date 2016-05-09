@@ -11,7 +11,8 @@ void 		free_simple_tab(char ***tab)
 		(*tab)[colonne] = NULL;
 		colonne++;
 	}
-	free(*tab);
+	if (*tab)
+		free(*tab);
 	*tab = NULL;
 }
 

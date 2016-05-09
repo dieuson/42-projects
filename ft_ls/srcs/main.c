@@ -21,32 +21,6 @@ void 		init_struct(t_store *store)
 	store->argc = 0;
 }
 
-void 		free_struct(t_store *store)
-{
-	ft_strdel(&(store->path));
-	ft_strdel(&(store->flags));
-	free_simple_tab(&store->tab);
-	ft_memdel((void**)&store->start_list);
-}
-
-
-void 		free_list(t_file **files)
-{
-	t_file 	*tmp;
-
-	while ((*files))
-	{
-		tmp = (*files)->next;
-		ft_strdel(&(*files)->path);
-		ft_strdel(&(*files)->name);
-		free_simple_tab(&(*files)->date);
-		ft_strdel(&(*files)->rights);
-		free((*files)->directories);
-		ft_memdel((void**)&(*files));
-		*files = tmp;
-	}
-}
-
 int main (int argc, char **argv)
 {
 	t_file *files;
@@ -61,9 +35,9 @@ int main (int argc, char **argv)
 	}
 	files = NULL;
 	parse_args(argv, files, &store);
-	print_data(&store);
-	free_list(&(store.start_list));
-	free_struct(&store);
+//	print_data(&store);
+//	free_list(&(store.start_list));
+//	free_struct(&store);
 	if (argc || argv || files)
 		return (1);
 	return (0);	
