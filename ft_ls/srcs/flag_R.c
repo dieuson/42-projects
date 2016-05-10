@@ -34,6 +34,8 @@ char 		**ft_strjoin_tab(char **t1, char **t2)
 	FT_INIT(int, len_t2, 0);
 	FT_INIT(int, line, 0);
 	FT_INIT(char**, fraiche, NULL);
+	if (!t1)
+		return(copy_argv(t2));
 	if (!t1 || !t2)
 		return (NULL);
 	while (t1[len_t1])
@@ -41,7 +43,12 @@ char 		**ft_strjoin_tab(char **t1, char **t2)
 	while (t2[len_t2])
 		len_t2++;
 	fraiche = (char**)malloc(sizeof(char*) * (len_t1 + len_t2));
-	fraiche = copy_simple_tab(t1, fraiche);
+	len_t1 = 0;
+	while (t1[len_t1])
+	{
+		fraiche[len_t1] = ft_strdup(t1[len_t1]);
+		len_t1++;
+	}
 	while (line < len_t2)
 	{
 		fraiche[len_t1] = ft_strdup(t2[line]);
@@ -52,26 +59,6 @@ char 		**ft_strjoin_tab(char **t1, char **t2)
 	fraiche = verif_dir_double(fraiche);
 	return (fraiche);
 }
-/*
-int 		verif_tab_doublons(char **ref)
-{
-	FT_INIT(int, line, 0);
-	FT_INIT(int, line2, 1);
-	if (!ref)
-		return (1);	
-	while (ref[line])
-	{
-		while (ref[line2])
-		{
-			if (!ft_strcmp(ref[line], ref[line2]))
-				return (0);
-			line2++;
-		}
-		line++;
-		line2 = line + 1;
-	}
-	return (1);
-}*/
 
 char 		**flag_R(t_store *store, int nb_dir)
 {

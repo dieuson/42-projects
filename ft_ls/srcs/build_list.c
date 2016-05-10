@@ -53,13 +53,11 @@ t_file		*build_list(t_file **files, t_store *store, t_file **tab)
 		return (NULL);
 	if (!(*files))
 		MULTI(store->start_list, (*files), copy_cell(tab[0]));
-//	ft_putstr("test29\n");
 	while (tab && tab[line])
 	{
 		if (ft_strchr((tab[line])->rights, 'd'))
 			nb_dir++;
 		(*files)->next = copy_cell(tab[line]);
-//		ft_putstr("test30\n");
 		*files = (*files)->next;
 		line++;
 	}
@@ -67,14 +65,8 @@ t_file		*build_list(t_file **files, t_store *store, t_file **tab)
 	{
 		free_simple_tab(&(store->tab));
 		store->tab = flag_R(store, nb_dir);
-//		ft_putstr("tab\n");
-//		print_simple_tab(store->tab);
-//		ft_putstr("end tab\n");
 	}
-	else
-	{
-//		ft_putstr("else\n");
-		store->tab = NULL;
-	}
+//	else
+//		store->tab = NULL;
 	return (*files);
 }

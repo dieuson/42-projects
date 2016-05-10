@@ -29,7 +29,7 @@ int main (int argc, char **argv)
 	init_struct(&store);
 	if (!detect_flags(&argv, argc, &store))
 	{
-		free_list(&store.start_list);
+		free_list(store.start_list);
 		free_struct(&store);
 		return (0);
 	}

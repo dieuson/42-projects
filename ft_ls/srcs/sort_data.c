@@ -100,16 +100,21 @@ int 				nb_files(char *file, t_store *store)
 	struct dirent 	*fd;
 
 	FT_INIT(int, nb_args, 0);
+	ft_putstr("nb_files1\n");
+	ft_printf("file =%s,\n", file);
 	if (!(rep = opendir(file)))
-		return (perror_ls());
+		return (0);
+//		return (perror_ls() * 0);
+	ft_putstr("nb_files2\n");
 	while((fd = readdir(rep)))
 	{
 		if (!verif_flag_a(store, fd->d_name))
 			continue ;
 		nb_args++;
 	}
+	ft_putstr("nb_files3\n");
 	if (closedir(rep) == -1)
-		return (perror_ls());
+		return (perror_ls() * 0);
 	return (nb_args);
 }
 
@@ -120,24 +125,33 @@ int			sort_files(char *file, t_store *store, t_file **files)
 	struct dirent *fd;
 
 	FT_INIT(int, ligne, 0);
-	FT_INIT(int, len, nb_files(file, store));
-	if (!len)
+	ft_putstr("test19\n");
+	FT_INIT(int, len, 0);
+	ft_putstr("test20\n");
+	if (!(len =  nb_files(file, store)))
 		return (0);
 	tab = (t_file**)malloc(sizeof(t_file*) *  (len + 1));
 	if (!(rep = opendir(file)))
 		return (perror_ls());
+	ft_putstr("test21\n");
 	while((fd = readdir(rep)))
 	{
+//		ft_printf("debut\n");
 		if (!verif_flag_a(store, fd->d_name))
 			continue ;
 		tab[ligne] = create_cells(fd, store);
 		ligne++;
+//		ft_printf("FIN\n\n");
 	}
+	ft_putstr("test22\n");
 	if (closedir(rep) == -1)
 		return (perror_ls());
 	tab[ligne] = NULL;
 	tab = sort_tab_list(tab, store);
+	ft_putstr("test23\n");
 	build_list(&(*files), store, tab);
+	ft_putstr("test20\n");
 	free_tab_cell(&tab);
+	//ft_strdel(&file);
 	return (1);
 }
