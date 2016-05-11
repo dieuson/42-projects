@@ -53,16 +53,17 @@ typedef struct				s_store
 	t_file					*start_list;
 }							t_store;
 
-char				 		**copy_argv(char **argv);
+int 						compare(t_file *s1, t_file *s2, t_store *store);
+char				 		**ft_strdup_tab(char **argv);
 char				 		**ft_strjoin_tab(char **t1, char **t2);
-char				 		**flag_R(t_store *store, int nb_dir);
+char 						**flag_R(t_file *files, int nb_dir);
 char			 			**get_date(struct stat infos);
 char						*get_owner(struct stat infos);
 char						*get_owner_grp(struct stat infos);
 char 						*get_rights(struct stat infos);
 int							*get_time_pass(struct stat infos);
 void		 				free_struct(t_store *store);
-void 						free_tab_cell(t_file ***tab);
+void 						free_tab_cell(t_file **tab);
 void 						free_list(t_file *files);
 char			 			**verif_double(char **argv, int *argc);
 int					 		parse_dir(char *file, t_file **files, t_store *store);

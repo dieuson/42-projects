@@ -54,16 +54,22 @@ int 		compare(t_file *s1, t_file *s2, t_store *store)
 		}
 		else if (ft_strchr(store->flags, 'r'))
 		{
-			if (ft_strcmp_abs(s1->name, s2->name) < 0)
+	//		if (ft_strcmp_abs(s1->name, s2->name) < 0)
+	//			return (1);
+			if (ft_strcmp(s1->name, s2->name) < 0)
 				return (1);
 		}
-		else if (ft_strcmp_abs(s1->name, s2->name) > 0)
+		else if (ft_strcmp(s1->name, s2->name) > 0)
 				return (1);
+//		else if (ft_strcmp_abs(s1->name, s2->name) > 0)
+//				return (1);
 	}
 	else
 	{
-		if (ft_strcmp_abs(s1->name, s2->name) > 0)
+		if (ft_strcmp(s1->name, s2->name) > 0)
 			return (1);
+//		if (ft_strcmp_abs(s1->name, s2->name) > 0)
+//			return (1);
 	}
 	return (0);
 }
@@ -100,24 +106,149 @@ int 				nb_files(char *file, t_store *store)
 	struct dirent 	*fd;
 
 	FT_INIT(int, nb_args, 0);
-	ft_putstr("nb_files1\n");
-	ft_printf("file =%s,\n", file);
+	//ft_putstr("nb_files1\n");
+//	ft_printf("file =%s,\n", file);
 	if (!(rep = opendir(file)))
 		return (0);
 //		return (perror_ls() * 0);
-	ft_putstr("nb_files2\n");
+	//ft_putstr("nb_files2\n");
 	while((fd = readdir(rep)))
 	{
 		if (!verif_flag_a(store, fd->d_name))
 			continue ;
 		nb_args++;
 	}
-	ft_putstr("nb_files3\n");
+	//ft_putstr("nb_files3\n");
 	if (closedir(rep) == -1)
 		return (perror_ls() * 0);
 	return (nb_args);
 }
 
+void 		print_list_ls(t_file *start)
+{
+	t_file *tmp;
+
+	tmp = start;
+	while (tmp)
+	{
+		ft_printf("tmp->name =%s,\n", tmp->name);
+		tmp = tmp->next;
+	}
+	ft_printf("\n");
+}
+
+t_file 		*sort_list(t_file *liste, t_store *store, int len)
+{
+	t_file 	*copy_list;
+	t_file 	*tmp;
+	t_file 	*final;
+	t_file 	*start_list;
+	t_file 	*list;
+
+	FT_INIT(int, ref, len);
+	FT_INIT(int, final_nb, len);
+	list = liste;
+	start_list = list;
+	copy_list = start_list->next;
+	tmp = start_list;
+	final = NULL;
+	ft_printf("LIST\n");
+	print_list_ls(list);
+	ft_printf("END LIST\n");
+	while (copy_list && final_nb >= 0)
+	{
+		ft_putstr("test\n");
+		if (final != tmp && final != copy_list && compare(tmp, copy_list, store))
+		{
+			ft_putstr("if\n");
+			ft_printf("name =%s,\n", tmp->name);
+//			tmp = copy_list;
+			len = ref;
+			copy_list = copy_list->next;
+		}
+		else
+		{
+			len--;
+			copy_list = list;
+			tmp = copy_list;
+			ft_printf("else name =%s,\n", tmp->name);
+		}
+		if (len <= 0)
+		{
+			if (!final)
+			{
+				ft_putstr("first cell\n");
+				final = tmp;
+				start_list = final;
+			}
+			else
+			{
+				ft_putstr("ADD cell\n");
+				final->next = tmp;
+				final = final->next;
+				ft_printf("FINAL\n");
+				print_list_ls(start_list);
+				ft_printf("END FINAL\n\n");
+			}
+			ft_printf("final_nb =%d\n", final_nb);
+			len = ref;
+			copy_list = list;
+			tmp = copy_list;
+			final_nb--;
+		}
+		ft_printf("final_nb =%d\n", final_nb);
+		ft_printf("len =%d,\n", len);
+	}
+	return (start_list);
+}
+
+int			sort_files(char *file, t_store *store, t_file **files)
+{
+	t_file *list;
+	t_file *start_list;
+	DIR* 	rep;
+	struct dirent *fd;
+
+	FT_INIT(int, len, 0);
+	if (!(rep = opendir(file)))
+		return (perror_ls());
+	list = NULL;
+	while ((fd = readdir(rep)))
+	{
+		if (!verif_flag_a(store, fd->d_name))
+			continue ;
+		if (!len)
+		{
+			list = create_cells(fd, store);
+			start_list = list;
+		}
+		else
+		{
+			list->next = create_cells(fd, store);
+			list = list->next;
+		}
+		len++;
+	}
+	ft_printf("start->name =%s\n", start_list->name);
+	list = sort_list(start_list, store, len);
+//	tab = (t_file**)malloc(sizeof(t_file*) *  (len + 1));
+	//ft_putstr("test22\n");
+	if (closedir(rep) == -1)
+		return (perror_ls());
+//	tab[ligne] = NULL;
+//	tab = sort_tab_list(tab, store);
+	//ft_putstr("test23\n");
+//	build_list(&(*files), store, tab);
+	//ft_putstr("test20\n");
+//	free_tab_cell(tab);
+	//ft_putstr("test21\n");
+	if (files)
+		return (1);
+	//ft_strdel(&file);
+	return (1);
+}
+
+/*
 int			sort_files(char *file, t_store *store, t_file **files)
 {
 	t_file **tab;
@@ -125,33 +256,36 @@ int			sort_files(char *file, t_store *store, t_file **files)
 	struct dirent *fd;
 
 	FT_INIT(int, ligne, 0);
-	ft_putstr("test19\n");
+	//ft_putstr("test19\n");
 	FT_INIT(int, len, 0);
-	ft_putstr("test20\n");
+	//ft_putstr("test20\n");
 	if (!(len =  nb_files(file, store)))
 		return (0);
 	tab = (t_file**)malloc(sizeof(t_file*) *  (len + 1));
 	if (!(rep = opendir(file)))
 		return (perror_ls());
-	ft_putstr("test21\n");
+	//ft_putstr("test21\n");
 	while((fd = readdir(rep)))
 	{
-//		ft_printf("debut\n");
+//		//ft_printf("debut\n");
 		if (!verif_flag_a(store, fd->d_name))
 			continue ;
 		tab[ligne] = create_cells(fd, store);
 		ligne++;
 //		ft_printf("FIN\n\n");
 	}
-	ft_putstr("test22\n");
+	//ft_putstr("test22\n");
 	if (closedir(rep) == -1)
 		return (perror_ls());
 	tab[ligne] = NULL;
 	tab = sort_tab_list(tab, store);
-	ft_putstr("test23\n");
+	//ft_putstr("test23\n");
 	build_list(&(*files), store, tab);
-	ft_putstr("test20\n");
-	free_tab_cell(&tab);
+	//ft_putstr("test20\n");
+	free_tab_cell(tab);
+	//ft_putstr("test21\n");
+	if (files)
+		return (1);
 	//ft_strdel(&file);
 	return (1);
-}
+}*/

@@ -4,6 +4,7 @@ char 		**verif_dir_double(char **ref)
 {
 	FT_INIT(int, line, 0);
 	FT_INIT(int, line2, 1);
+	FT_INIT(char*, to_del, NULL);
 	if (!ref)
 		return (NULL);	
 	while (ref[line])
@@ -12,11 +13,13 @@ char 		**verif_dir_double(char **ref)
 		{
 			if (ref[line] && ref[line2] && !ft_strcmp(ref[line], ref[line2]))
 			{
+				to_del = ref[line2];
 				while (ref[line2] && ref[line2 + 1])
 				{
 					ref[line2] = ref[line2 + 1];
 					line2++;
 				}
+				ft_strdel(&to_del);
 				ref[line2] = NULL;
 			}
 			else
@@ -28,60 +31,91 @@ char 		**verif_dir_double(char **ref)
 	return (ref);
 }
 
-char 		**ft_strjoin_tab(char **t1, char **t2)
+int 		ft_strcmp_tab(char **tab, char *str)
 {
-	FT_INIT(int, len_t1, 0);
-	FT_INIT(int, len_t2, 0);
 	FT_INIT(int, line, 0);
-	FT_INIT(char**, fraiche, NULL);
-	if (!t1)
-		return(copy_argv(t2));
-	if (!t1 || !t2)
-		return (NULL);
-	while (t1[len_t1])
-		len_t1++;
-	while (t2[len_t2])
-		len_t2++;
-	fraiche = (char**)malloc(sizeof(char*) * (len_t1 + len_t2));
-	len_t1 = 0;
-	while (t1[len_t1])
+	while (tab[line])
 	{
-		fraiche[len_t1] = ft_strdup(t1[len_t1]);
-		len_t1++;
-	}
-	while (line < len_t2)
-	{
-		fraiche[len_t1] = ft_strdup(t2[line]);
-		len_t1++;
+		if (!ft_strcmp(tab[line], str))
+			return (1);
 		line++;
 	}
-	fraiche[len_t1] = NULL;
-	fraiche = verif_dir_double(fraiche);
+	return (0);
+}
+
+int 		ft_len_tab(void **tab)
+{
+	FT_INIT(int, len, 0);
+	while (tab && tab[len])
+		len++;
+	return (len);
+}
+
+char 		**ft_strjoin_tab(char **t1, char **t2)
+{
+	FT_INIT(int, line_cop, 0);
+	FT_INIT(int, line, 0);
+	FT_INIT(char**, fraiche, NULL);
+	if (!t2)
+		return (NULL);
+	if (!t1)
+		return(ft_strdup_tab(t2));
+	fraiche = (char**)malloc(sizeof(char*) * 
+	(ft_len_tab((void**)t1) + ft_len_tab((void**)t2)));
+	fraiche[0] = NULL;
+	while (t1[line_cop])
+	{
+//		if (!ft_strcmp(t1[line_cop], ".") || !ft_strcmp(t1[line_cop], ".."))
+//			continue ;
+		if (!fraiche[0] || !ft_strcmp_tab(fraiche, t1[line_cop]))
+		{
+			fraiche[line] = ft_strdup(t1[line_cop]);
+			fraiche[line + 1] = NULL;
+			line++;
+		}
+		line_cop++;
+	}
+	line_cop = 0;
+//	ft_printf("FIRST tab argv2\n");
+//	print_simple_tab(fraiche);
+//	ft_printf("FIRST tab end argv2\n\n");
+	while (t2[line_cop])
+	{
+		if (!fraiche[0] || !ft_strcmp_tab(fraiche, t2[line_cop]))
+		{
+			fraiche[line] = ft_strdup(t2[line_cop]);
+			fraiche[line + 1] = NULL;
+			line++;
+		}
+		line_cop++;
+	}
+//	ft_printf("SECOND tab argv2\n");
+//	print_simple_tab(fraiche);
+//	ft_printf("SECOND tab end argv2\n\n");
 	return (fraiche);
 }
 
-char 		**flag_R(t_store *store, int nb_dir)
+char 		**flag_R(t_file *files, int nb_dir)
 {
-	FT_INIT(char **, argv, NULL);
-	FT_INIT(t_file*, tmp, store->start_list);
+	FT_INIT(char **, tab, NULL);
 	if (!nb_dir)
-	{
-		ft_putstr("NO DIR\n");
 		return (NULL);
-	}
-	argv = (char **)malloc(sizeof(char *) * nb_dir);
+	tab = (char **)malloc(sizeof(char *) * (nb_dir + 1));
 	nb_dir = 0;
-	while (tmp)
+	while (files)
 	{
-		if (ft_strchr(tmp->rights, 'd'))
+		if (files && ft_strchr(files->rights, 'd'))
 		{
-			argv[nb_dir] = ft_strdup(tmp->absolute_path);
-			if (argv[nb_dir][ft_strlen(argv[nb_dir]) - 1] != '/')
-				argv[nb_dir] = ft_strjoin(argv[nb_dir], "/");
-			argv[nb_dir + 1] = NULL;
+			tab[nb_dir] = ft_strdup(files->absolute_path);
+			if (tab[nb_dir][ft_strlen(tab[nb_dir]) - 1] != '/')
+				tab[nb_dir] = ft_strjoin(tab[nb_dir], "/");
+			tab[nb_dir + 1] = NULL;
 			nb_dir++;
 		}
-		tmp = tmp->next;
+		files = files->next;
 	}
-	return (argv);
+//	ft_printf("STORE tab argv2\n");
+//	print_simple_tab(tab);
+//	ft_printf("STORE tab end argv2\n\n");
+	return (tab);
 }

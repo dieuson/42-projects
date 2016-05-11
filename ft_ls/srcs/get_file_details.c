@@ -17,6 +17,9 @@ char 		**get_date(struct stat infos)
 	ft_strsub(date_tmp[3], 0, (ft_strlen(date_tmp[3]) - ft_strlen(tmp)));
 	date[3] = NULL;
 	free_simple_tab(&date_tmp);
+//	ft_printf("START date\n");
+//	print_simple_tab(date);
+//	ft_printf("START date\n");	
 	return (date);
 }
 
