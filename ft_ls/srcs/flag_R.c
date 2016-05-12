@@ -114,8 +114,5 @@ char 		**flag_R(t_file *files, int nb_dir)
 		}
 		files = files->next;
 	}
-//	ft_printf("STORE tab argv2\n");
-//	print_simple_tab(tab);
-//	ft_printf("STORE tab end argv2\n\n");
 	return (tab);
 }

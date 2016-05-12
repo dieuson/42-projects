@@ -49,37 +49,3 @@ t_file 		*copy_cell(t_file *cell)
 	new->directories = ft_strstr(new->rights, "d") ? 1 : 0;
 	return (new);
 }
-
-t_file		*build_list(t_file **files, t_store *store, t_file **tab)
-{
-	FT_INIT(int, line, 1);
-	FT_INIT(int, nb_dir, 0);
-	FT_INIT(t_file *, verif_dir, NULL);
-	if (!tab)
-		return (NULL);
-	if (!(*files))
-		MULTI(store->start_list, (*files), copy_cell(tab[0]));
-//		MULTI(store->start_list, (*files), tab[0]);
-	verif_dir = *files;
-	while (tab && tab[line])
-	{
-		if (ft_strchr((tab[line])->rights, 'd'))
-		{
-		//	ft_putstr("DIR\n");
-			nb_dir++;
-		}
-//		(*files)->next = tab[line];
-		(*files)->next = copy_cell(tab[line]);
-		*files = (*files)->next;
-		line++;
-	}
-	if (nb_dir && store->flags && ft_strstr(store->flags, "R"))
-	{
-	//	ft_putstr("test segfault\n");
-		store->tab = flag_R(verif_dir, nb_dir);
-	//	ft_putstr("end test segfault\n");
-	}
-//	else
-//		store->tab = NULL;
-	return (*files);
-}

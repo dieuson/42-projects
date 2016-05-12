@@ -39,7 +39,7 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 {
 	FT_INIT(int, ligne, 0);
 	FT_INIT(char **, argv2, NULL);
-	FT_INIT(char **, to_del, NULL);
+//	FT_INIT(char **, to_del, NULL);
 	if (!store->argc)
 	{	
 		argv2 = (char**)malloc(sizeof(char*) * 2);
@@ -54,11 +54,11 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 		parse_dir(argv2[ligne], &files, store);
 		if (store->tab)
 		{
-			to_del = argv2;
+//			to_del = argv2;
 //			if (!ft_strcmp(argv2[ligne], "."))
 //				ligne--;
 			argv2 = ft_strjoin_tab(argv2, store->tab);
-			free_simple_tab(&(store->tab));
+//			free_simple_tab(&(store->tab));
 //			free_simple_tab(&to_del);
 			store->tab = NULL;
 
