@@ -7,9 +7,7 @@ void 		print_date(char **date)
 
 void 		print_data(t_store *store)
 {
-	t_file *tmp;
-
-	tmp = store->start_list;
+	FT_INIT(t_file*, tmp, store->start_list);
 	if (store->flags && ft_strstr(store->flags, "R"))
 	{
 		if (!ft_strcmp(tmp->path, "./"))

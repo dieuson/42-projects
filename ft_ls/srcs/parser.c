@@ -1,23 +1,5 @@
 #include "../includes/ft_ls.h"
 
-int 		parse_dir(char *file, t_file **files, t_store *store)
-{
-	if (ft_strcmp(file, "."))
-	{
-		if (file[ft_strlen(file) - 1] != '/')
-			store->path = ft_strjoin(file, "/");
-		else
-			store->path = ft_strdup(file);
-//		store->path = ft_strjoin(file, "/");
-	}
-//		store->path = ft_strdup(file);
-	else
-		store->path = ft_strdup("./");
-	sort_files(file, store, files);
-	ft_strdel(&store->path);
-	return (1);
-}
-
 char 		**ft_strdup_tab(char **argv)
 {
 	FT_INIT(int, len, 0);
@@ -33,6 +15,55 @@ char 		**ft_strdup_tab(char **argv)
 	}
 	fraiche[len] = NULL;
 	return (fraiche);
+}
+
+t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
+{
+	struct dirent *fd;
+
+	FT_INIT(t_file*, new, NULL);
+	FT_INIT(t_file*, start_new, NULL);
+	while ((fd = readdir(rep)))
+	{
+		if (!verif_flag_a(store, fd->d_name))
+			continue ;
+		if (!new)
+			MULTI(start_new, new, create_cells(fd, store));
+		else
+		{
+			new->next = create_cells(fd, store);
+			new = new->next;
+		}
+		(*nb_dir) += ft_strchr(new->rights, 'd') ? 1 : 0;
+	}
+	return (start_new);
+}
+
+int			sort_files(char *file, t_store *store, t_file **files)
+{
+	DIR* 	rep;
+
+	FT_INIT(t_file*, new, NULL);
+	FT_INIT(int, nb_dir, 0);
+	if (ft_strcmp(file, "."))
+		store->path = file[ft_strlen(file) - 1] != '/' ? ft_strjoin(file, "/") 
+		: ft_strdup(file);
+	else
+		store->path = ft_strdup("./");
+	if (!(rep = opendir(file)))
+		return (perror_ls());
+	new = read_elements(store, &nb_dir, rep);
+	if (closedir(rep) == -1)
+		return (perror_ls());
+	if (!(*files))
+		MULTI(store->start_list, *files, sort_list(new, store));
+	else
+		(*files)->next = sort_list(new, store);
+	store->tab = flag_R(*files, nb_dir, store);
+	while ((*files)->next)
+		*files = (*files)->next;
+	ft_strdel(&store->path);
+	return (1);
 }
 
 char 		**parse_args(char **argv, t_file *files, t_store *store)
@@ -51,7 +82,7 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 	while (argv2 && argv2[ligne])
 	{
 		ft_printf("argv =%s,\n", argv2[ligne]);
-		parse_dir(argv2[ligne], &files, store);
+		sort_files(argv2[ligne], store, &files);
 		if (store->tab)
 		{
 //			to_del = argv2;

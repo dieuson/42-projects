@@ -92,7 +92,7 @@ t_file 		*sort_list(t_file *files, t_store *store)
 	FT_INIT(t_file*, after, files);
 	FT_INIT(t_file*, before, files);
 	FT_INIT(t_file*, tmp, NULL);
-	while (after->next)
+	while (after && after->next)
 	{
 		if (compare(after, after->next, store) > 0)
 		{
@@ -110,49 +110,4 @@ t_file 		*sort_list(t_file *files, t_store *store)
 		}
 	}
 	return (files);
-}
-
-
-t_file		*build_list(t_file *files, t_store *store, int nb_dir)
-{
-	if (nb_dir && store->flags && ft_strchr(store->flags, 'R'))
-		store->tab = flag_R(files, nb_dir);
-	else
-		store->tab = NULL;
-	return (files);
-}
-
-int			sort_files(char *file, t_store *store, t_file **files)
-{
-	DIR* 	rep;
-	struct dirent *fd;
-
-	FT_INIT(t_file*, new, NULL);
-	FT_INIT(t_file*, start_new, NULL);
-	FT_INIT(int, nb_dir, 0);
-	if (!(rep = opendir(file)))
-		return (perror_ls());
-	while ((fd = readdir(rep)))
-	{
-		if (!verif_flag_a(store, fd->d_name))
-			continue ;
-		if (!new)
-			MULTI(start_new, new, create_cells(fd, store));
-		else
-		{
-			new->next = create_cells(fd, store);
-			new = new->next;
-		}
-		nb_dir += ft_strchr(new->rights, 'd') ? 1 : 0;
-	}
-	if (!(*files))
-		MULTI(store->start_list, *files, sort_liste(start_new, store));
-	else
-		(*files)->next = sort_liste(start_new, store);
-	build_liste(*files, store, nb_dir);
-	while ((*files)->next)
-		*files = (*files)->next;
-	if (closedir(rep) == -1)
-		return (perror_ls());
-	return (1);
 }

@@ -1,27 +1,23 @@
 #include "../includes/ft_ls.h"
 
+
 t_file		*create_cells(struct dirent* fd, t_store *store)
 {
 	struct stat infos;
 
 	FT_INIT(char*, path, ft_strjoin(store->path, fd->d_name));
 	stat(path, &infos);
-//	ft_printf("path =%s,\n", path);
 	FT_INIT(t_file *, new, (t_file *)malloc(sizeof(t_file)));
 	new->name = ft_strdup(fd->d_name);
 	new->path = ft_strdup(store->path);
 	new->absolute_path = ft_strdup(path);
-//	ft_printf("absolute_path =%s,\n\n", new->absolute_path);
 	new->date = get_date(infos);
-//	ft_printf("ORIGIN date\n");
-//	print_simple_tab(new->date);
-//	ft_printf("ORIGIN date\n");
 	new->owner =  get_owner(infos);
 	new->owner_grp = get_owner_grp(infos);
 	new->size = infos.st_size;
 	new->link = infos.st_nlink;
 	new->rights = get_rights(infos);
-	new->time_past = get_time_pass(infos);
+	new->time_past = get_time_estamp(infos);
 	new->next = NULL;
 	new->prev = NULL;
 	new->directories = ft_strchr(new->rights, 'd') ? 1 : 0;

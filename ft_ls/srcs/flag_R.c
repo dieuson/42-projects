@@ -95,9 +95,11 @@ char 		**ft_strjoin_tab(char **t1, char **t2)
 	return (fraiche);
 }
 
-char 		**flag_R(t_file *files, int nb_dir)
+char 		**flag_R(t_file *files, int nb_dir, t_store *store)
 {
 	FT_INIT(char **, tab, NULL);
+	if (!nb_dir || !store->flags || !ft_strchr(store->flags, 'R'))
+		return (NULL);
 	if (!nb_dir)
 		return (NULL);
 	tab = (char **)malloc(sizeof(char *) * (nb_dir + 1));
