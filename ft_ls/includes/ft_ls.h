@@ -37,11 +37,27 @@ typedef struct				s_file
 	char 					*rights;
 	int 					size;
 	int 					link;
-	int						*time_past;
+	int						*time_estamp;
+	int 					directories;
 	struct s_file			*next;
-	struct s_file			*prev;
-	int						directories;
 }							t_file;
+
+typedef struct 				s_display
+{
+	int						name_len;
+	int 					date_len;
+	int 					owner_len;
+	int 					owner_grp_len;
+	int 					size_len;
+	int 					lin_len;
+
+}							t_display;
+
+typedef struct 				s_args
+{
+	char 					*name;
+	struct s_args			*next;
+}							t_args;
 
 typedef struct				s_store
 {

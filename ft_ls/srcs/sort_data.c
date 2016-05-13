@@ -27,8 +27,8 @@ int						ft_strcmp_abs(const char *s1, const char *s2)
 
 int 		compare_date(t_file *cell1, t_file *cell2)
 {
-	FT_INIT(int*, s1, cell1->time_past);
-	FT_INIT(int*, s2, cell2->time_past);
+	FT_INIT(int*, s1, cell1->time_estamp);
+	FT_INIT(int*, s2, cell2->time_estamp);
 	FT_INIT(int, verif, 0);
 	verif += s1[0] - s2[0];
 	verif += (!verif && s1[0] == s2[0]) ?(s1[1] - s2[1]) : verif;

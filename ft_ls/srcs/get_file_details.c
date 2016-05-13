@@ -62,7 +62,8 @@ int					*get_time_estamp(struct stat infos)
 	struct tm 		*tmp;
 	int 			*tab;
 
-	tmp = gmtime(&infos.st_mtime);
+	tmp = gmtime(&infos.st_ctime);
+//	tmp = gmtime(&infos.st_mtimespec.tv_sec);
 	tab = (int*)malloc(sizeof(int) * 7);
 	tab[0] = tmp->tm_year;
 	tab[1] = tmp->tm_mon;

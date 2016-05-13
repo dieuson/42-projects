@@ -17,9 +17,8 @@ t_file		*create_cells(struct dirent* fd, t_store *store)
 	new->size = infos.st_size;
 	new->link = infos.st_nlink;
 	new->rights = get_rights(infos);
-	new->time_past = get_time_estamp(infos);
+	new->time_estamp = get_time_estamp(infos);
 	new->next = NULL;
-	new->prev = NULL;
 	new->directories = ft_strchr(new->rights, 'd') ? 1 : 0;
 	ft_strdel(&path);
 	return (new);
@@ -39,9 +38,8 @@ t_file 		*copy_cell(t_file *cell)
 	new->size = cell->size;
 	new->link = cell->link;
 	new->rights = ft_strdup(cell->rights);
-	new->time_past = NULL;
+	new->time_estamp = NULL;
 	new->next = NULL;
-	new->prev = NULL;
-	new->directories = ft_strstr(new->rights, "d") ? 1 : 0;
+	new->directories = ft_strchr(new->rights, 'd') ? 1 : 0;
 	return (new);
 }

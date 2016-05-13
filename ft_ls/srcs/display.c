@@ -7,6 +7,9 @@ void 		print_date(char **date)
 
 void 		print_data(t_store *store)
 {
+	char 	*test;
+
+	test = "%7d";
 	FT_INIT(t_file*, tmp, store->start_list);
 	if (store->flags && ft_strstr(store->flags, "R"))
 	{
@@ -23,7 +26,7 @@ void 		print_data(t_store *store)
 			ft_printf("%3d ", tmp->link);
 			ft_printf("%5s ", tmp->owner);
 			ft_printf("%5s", tmp->owner_grp);
-			ft_printf("%7d", tmp->size);
+			ft_printf(test, tmp->size);
 			print_date(tmp->date);
 		}
 		ft_printf("%s\n", tmp->name);

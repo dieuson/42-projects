@@ -59,6 +59,7 @@ char 		**ft_strjoin_tab(char **t1, char **t2)
 	if (!t2)
 		return (NULL);
 	if (!t1)
+
 		return(ft_strdup_tab(t2));
 	fraiche = (char**)malloc(sizeof(char*) * 
 	(ft_len_tab((void**)t1) + ft_len_tab((void**)t2)));
@@ -106,7 +107,7 @@ char 		**flag_R(t_file *files, int nb_dir, t_store *store)
 	nb_dir = 0;
 	while (files)
 	{
-		if (files && ft_strchr(files->rights, 'd'))
+		if (files && !ft_strstr(files->absolute_path, "/.") && ft_strchr(files->rights, 'd'))
 		{
 			tab[nb_dir] = ft_strdup(files->absolute_path);
 			if (tab[nb_dir][ft_strlen(tab[nb_dir]) - 1] != '/')

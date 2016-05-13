@@ -11,7 +11,7 @@
 #******************************************************************************#
 
 NAME = ft_ls
-LIBFT = ./srcs/libft/
+LIBFT = ./srcs/ft_printf/libft/
 FT_PRINTF = ./srcs/ft_printf/
 LS = ./srcs/
 FILES_LS = main.c build_list.c detection.c display.c errors.c parser.c \
@@ -31,7 +31,7 @@ $(NAME):
 	@printf "\033[31mCompilation $(NAME):\033[0m"
 	@gcc -Wall -Wextra -Werror -g3 $(SRC) $(INCLUDES) -c
 	@gcc -Wall -Wextra -Werror $(BIN) $(INCLUDES) \
-	$(FT_PRINTF)libftprintf.a -o $(NAME)
+	$(FT_PRINTF)libftprintf.a $(LIBFT)libft.a -o $(NAME)
 	@mkdir bin_folder
 	@mv $(BIN) ./bin_folder
 	@printf "\033[32m done!\n\033[0m"
