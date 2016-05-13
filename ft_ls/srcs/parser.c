@@ -17,50 +17,88 @@ char 		**ft_strdup_tab(char **argv)
 	return (fraiche);
 }
 
+int 		*create_int_tab(int len)
+{
+	int 	*fraiche;
+
+	FT_INIT(int, line, 0);
+ 	fraiche = (int*)malloc(sizeof(int) * len);
+ 	while (line < len)
+ 	{
+ 		fraiche[line] = 0;
+ 		line++;
+ 	}
+ 	return (fraiche);
+}
+
+int 		len_str(char *str)
+{
+	FT_INIT(int, len, 0);
+	while (str && str[len])
+		len++;
+	return (len);
+}
+
+int 		len_nb(int nb)
+{
+	FT_INIT(int, len, 0);
+	while (nb > 0)
+	{
+		len++;
+		nb /= 10;
+	}
+	return (len);
+}
+
+int 		*compare_len(t_file *files, int *tab)
+{
+	tab[0] = len_str(files->rights) > tab[0] ? len_str(files->rights) : tab[0];
+	tab[1] = len_nb(files->link) > tab[1] ? len_nb(files->link) : tab[1];
+	tab[2] = len_str(files->owner) > tab[2] ? len_str(files->owner) : tab[2];
+	tab[3] = len_str(files->owner_grp) > tab[3] ? len_str(files->owner_grp) : tab[3];
+	tab[4] = len_nb(files->size) > tab[4] ? len_nb(files->size) : tab[4];
+	tab[5] = len_str(files->date[0]) > tab[5] ? len_str(files->date[0]) : tab[5];
+	tab[6] = len_str(files->date[1]) > tab[6] ? len_str(files->date[1]) : tab[6];
+	tab[7] = len_str(files->date[2]) > tab[7] ? len_str(files->date[2]) : tab[7];
+	tab[8] = len_str(files->name) > tab[8] ? len_str(files->name) : tab[8];
+	return (tab);
+}
+
 t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
 {
 	struct dirent *fd;
 
 	FT_INIT(t_file*, new, NULL);
 	FT_INIT(t_file*, start_new, NULL);
+	FT_INIT(int*, len_print, NULL);
+
+	len_print = create_int_tab(9);
 	while ((fd = readdir(rep)))
 	{
-//		ft_putstr("test30\n");
 		if (!verif_flag_a(store, fd->d_name))
 			continue ;
-//		ft_putstr("test31\n");
 		if (!new)
-		{
-//			ft_putstr("test31.5\n");
 			MULTI(start_new, new, create_cells(fd, store));
-//			ft_putstr("test32\n");
-		}
 		else
 		{
-//			ft_putstr("test33\n");
 			new->next = create_cells(fd, store);
 			new = new->next;
-//			ft_putstr("test34\n");
 		}
+		len_print = compare_len(new, len_print);
+		new->display = len_print;
 		if (store->flags && ft_strchr(store->flags, 'R') 
 		&& ft_strcmp(new->name, ".") && ft_strcmp(new->name, ".."))
-		{
-//			ft_putstr("test35\n");
 			(*nb_dir) += ft_strchr(new->rights, 'd') ? 1 : 0;
-//			ft_putstr("test36\n");
-		}
-//		ft_putstr("test37\n");
 	}
+	start_new->display = len_print;
 	return (start_new);
 }
 
 int			sort_files(char *file, t_store *store, t_file **files)
 {
-	DIR* 	rep;
-
 	FT_INIT(t_file*, new, NULL);
+	FT_INIT(DIR*, rep, NULL);
 	FT_INIT(int, nb_dir, 0);
-//	ft_printf("file name =%s,\n", file);
 	if (ft_strcmp(file, "."))
 		store->path = file[ft_strlen(file) - 1] != '/' ? ft_strjoin(file, "/") 
 		: ft_strdup(file);
@@ -81,7 +119,6 @@ int			sort_files(char *file, t_store *store, t_file **files)
 	store->tab = flag_R(*files, nb_dir, store);
 	while (*files && (*files)->next)
 		*files = (*files)->next;
-	ft_strdel(&store->path);
 	return (1);
 }
 
@@ -134,14 +171,11 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 	FT_INIT(t_args*, args, NULL);
 	FT_INIT(t_args*, add, NULL);
 	FT_INIT(t_args*, tmp, NULL);
-//	FT_INIT(t_args*, to_del, NULL);
 	args = build_args_list(argv, store);
 	while (args)
 	{
-//		ft_printf("argv =%s,\n", args->name);
-//		to_del = args;
-//		ft_putstr("test8\n");
 		sort_files(args->name, store, &files);
+		ft_strdel(&store->path);
 		if (store->tab)
 		{
 			add = build_args_list(store->tab, store);
@@ -149,12 +183,6 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 			tmp = args->next;
 			args->next = add;
 			ft_lstadd_end_ls(&args, tmp);
-//			add->next = tmp;
-//			ft_lstadd_end_ls(&args, build_args_list(store->tab, store));
-			ft_putstr("\nTEST\n");
-//			free_simple_tab(&store->tab);
-	//		ft_memdel((void**)store->tab);
-
 		}
 	//	ft_strdel(&to_del->name);
 	//	ft_memdel((void**)&(to_del));

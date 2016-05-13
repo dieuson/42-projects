@@ -35,23 +35,13 @@ typedef struct				s_file
 	char 					*owner;
 	char 					*owner_grp;
 	char 					*rights;
+	int						*time_estamp;
+	int						*display;
 	int 					size;
 	int 					link;
-	int						*time_estamp;
 	int 					directories;
 	struct s_file			*next;
 }							t_file;
-
-typedef struct 				s_display
-{
-	int						name_len;
-	int 					date_len;
-	int 					owner_len;
-	int 					owner_grp_len;
-	int 					size_len;
-	int 					lin_len;
-
-}							t_display;
 
 typedef struct 				s_args
 {
