@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
+#include "./includes/libft.h"
 #include "../libftprintf/libftprintf.h"
 
 #define MASK_2 "110xxxxx 10xxxxxx"

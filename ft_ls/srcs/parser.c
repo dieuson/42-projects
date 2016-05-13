@@ -119,7 +119,7 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 //			to_del = argv2;
 //			if (!ft_strcmp(argv2[ligne], "."))
 //				ligne--;
-		//	args = ft_lstadd_end(&args, build_args_list(store->tab, store));
+			args = ft_lstadd_end(&args, build_args_list(store->tab, store));
 			argv2 = ft_strjoin_tab(argv2, store->tab);
 //			free_simple_tab(&(store->tab));
 //			free_simple_tab(&to_del);
