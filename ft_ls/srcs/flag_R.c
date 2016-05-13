@@ -96,6 +96,8 @@ char 		**ft_strjoin_tab(char **t1, char **t2)
 	return (fraiche);
 }
 
+
+
 char 		**flag_R(t_file *files, int nb_dir, t_store *store)
 {
 	FT_INIT(char **, tab, NULL);
@@ -103,18 +105,24 @@ char 		**flag_R(t_file *files, int nb_dir, t_store *store)
 		return (NULL);
 	if (!nb_dir)
 		return (NULL);
+//	ft_printf("test0\n");
 	tab = (char **)malloc(sizeof(char *) * (nb_dir + 1));
+//	ft_printf("test1\n");
 	nb_dir = 0;
 	while (files)
 	{
-		if (files && !ft_strstr(files->absolute_path, "/.") && ft_strchr(files->rights, 'd'))
+//		if (files && !ft_strstr(files->absolute_path, "/.") && ft_strchr(files->rights, 'd'))
+		if (files && ft_strchr(files->rights, 'd') && ft_strcmp(files->name, ".") && ft_strcmp(files->name, ".."))
 		{
+//			ft_putstr("test3\n");
 			tab[nb_dir] = ft_strdup(files->absolute_path);
 			if (tab[nb_dir][ft_strlen(tab[nb_dir]) - 1] != '/')
 				tab[nb_dir] = ft_strjoin(tab[nb_dir], "/");
+//			ft_putstr("test5\n");
 			tab[nb_dir + 1] = NULL;
 			nb_dir++;
 		}
+//		ft_printf("file->name =%s\n", files->name);
 		files = files->next;
 	}
 	return (tab);

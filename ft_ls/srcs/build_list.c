@@ -8,19 +8,24 @@ t_file		*create_cells(struct dirent* fd, t_store *store)
 	FT_INIT(char*, path, ft_strjoin(store->path, fd->d_name));
 	stat(path, &infos);
 	FT_INIT(t_file *, new, (t_file *)malloc(sizeof(t_file)));
+//	ft_putstr("test40\n");
 	new->name = ft_strdup(fd->d_name);
 	new->path = ft_strdup(store->path);
 	new->absolute_path = ft_strdup(path);
 	new->date = get_date(infos);
 	new->owner =  get_owner(infos);
+//	ft_putstr("test45\n");
 	new->owner_grp = get_owner_grp(infos);
 	new->size = infos.st_size;
 	new->link = infos.st_nlink;
 	new->rights = get_rights(infos);
+//	ft_putstr("test50\n");
 	new->time_estamp = get_time_estamp(infos);
+//	ft_putstr("test50\n");
 	new->next = NULL;
 	new->directories = ft_strchr(new->rights, 'd') ? 1 : 0;
 	ft_strdel(&path);
+//	ft_putstr("test55\n");
 	return (new);
 }
 

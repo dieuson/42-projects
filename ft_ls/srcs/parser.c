@@ -25,18 +25,31 @@ t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
 	FT_INIT(t_file*, start_new, NULL);
 	while ((fd = readdir(rep)))
 	{
+//		ft_putstr("test30\n");
 		if (!verif_flag_a(store, fd->d_name))
 			continue ;
+//		ft_putstr("test31\n");
 		if (!new)
+		{
+//			ft_putstr("test31.5\n");
 			MULTI(start_new, new, create_cells(fd, store));
+//			ft_putstr("test32\n");
+		}
 		else
 		{
+//			ft_putstr("test33\n");
 			new->next = create_cells(fd, store);
 			new = new->next;
+//			ft_putstr("test34\n");
 		}
 		if (store->flags && ft_strchr(store->flags, 'R') 
-		&& !ft_strstr(new->absolute_path, "/."))
+		&& ft_strcmp(new->name, ".") && ft_strcmp(new->name, ".."))
+		{
+//			ft_putstr("test35\n");
 			(*nb_dir) += ft_strchr(new->rights, 'd') ? 1 : 0;
+//			ft_putstr("test36\n");
+		}
+//		ft_putstr("test37\n");
 	}
 	return (start_new);
 }
@@ -47,31 +60,27 @@ int			sort_files(char *file, t_store *store, t_file **files)
 
 	FT_INIT(t_file*, new, NULL);
 	FT_INIT(int, nb_dir, 0);
-	ft_printf("file name =%s,\n", file);
+//	ft_printf("file name =%s,\n", file);
 	if (ft_strcmp(file, "."))
 		store->path = file[ft_strlen(file) - 1] != '/' ? ft_strjoin(file, "/") 
 		: ft_strdup(file);
 	else
 		store->path = ft_strdup("./");
-	ft_putstr("test1\n");
 	if (!(rep = opendir(file)))
 		return (perror_ls());
-	ft_putstr("test2\n");
 	new = read_elements(store, &nb_dir, rep);
-	ft_putstr("test3\n");
 	if (closedir(rep) == -1)
 		return (perror_ls());
-	ft_putstr("test4\n");
 	if (!(*files))
 		MULTI(store->start_list, *files, sort_list(new, store));
 	else
+	{
 		(*files)->next = sort_list(new, store);
-	ft_putstr("test5\n");
-	store->tab = flag_R(*files, nb_dir, store);
-	ft_putstr("test6\n");
-	while ((*files)->next)
 		*files = (*files)->next;
-	ft_putstr("test7\n");
+	}
+	store->tab = flag_R(*files, nb_dir, store);
+	while (*files && (*files)->next)
+		*files = (*files)->next;
 	ft_strdel(&store->path);
 	return (1);
 }
@@ -101,77 +110,59 @@ t_args 		*build_args_list(char **argv, t_store *store)
 		ligne++;
 		new = new->next;
 	}
+//	if (store->tab)
+//		free_simple_tab(&(store->tab));
 	return (start_new);
+}
+
+void		ft_lstadd_end_ls(t_args **alst, t_args *new)
+{
+	t_args 	*node;
+
+	if (*alst)
+	{
+		node = *alst;
+		while (node->next)
+			node = node->next;
+		node->next = new;
+	}
 }
 
 char 		**parse_args(char **argv, t_file *files, t_store *store)
 {
 	
-	FT_INIT(char **, argv2, NULL);
 	FT_INIT(t_args*, args, NULL);
+	FT_INIT(t_args*, add, NULL);
+	FT_INIT(t_args*, tmp, NULL);
+//	FT_INIT(t_args*, to_del, NULL);
 	args = build_args_list(argv, store);
 	while (args)
 	{
-		ft_printf("argv =%s,\n", args->name);
+//		ft_printf("argv =%s,\n", args->name);
+//		to_del = args;
+//		ft_putstr("test8\n");
 		sort_files(args->name, store, &files);
 		if (store->tab)
 		{
-//			to_del = argv2;
-//			if (!ft_strcmp(argv2[ligne], "."))
-//				ligne--;
-			args = ft_lstadd_end(&args, build_args_list(store->tab, store));
-			argv2 = ft_strjoin_tab(argv2, store->tab);
-//			free_simple_tab(&(store->tab));
-//			free_simple_tab(&to_del);
-			store->tab = NULL;
+			add = build_args_list(store->tab, store);
+			store->argc = 1;
+			tmp = args->next;
+			args->next = add;
+			ft_lstadd_end_ls(&args, tmp);
+//			add->next = tmp;
+//			ft_lstadd_end_ls(&args, build_args_list(store->tab, store));
+			ft_putstr("\nTEST\n");
+//			free_simple_tab(&store->tab);
+	//		ft_memdel((void**)store->tab);
 
 		}
+	//	ft_strdel(&to_del->name);
+	//	ft_memdel((void**)&(to_del));
 		args = args->next;
 	}	
 	print_data(store);
-//	free_simple_tab(&store->tab);
+	
 //	free_simple_tab(&argv2);
 //	free_list(store->start_list);
 	return (NULL);
 }
-
-/*
-char 		**parse_args(char **argv, t_file *files, t_store *store)
-{
-	FT_INIT(int, ligne, 0);
-	FT_INIT(char **, argv2, NULL);
-//	FT_INIT(char **, to_del, NULL);
-
-
-
-	if (!store->argc)
-	{	
-		argv2 = (char**)malloc(sizeof(char*) * 2);
-		argv2[0] = ft_strdup(".");
-		argv2[1] = NULL;
-	}
-	else
-		argv2 = ft_strdup_tab(argv);
-	while (argv2 && argv2[ligne])
-	{
-		ft_printf("argv =%s,\n", argv2[ligne]);
-		sort_files(argv2[ligne], store, &files);
-		if (store->tab)
-		{
-//			to_del = argv2;
-//			if (!ft_strcmp(argv2[ligne], "."))
-//				ligne--;
-			argv2 = ft_strjoin_tab(argv2, store->tab);
-//			free_simple_tab(&(store->tab));
-//			free_simple_tab(&to_del);
-			store->tab = NULL;
-
-		}
-		ligne++;
-	}	
-	print_data(store);
-//	free_simple_tab(&store->tab);
-//	free_simple_tab(&argv2);
-//	free_list(store->start_list);
-	return (NULL);
-}*/
