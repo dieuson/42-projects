@@ -1,7 +1,5 @@
 #include "../includes/ft_ls.h"
 
-
-
 t_file		*create_cells(struct dirent* fd, t_store *store)
 {
 	struct stat infos;
@@ -17,7 +15,7 @@ t_file		*create_cells(struct dirent* fd, t_store *store)
 
 		new->owner =  get_owner(infos);
 		new->owner_grp = get_owner_grp(infos);
-		new->date = get_date(infos);
+		new->date = get_date(infos, 1);
 //	}
 //	if (store->flags && ft_strchr(store->flags, 't'))
 		new->time_estamp = get_time_estamp(infos);

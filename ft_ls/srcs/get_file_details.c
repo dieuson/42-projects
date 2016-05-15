@@ -1,13 +1,16 @@
 #include "../includes/ft_ls.h"
 
-char 		**get_date(struct stat infos)
+char 		**get_date(struct stat infos, int type)
 {
 	char 	**date_tmp;
 	char 	**date;
 	char 	*tmp;
 	struct  tm 	*ref;
 
-	tmp = ctime(&infos.st_mtime);
+	if (type == 1)
+		tmp = ctime(&infos.st_mtime);
+	else if (type == 2)
+		tmp = ctime(&infos.st_atime);
 	date_tmp = ft_strsplit(tmp, ' ');
 //	ft_strdel(&tmp);
 	date = (char **)malloc(sizeof(char*) * 5);

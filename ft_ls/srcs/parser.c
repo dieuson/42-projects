@@ -42,6 +42,8 @@ int 		len_str(char *str)
 int 		len_nb(int nb)
 {
 	FT_INIT(int, len, 0);
+	if (nb == 0)
+		return (1);
 	while (nb > 0)
 	{
 		len++;
@@ -60,6 +62,7 @@ int 		*compare_len(t_file *files, int *tab)
 	tab[5] = len_str(files->date[0]) > tab[5] ? len_str(files->date[0]) : tab[5];
 	tab[6] = len_str(files->date[1]) > tab[6] ? len_str(files->date[1]) : tab[6];
 	tab[7] = len_str(files->date[2]) > tab[7] ? len_str(files->date[2]) : tab[7];
+//	ft_printf("tab[7] =%d,\n", tab[7]);
 	tab[8] = len_str(files->name) > tab[8] ? len_str(files->name) : tab[8];
 	return (tab);
 }
@@ -90,7 +93,7 @@ t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
 		&& ft_strcmp(new->name, ".") && ft_strcmp(new->name, ".."))
 			(*nb_dir) += ft_strchr(new->rights, 'd') ? 1 : 0;
 	}
-	start_new->display = len_print;
+//	start_new->display = len_print;
 	return (start_new);
 }
 
@@ -109,6 +112,8 @@ int			sort_files(char *file, t_store *store, t_file **files)
 	new = read_elements(store, &nb_dir, rep);
 	if (closedir(rep) == -1)
 		return (perror_ls());
+	if (!new)
+		return (0);
 	if (!(*files))
 		MULTI(store->start_list, *files, sort_list(new, store));
 	else
@@ -116,7 +121,7 @@ int			sort_files(char *file, t_store *store, t_file **files)
 		(*files)->next = sort_list(new, store);
 		*files = (*files)->next;
 	}
-	store->tab = flag_R(*files, nb_dir, store);
+	store->add_args = flag_R(*files, nb_dir, store);
 	while (*files && (*files)->next)
 		*files = (*files)->next;
 	return (1);
@@ -147,8 +152,6 @@ t_args 		*build_args_list(char **argv, t_store *store)
 		ligne++;
 		new = new->next;
 	}
-//	if (store->tab)
-//		free_simple_tab(&(store->tab));
 	return (start_new);
 }
 
@@ -176,20 +179,18 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 	{
 		sort_files(args->name, store, &files);
 		ft_strdel(&store->path);
-		if (store->tab)
+		if (store->add_args)
 		{
-			add = build_args_list(store->tab, store);
+//			add = build_args_list(store->tab, store);
+			add = store->add_args;
 			store->argc = 1;
 			tmp = args->next;
 			args->next = add;
 			ft_lstadd_end_ls(&args, tmp);
 		}
-	//	ft_strdel(&to_del->name);
-	//	ft_memdel((void**)&(to_del));
 		args = args->next;
 	}	
 	print_data(store);
-	
 //	free_simple_tab(&argv2);
 //	free_list(store->start_list);
 	return (NULL);

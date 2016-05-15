@@ -4,7 +4,7 @@ void 		free_struct(t_store *store)
 {
 	ft_strdel(&(store->path));
 	ft_strdel(&(store->flags));
-	free_simple_tab(&store->tab);
+//	free_simple_tab(&store->tab);
 	free(&store->start_list);
 //	ft_memdel((void**)&store->start_list);
 }

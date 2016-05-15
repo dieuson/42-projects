@@ -53,19 +53,21 @@ typedef struct				s_store
 {
 	char 					*flags;
 	char 					*path;
-	char 					**tab;
+//	char 					**tab;
 	int	 					argc;
 	int 					len_tab;
+	t_args 					*add_args;
 	t_file					*start_list;
 }							t_store;
 
+t_args				 		*create_cells_args(char *name);
 t_file 						*sort_list(t_file *files, t_store *store);
 t_file						*read_elements(t_store *store, int *nb_dir, DIR *rep);
 int 						compare(t_file *s1, t_file *s2, t_store *store);
 char				 		**ft_strdup_tab(char **argv);
 char				 		**ft_strjoin_tab(char **t1, char **t2);
-char 						**flag_R(t_file *files, int nb_dir, t_store *store);
-char			 			**get_date(struct stat infos);
+t_args 						*flag_R(t_file *files, int nb_dir, t_store *store);
+char 						**get_date(struct stat infos, int type);
 char						*get_owner(struct stat infos);
 char						*get_owner_grp(struct stat infos);
 char 						*get_rights(struct stat infos);

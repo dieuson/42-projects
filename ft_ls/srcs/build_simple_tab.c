@@ -1,5 +1,5 @@
 #include "../includes/ft_ls.h"
-
+/*
 void 		free_simple_tab(char ***tab)
 {
 	int 	colonne;
@@ -44,4 +44,4 @@ char 		**new_simple_tab(char ***tab)
 	fraiche_tab = copy_simple_tab(*tab, fraiche_tab);
 	free_simple_tab(&(*tab));
 	return (fraiche_tab);
-}
+}*/

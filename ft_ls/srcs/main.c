@@ -16,7 +16,7 @@ void 		init_struct(t_store *store)
 {
 	store->start_list = NULL;
 	store->flags = NULL;
-	store->tab = NULL;
+//	store->tab = NULL;
 	store->len_tab = 5;
 	store->argc = 0;
 }
