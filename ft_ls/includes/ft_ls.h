@@ -35,11 +35,14 @@ typedef struct				s_file
 	char 					*owner;
 	char 					*owner_grp;
 	char 					*rights;
-	int						*time_estamp;
+	unsigned int			time_estamp;
+	unsigned int			time_lacc; 
+	unsigned int 			time_chan; 
 	int						*display;
 	int 					size;
 	int 					link;
 	int 					directories;
+	int 					nb_blocks;
 	struct s_file			*next;
 }							t_file;
 
@@ -53,6 +56,7 @@ typedef struct				s_store
 {
 	char 					*flags;
 	char 					*path;
+	int 					nb_blocks;
 //	char 					**tab;
 	int	 					argc;
 	int 					len_tab;
@@ -63,7 +67,7 @@ typedef struct				s_store
 t_args				 		*create_cells_args(char *name);
 t_file 						*sort_list(t_file *files, t_store *store);
 t_file						*read_elements(t_store *store, int *nb_dir, DIR *rep);
-int 						compare(t_file *s1, t_file *s2, t_store *store);
+int 						compare(t_file *s1, t_file *s2, t_store *store, int loop);
 char				 		**ft_strdup_tab(char **argv);
 char				 		**ft_strjoin_tab(char **t1, char **t2);
 t_args 						*flag_R(t_file *files, int nb_dir, t_store *store);
@@ -71,7 +75,7 @@ char 						**get_date(struct stat infos, int type);
 char						*get_owner(struct stat infos);
 char						*get_owner_grp(struct stat infos);
 char 						*get_rights(struct stat infos);
-int							*get_time_estamp(struct stat infos);
+unsigned int				get_time_estamp(struct stat infos);
 void		 				free_struct(t_store *store);
 void 						free_tab_cell(t_file **tab);
 void 						free_list(t_file *files);
@@ -90,6 +94,6 @@ int 						detect_flags(char ***argv, int argc, t_store *store);
 int							print_help();
 int 						error_flags(char c);
 void 						print_list(t_store *store);
-int 						perror_ls();
+int						 	perror_ls(char *file);
 
 #endif

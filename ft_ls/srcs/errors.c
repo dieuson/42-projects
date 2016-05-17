@@ -21,8 +21,8 @@ int 	error_flags(char c)
 	return (0);
 }
 
-int 	perror_ls()
+int 	perror_ls(char *file)
 {
-	perror("");
-	return (-1);
+	perror(file);
+	return (0);
 }

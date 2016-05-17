@@ -25,25 +25,22 @@ int						ft_strcmp_abs(const char *s1, const char *s2)
 	return (ft_strlen(s1) - ft_strlen(s2));
 }
 
-int 		compare_date(t_file *cell1, t_file *cell2)
+int		compare_date(t_file *cell1, t_file *cell2)
 {
-	FT_INIT(int*, s1, cell1->time_estamp);
-	FT_INIT(int*, s2, cell2->time_estamp);
-	FT_INIT(int, verif, 0);
-	verif += s1[0] - s2[0];
-	verif += (!verif && s1[0] == s2[0]) ?(s1[1] - s2[1]) : verif;
-	verif += (!verif && s1[1] == s2[1]) ?(s1[2] - s2[2]) : verif;
-	verif += (!verif && s1[2] == s2[2]) ?(s1[3] - s2[3]) : verif;
-	verif += (!verif && s1[3] == s2[3]) ?(s1[4] - s2[4]) : verif;
-	verif += (!verif && s1[4] == s2[4]) ?(s1[5] - s2[5]) : verif;
-	verif += (!verif && s1[5] == s2[5]) ? ft_strlen(cell1->name) - ft_strlen(cell2->name) : 0;
-	return (verif);
+	int dif;
+
+	dif = cell1->time_estamp - cell2->time_estamp;
+	if (!dif)
+		dif = cell1->time_lacc - cell2->time_lacc;
+	if (!dif)
+		dif = cell1->time_chan - cell2->time_chan;
+	return (dif);
 }
 
 
-int 		compare(t_file *s1, t_file *s2, t_store *store)
+int 		compare(t_file *s1, t_file *s2, t_store *store, int loop)
 {
-	if (store->flags)
+	if (store->flags && loop)
 	{
 		if (ft_strchr(store->flags, 't'))
 		{
@@ -54,21 +51,15 @@ int 		compare(t_file *s1, t_file *s2, t_store *store)
 		}
 		else if (ft_strchr(store->flags, 'r'))
 		{
-		if (ft_strcmp_abs(s1->name, s2->name) < 0)
+			if (ft_strcmp(s1->name, s2->name) < 0)
 				return (1);
-//			if (ft_strcmp(s1->name, s2->name) < 0)
-//				return (1);
 		}
-		else if (ft_strcmp_abs(s1->name, s2->name) > 0)
+		else if (ft_strcmp(s1->name, s2->name) > 0)
 				return (1);
-//		else if (ft_strcmp(s1->name, s2->name) > 0)
-//				return (1);
 	}
 	else
 	{
-//		if (ft_strcmp(s1->name, s2->name) > 0)
-//			return (1);
-		if (ft_strcmp_abs(s1->name, s2->name) > 0)
+		if (ft_strcmp(s1->name, s2->name) > 0)
 			return (1);
 	}
 	return (0);
@@ -92,9 +83,13 @@ t_file 		*sort_list(t_file *files, t_store *store)
 	FT_INIT(t_file*, after, files);
 	FT_INIT(t_file*, before, files);
 	FT_INIT(t_file*, tmp, NULL);
+	FT_INIT(static int, loop, 0);
+
+//	ft_putstr("test2\n");
 	while (after && after->next)
 	{
-		if (compare(after, after->next, store) > 0)
+//		ft_printf("after->name =%s, 	before->name =%s,\n", after->name, before->name);
+		if (compare(after, after->next, store, loop) > 0)
 		{
 			files = (after == files) ? after->next : files;
 			before->next = after->next;
@@ -109,5 +104,10 @@ t_file 		*sort_list(t_file *files, t_store *store)
 			after = after->next;
 		}
 	}
+	loop++;
+//	print_list_ls(files);
+	if (loop == 1)
+		return(sort_list(files, store));
+	loop = 0;
 	return (files);
 }

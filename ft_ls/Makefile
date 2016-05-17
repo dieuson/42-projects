@@ -15,9 +15,9 @@ LIBFT = ./srcs/ft_printf/libft/
 FT_PRINTF = ./srcs/ft_printf/
 LS = ./srcs/
 FILES_LS = main.c build_list.c detection.c display.c errors.c parser.c \
-sort_data.c build_simple_tab.c flag_R.c delete_data.c get_file_details.c
+sort_data.c flag_R.c delete_data.c get_file_details.c
 SRC = $(LS)main.c $(LS)build_list.c $(LS)detection.c $(LS)display.c \
-$(LS)errors.c $(LS)parser.c $(LS)sort_data.c $(LS)build_simple_tab.c \
+$(LS)errors.c $(LS)parser.c $(LS)sort_data.c \
 $(LS)flag_R.c $(LS)delete_data.c $(LS)get_file_details.c
 BIN = $(FILES_LS:.c=.o)
 INLCLUDES = $(LIBFT)libft.h ./includes/ft_ls.h
