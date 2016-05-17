@@ -19,6 +19,7 @@ void 		init_struct(t_store *store)
 //	store->tab = NULL;
 	store->len_tab = 5;
 	store->argc = 0;
+	store->nb_blocks = 0;
 }
 
 int main (int argc, char **argv)

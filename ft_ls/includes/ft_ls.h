@@ -36,13 +36,13 @@ typedef struct				s_file
 	char 					*owner_grp;
 	char 					*rights;
 	unsigned int			time_estamp;
-	unsigned int			time_lacc; 
-	unsigned int 			time_chan; 
+	unsigned int			time_lacc;
+	unsigned int 			time_chan;
 	int						*display;
 	int 					size;
 	int 					link;
 	int 					directories;
-	int 					nb_blocks;
+	unsigned int 			nb_blocks;
 	struct s_file			*next;
 }							t_file;
 
@@ -56,7 +56,7 @@ typedef struct				s_store
 {
 	char 					*flags;
 	char 					*path;
-	int 					nb_blocks;
+	unsigned int			nb_blocks;
 //	char 					**tab;
 	int	 					argc;
 	int 					len_tab;
@@ -64,10 +64,11 @@ typedef struct				s_store
 	t_file					*start_list;
 }							t_store;
 
+t_file						*create_simple_cells(char *name, t_store *store);
 t_args				 		*create_cells_args(char *name);
 t_file 						*sort_list(t_file *files, t_store *store);
 t_file						*read_elements(t_store *store, int *nb_dir, DIR *rep);
-int 						compare(t_file *s1, t_file *s2, t_store *store, int loop);
+int 						compare(t_file *s1, t_file *s2, t_store *store);
 char				 		**ft_strdup_tab(char **argv);
 char				 		**ft_strjoin_tab(char **t1, char **t2);
 t_args 						*flag_R(t_file *files, int nb_dir, t_store *store);
@@ -84,7 +85,7 @@ int					 		parse_dir(char *file, t_file **files, t_store *store);
 int 						verif_flag_a(t_store *store, char *name);
 t_file						*create_cells(struct dirent* fd, t_store *store);
 int							ft_strcmp_abs(const char *s1, const char *s2);
-void 						print_data(t_store *store);
+void						print_data(t_store *store, int ref);
 char 						**parse_args(char **argv, t_file *files, t_store *store);	
 void						print_simple_tab(char **tab);
 void 						distrib_sort_data(char ***tab, t_store *store);

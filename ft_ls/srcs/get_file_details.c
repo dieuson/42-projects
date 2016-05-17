@@ -66,7 +66,7 @@ unsigned int		get_time_estamp(struct stat infos)
 {
 	unsigned int time_est;
 	
-	
-	time_est = infos.st_mtimespec.tv_sec; 
+	time_est = infos.st_mtime;	
+//	time_est = infos.st_mtimespec.tv_sec; 
 	return (time_est);
 }

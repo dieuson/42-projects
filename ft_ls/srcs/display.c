@@ -22,21 +22,22 @@ char			*set_sentence(int len, char *flag)
 	return (c_len);
 }
 
-static void		print_l(t_file *tmp)
+static void		print_l(t_file *tmp, char *flags)
 {
 	if (!tmp)
 		return ;
 	ft_printf("%10s ", tmp->rights);
 	ft_printf(set_sentence((tmp->display)[1], "d "), tmp->link);
 	ft_printf(set_sentence((tmp->display)[2], "s "), tmp->owner);
-	ft_printf(set_sentence((tmp->display)[3] + 1, "s "), tmp->owner_grp);
+	if (!flags || (flags && !ft_strchr(flags, 'g')))
+		ft_printf(set_sentence((tmp->display)[3] + 1, "s "), tmp->owner_grp);
 	ft_printf(set_sentence((tmp->display)[4] + 2, "d "), tmp->size);
 	ft_printf(set_sentence((tmp->display)[5], "s "), (tmp->date)[0]);
 	ft_printf(set_sentence((tmp->display)[6], "s "), (tmp->date)[1]);
 	ft_printf(set_sentence((tmp->display)[7], "s "), (tmp->date)[2]);
 }
 
-void			print_data(t_store *store)
+void			print_data(t_store *store, int ref)
 {
 	FT_INIT(t_file*, tmp, store->start_list);
 	if (store->flags && ft_strchr(store->flags, 'R'))
@@ -46,12 +47,12 @@ void			print_data(t_store *store)
 		else
 			ft_printf("%s\n", tmp->path);
 	}
-	if (store->flags && ft_strchr(store->flags, 'l'))
+	if (ref && store->flags && ft_strchr(store->flags, 'l'))
 		ft_printf("total %d\n", tmp->nb_blocks);
 	while (tmp)
 	{
 		if (store->flags && ft_strchr(store->flags, 'l'))
-			print_l(tmp);
+			print_l(tmp, store->flags);
 		ft_printf(set_sentence((tmp->display)[8], "-s\n"), tmp->name);
 		if (tmp->next && ft_strcmp(tmp->path, (tmp->next)->path))
 		{

@@ -63,37 +63,30 @@ t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
 	len_print = create_int_tab(9);
 	while ((fd = readdir(rep)))
 	{
-//		ft_putstr("test readdir\n");
 		if (!verif_flag_a(store, fd->d_name))
 			continue ;
-		//ft_putstr("test readdir1\n");
 		if (!new)
 			MULTI(start_new, new, create_cells(fd, store));
 		else
 		{
-//			ft_putstr("test readdir0\n");
 			new->next = create_cells(fd, store);
-//			ft_putstr("test readdir1\n");
 			new = new->next;
 		}
-//		ft_putstr("test readdir2\n");
-		len_print = compare_len(store->flags, new, len_print);
 		store->nb_blocks += new->nb_blocks;
+//		ft_printf("name =%s, nb_blocks =%d,\n",new->name, store->nb_blocks);
+		len_print = compare_len(store->flags, new, len_print);
 		new->display = len_print;
-//		ft_putstr("test readdir3\n");
-//		ft_putstr("test readdir4\n");
 		if (store->flags && ft_strchr(store->flags, 'R') 
 		&& ft_strcmp(new->name, ".") && ft_strcmp(new->name, ".."))
 			(*nb_dir) += ft_strchr(new->rights, 'd') ? 1 : 0;
-//		ft_putstr("test readdir5\n");
 	}
-//	start_new->display = len_print;
-	//ft_printf("end read\n");		
 	return (start_new);
 }
 
 int			sort_files(char *file, t_store *store, t_file **files)
 {
+	struct stat infos;
+
 	FT_INIT(t_file*, new, NULL);
 	FT_INIT(DIR*, rep, NULL);
 	FT_INIT(int, nb_dir, 0);
@@ -104,32 +97,32 @@ int			sort_files(char *file, t_store *store, t_file **files)
 	else
 		store->path = ft_strdup("./");
 	if (!(rep = opendir(file)))
-		return (perror_ls(file));
-//	ft_putstr("testREAD");
+	{
+		if (stat(file, &infos) == -1)
+			return (perror_ls(file));
+		MULTI(store->start_list, *files, create_simple_cells(file, store));
+		(*files)->display = create_int_tab(9);
+		(*files)->display = compare_len(file, *files, (*files)->display);
+		return (0);
+	}
 	new = read_elements(store, &nb_dir, rep);
-//	ft_putstr("FIN READ\n");
 	if (closedir(rep) == -1)
 		return (perror_ls(file));
 	if (!new)
 	{
 		store->add_args = NULL;
-		//ft_putstr("new == NULL\n");
 		return (0);
 	}
-	//ft_putstr("test4\n");
+	//ft_printf("test\n");
 	if (!(*files))
 		MULTI(store->start_list, *files, sort_list(new, store));
 	else
 	{
-//		ft_putstr("test5\n");
 		(*files)->next = sort_list(new, store);
 		*files = (*files)->next;
 	}
-	(*files)->nb_blocks = store->nb_blocks;
-	store->nb_blocks = 0;
-//	ft_putstr("test1");
+//	(*files)->nb_blocks = store->nb_blocks;
 	store->add_args = flag_R(*files, nb_dir, store);
-//	ft_putstr("test2\n");
 	while (*files && (*files)->next)
 		*files = (*files)->next;
 	return (1);
@@ -171,7 +164,9 @@ void		ft_lstadd_end_ls(t_args **alst, t_args *new)
 	{
 		node = *alst;
 		while (node->next)
+		{
 			node = node->next;
+		}
 		node->next = new;
 	}
 }
@@ -185,6 +180,7 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 	args = build_args_list(argv, store);
 	while (args)
 	{
+		store->nb_blocks = 0;
 		verif = sort_files(args->name, store, &files);
 		ft_strdel(&store->path);
 		if (verif && store->add_args)
@@ -197,6 +193,6 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 		}
 		args = args->next;
 	}
-	print_data(store);
+	print_data(store, verif);
 	return (NULL);
 }
