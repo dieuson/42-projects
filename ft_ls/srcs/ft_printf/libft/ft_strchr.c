@@ -25,3 +25,17 @@ char		*ft_strchr(const char *s, int c)
 		return ((char*)&s[i]);
 	return (NULL);
 }
+
+char		*ft_strnchr(const char *s, int c, int size)
+{
+	int		i;
+	char	t;
+
+	t = (char)c;
+	i = 0;
+	while (i < size && s[i] != '\0' && s[i] != t)
+		i++;
+	if (s[i] == t)
+		return ((char*)&s[i]);
+	return (NULL);
+}

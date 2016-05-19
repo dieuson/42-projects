@@ -1,31 +1,6 @@
 #include "../includes/ft_ls.h"
 
-int						ft_strcmp_abs(const char *s1, const char *s2)
-{
-	int					i;
-	int 				e;
-	unsigned char		*str1;
-	unsigned char		*str2;
-
-	str1 = (unsigned char *)s1;
-	str2 = (unsigned char *)s2;
-	i = 0;
-	e = 0;
-	while (str1[i] && str2[e])
-	{
-		if (str1[i] == '.')
-			i++;
-		if (str2[e] == '.')
-			e++;
-		if (ft_tolower(str1[i]) != ft_tolower(str2[e]))
-			return (ft_tolower(str1[i]) - ft_tolower(str2[e]));
-		i++;
-		e++;
-	}
-	return (ft_strlen(s1) - ft_strlen(s2));
-}
-
-int		compare_date(t_file *cell1, t_file *cell2)
+static int		compare_date(t_file *cell1, t_file *cell2)
 {
 	int dif;
 
@@ -33,8 +8,7 @@ int		compare_date(t_file *cell1, t_file *cell2)
 	return (dif);
 }
 
-
-int 		compare(t_file *s1, t_file *s2, t_store *store)
+static int 		compare(t_file *s1, t_file *s2, t_store *store)
 {
 	if (store->flags)
 	{
@@ -60,17 +34,21 @@ int 		compare(t_file *s1, t_file *s2, t_store *store)
 	return (0);
 }
 
-void 		print_list_ls(t_file *start)
+int 		*compare_len(char *flags, t_file *files, int *tab)
 {
-	t_file *tmp;
-
-	tmp = start;
-	while (tmp)
+	if (flags && ft_strchr(flags, 'l'))
 	{
-		ft_printf("tmp->name =%s,\n", tmp->name);
-		tmp = tmp->next;
+		tab[0] = len_str(files->rights) > tab[0] ? len_str(files->rights) : tab[0];
+		tab[1] = len_nb(files->link) > tab[1] ? len_nb(files->link) : tab[1];
+		tab[2] = len_str(files->owner) > tab[2] ? len_str(files->owner) : tab[2];
+		tab[3] = len_str(files->owner_grp) > tab[3] ? len_str(files->owner_grp) : tab[3];
+		tab[4] = len_nb(files->size) > tab[4] ? len_nb(files->size) : tab[4];
+		tab[5] = len_str(files->date[0]) > tab[5] ? len_str(files->date[0]) : tab[5];
+		tab[6] = len_str(files->date[1]) > tab[6] ? len_str(files->date[1]) : tab[6];
+		tab[7] = len_str(files->date[2]) > tab[7] ? len_str(files->date[2]) : tab[7];
 	}
-	ft_printf("\n");
+	tab[8] = len_str(files->name) > tab[8] ? len_str(files->name) : tab[8];
+	return (tab);
 }
 
 t_file 		*sort_list(t_file *files, t_store *store)

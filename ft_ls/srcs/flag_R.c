@@ -1,9 +1,26 @@
 #include "../includes/ft_ls.h"
 
-t_args 		*flag_R(t_file *files, int nb_dir, t_store *store)
+void		ft_lstadd_end_ls(t_file **alst, t_file *new)
 {
-	FT_INIT(t_args*, new, NULL);
-	FT_INIT(t_args*, start_new, NULL);
+	t_file 	*node;
+
+	if (*alst)
+	{
+		node = *alst;
+		while (node->next)
+		{
+			node = node->next;
+		}
+		node->next = new;
+	}
+	else
+		*alst = new;
+}
+
+t_file 		*flag_R(t_file *files, int nb_dir, t_store *store)
+{
+	FT_INIT(t_file*, new, NULL);
+	FT_INIT(t_file*, start_new, NULL);
 	FT_INIT(char*, tmp, NULL);
 	if (!nb_dir || !store->flags || !ft_strchr(store->flags, 'R'))
 		return (NULL);
@@ -16,10 +33,10 @@ t_args 		*flag_R(t_file *files, int nb_dir, t_store *store)
 			if (tmp[ft_strlen(tmp) - 1] != '/')
 				tmp = ft_strjoin(tmp, "/");
 			if (!new)
-				MULTI(start_new, new, create_cells_args(tmp));
+				MULTI(start_new, new, create_simple_cells(tmp, store));
 			else
 			{
-				new->next = create_cells_args(tmp);
+				new->next = create_simple_cells(tmp, store);
 				new = new->next;
 			}
 		}
