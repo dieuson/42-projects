@@ -35,6 +35,7 @@ typedef struct				s_file
 	char 					*owner;
 	char 					*owner_grp;
 	char 					*rights;
+	char 					*private;
 	unsigned int			time_estamp;
 	unsigned int			time_lacc;
 	unsigned int 			time_chan;
@@ -65,13 +66,13 @@ typedef struct				s_store
 	t_file					*start_list;
 }							t_store;
 
-int							build_list(char *file, t_store *store, t_file **files);
+int							build_list(char *file, char *rights, t_store *store, t_file **files);
 t_file				 		*build_args_list(char **argv, t_store *store);
 int 						*compare_len(char *flags, t_file *files, int *tab);
 t_file						*create_simple_cells(char *name, t_store *store);
 t_file				 		*create_cells_args(char *name);
 int 						*create_int_tab(int len);
-t_file						*create_cells(struct dirent* fd, t_store *store);
+t_file						*create_cells(char *name, t_store *store);
 char 						**copy_simple_tab(char **src, char **dest);
 int 						detect_flags(char ***argv, int argc, t_store *store);
 void 						distrib_sort_data(char ***tab, t_store *store);

@@ -12,21 +12,18 @@ t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
 		if (!verif_flag_a(store, fd->d_name))
 			continue ;
 		if (!new)
-			MULTI(start_new, new, create_cells(fd, store));
+			MULTI(start_new, new, create_cells(fd->d_name, store));
 		else
 		{
-			new->next = create_cells(fd, store);
+			new->next = create_cells(fd->d_name, store);
 			new = new->next;
 		}
 		store->nb_blocks += new->nb_blocks;
-//		ft_printf("name =%s, nb_blocks =%d,\n",new->name, store->nb_blocks);
 		store->len_print = compare_len(store->flags, new, store->len_print);
-//		new->display = len_print;
 		if (store->flags && ft_strchr(store->flags, 'R') 
 		&& ft_strcmp(new->name, ".") && ft_strcmp(new->name, ".."))
 			(*nb_dir) += ft_strchr(new->rights, 'd') ? 1 : 0;
 	}
-// 	store->len_print = len_print;
 	return (start_new);
 }
 
@@ -52,8 +49,9 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 			loop++;
 		}
 		loop = 0;
-		verif = build_list(args->name, store, &files);
-		ft_strdel(&store->path);
+//		ft_printf("TEST1\n");
+		verif = build_list(args->name, args->rights, store, &files);
+//		ft_printf("TEST2\n");
 		if (verif && store->add_args)
 		{
 			add = store->add_args;
@@ -64,7 +62,7 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 		}
 		args = args->next;
 	}
-//	if (store->start_list)
+	if (store->start_list)
 		print_data(store, verif);
 	return (NULL);
 }

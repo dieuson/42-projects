@@ -88,6 +88,7 @@ clean:
 
 fclean: clean
 	@make -C $(LFT) fclean
+	@printf "\033[32m	  libftprintf.a \033[0m"
 	@rm -rf libftprintf.a
 	@echo "\033[32m[OK]\033[0m"
 

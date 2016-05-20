@@ -43,13 +43,25 @@ static void		print_l2(t_file *tmp, char *flags, int *len_display)
 		return ;
 	ft_printf("%10s ", tmp->rights);
 	ft_printf(set_sentence((len_display)[1], "d "), tmp->link);
-	ft_printf(set_sentence((len_display)[2], "s "), tmp->owner);
+	ft_printf(set_sentence((len_display)[3] + 1, "s "), tmp->owner_grp);
 	if (!flags || (flags && !ft_strchr(flags, 'g')))
-		ft_printf(set_sentence((len_display)[3] + 1, "s "), tmp->owner_grp);
+		ft_printf(set_sentence((len_display)[2], "s "), tmp->owner);
 	ft_printf(set_sentence((len_display)[4] + 2, "d "), tmp->size);
 	ft_printf(set_sentence((len_display)[5], "s "), (tmp->date)[0]);
 	ft_printf(set_sentence((len_display)[6], "s "), (tmp->date)[1]);
 	ft_printf(set_sentence((len_display)[7], "s "), (tmp->date)[2]);
+}
+
+static void 	put_color(t_file *tmp, char *flags, int position)
+{
+	if (!flags || (flags && !ft_strchr(flags, 'c')))
+		return ;
+	if (!position && (tmp->rights)[0] == 'd')
+		ft_printf("\033[31m");
+	else if (!position && (tmp->rights)[0] == 'l')
+			ft_printf("\033[32m");
+	if (position && ((tmp->rights)[0] == 'd' || (tmp->rights)[0] == 'l'))
+		ft_printf("\033[0m");
 }
 
 void			print_data(t_store *store, int ref)
@@ -57,26 +69,33 @@ void			print_data(t_store *store, int ref)
 	FT_INIT(t_file*, tmp, store->start_list);
 	FT_INIT(char*, path, NULL);
 	FT_INIT(int*, len_display, tmp->display);
+	ft_printf("start fisplay\n");
 	while (tmp)
 	{
 		if (tmp->display)
 			len_display = tmp->display;
 	//	if (tmp->path && store->flags && ft_strchr(store->flags, 'R'))
 	//		ft_printf("%s:\n", tmp->path);
-//		if (ref && store->flags && ft_strchr(store->flags, 'l'))
-//		ft_printf("total %d\n", tmp->nb_blocks);
 		/*if ((path && !ft_strcmp((store->start_list)->path, path)) || 
 		(tmp && path && ft_strcmp(tmp->path, path) &&*/
-		if (store->argc > 1)
-			if ((!path && tmp->path) || (tmp->path && path && ft_strcmp(tmp->path, path)))
+//		if (store->argc > 1)
+			if (/*(!path && tmp->path) || */(tmp->path && path && ft_strcmp(tmp->path, path)))
 				ft_printf("%s:\n", tmp->path);
-		if (store->flags && ft_strchr(store->flags, 'l'))
+		if (store->flags && ft_strchr(store->flags, 'l') && ((tmp->path && path && ft_strcmp(tmp->path, path)) || tmp == store->start_list))
+			ft_printf("total %d\n", tmp->nb_blocks);
+		put_color(tmp, store->flags, 0);
+		if (store->flags && (ft_strchr(store->flags, 'l') || ft_strchr(store->flags, 'g')))
 		{
 
 			print_l2(tmp, store->flags, len_display);
 //			print_l(tmp, store->flags);
 		}
-		ft_printf(set_sentence(len_display[8], "-s\n"), tmp->name);
+		ft_printf(set_sentence(len_display[8], "-s"), tmp->name);
+		if (store->flags && ft_strchr(store->flags, 'l') && ft_strchr(tmp->rights, 'l'))
+			ft_printf(" -> private/%s\n", tmp->private);
+		else
+			ft_putendl("");
+		put_color(tmp, store->flags, 1);
 		path = tmp->path;
 		tmp = tmp->next;
 	}

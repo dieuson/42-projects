@@ -7,10 +7,20 @@ char 		**get_date(struct stat infos, int type)
 	char 	*tmp;
 	struct  tm 	*ref;
 
+//	ft_putendl("GET DATE");
+
 	if (type == 1)
+	{
+//		ft_putendl("GET DATE 1 ");
 		tmp = ctime(&infos.st_mtime);
+//		ft_putendl("GET DATE after ");
+	}
 	else if (type == 2)
+	{
+//		ft_putendl("GET DATE 2 ");
 		tmp = ctime(&infos.st_atime);
+	}
+//	return (NULL);
 	date_tmp = ft_strsplit(tmp, ' ');
 	if (!date_tmp)
 		return (NULL);
@@ -43,12 +53,32 @@ char		*get_owner_grp(struct stat infos)
 	return (owner->gr_name);
 }
 
+char 		get_file_type(struct stat infos)
+{
+	if (S_ISDIR(infos.st_mode))
+		return ('d');
+	else if (S_ISFIFO(infos.st_mode))
+		return ('p');
+	else if (S_ISCHR(infos.st_mode))
+		return ('c');
+	else if (S_ISBLK(infos.st_mode))
+		return ('b');
+	else if (S_ISLNK(infos.st_mode))
+		return ('l');
+	else if (S_ISSOCK(infos.st_mode))
+		return ('s');
+	else if (S_ISREG(infos.st_mode))
+		return ('-');
+	else
+		return ('-');
+}
+
 char 		*get_rights(struct stat infos)
 {
 	char 	*rights;
 
 	rights = ft_strnew(11);
-	rights[0] = S_ISDIR(infos.st_mode) ? 'd' : '-';
+	rights[0] = get_file_type(infos);
 	rights[1] = infos.st_mode & S_IRUSR ? 'r' : '-';
 	rights[2] = infos.st_mode & S_IWUSR ? 'w' : '-';
 	rights[3] = infos.st_mode & S_IXUSR ? 'x' : '-';
@@ -66,7 +96,7 @@ unsigned int		get_time_estamp(struct stat infos)
 {
 	unsigned int time_est;
 	
-	time_est = infos.st_mtime;	
-//	time_est = infos.st_mtimespec.tv_sec; 
+//	time_est = infos.st_mtime;	
+	time_est = infos.st_mtimespec.tv_sec; 
 	return (time_est);
 }

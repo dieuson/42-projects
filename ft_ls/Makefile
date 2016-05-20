@@ -39,16 +39,16 @@ $(NAME):
 clean:
 	@printf "\033[31mCleaning:\033[0m"
 	@rm -rf $(TILDE) ./bin_folder
-	@printf "\033[32m lem-in bin_folder\033[0m"
+	@printf "\033[32m ft_ls bin_folder\033[0m"
 	@make -C $(FT_PRINTF) clean
-	@printf "\033[32m libft bin\033[0m"
-	@printf "\033[32m done!\n\033[0m"
+	@printf "\033[32m 	  libft bin\033[0m"
+	@printf "\033[32m [done]\n\033[0m"
 
 fclean: clean
 	@printf "\033[31mCleaning:\033[0m"
 	@rm -rf $(NAME)
-	@printf "\033[32m lem-in executable\033[0m"
+	@printf "\033[32m ft_ls executable\033[0m"
 	@make -C $(FT_PRINTF) fclean
-	@printf "\033[32m libft.a\n\033[0m"
+##	@printf "\033[32m libft.a\n\033[0m"
 
 re: fclean all

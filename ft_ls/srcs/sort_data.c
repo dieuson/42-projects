@@ -36,7 +36,7 @@ static int 		compare(t_file *s1, t_file *s2, t_store *store)
 
 int 		*compare_len(char *flags, t_file *files, int *tab)
 {
-	if (flags && ft_strchr(flags, 'l'))
+	if (flags && (ft_strchr(flags, 'l') || ft_strchr(flags, 'g')))
 	{
 		tab[0] = len_str(files->rights) > tab[0] ? len_str(files->rights) : tab[0];
 		tab[1] = len_nb(files->link) > tab[1] ? len_nb(files->link) : tab[1];
