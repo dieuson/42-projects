@@ -12,10 +12,10 @@ t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
 		if (!verif_flag_a(store, fd->d_name))
 			continue ;
 		if (!new)
-			MULTI(start_new, new, create_cells(fd->d_name, store));
+			MULTI(start_new, new, create_cells(fd->d_name, store, 0));
 		else
 		{
-			new->next = create_cells(fd->d_name, store);
+			new->next = create_cells(fd->d_name, store, 0);
 			new = new->next;
 		}
 		store->nb_blocks += new->nb_blocks;
@@ -27,16 +27,16 @@ t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
 	return (start_new);
 }
 
-char 		**parse_args(char **argv, t_file *files, t_store *store)
+int		parse_args(char **argv, t_file *files, t_store *store)
 {
 	FT_INIT(t_file*, args, NULL);
 	FT_INIT(t_file*, add, NULL);
 	FT_INIT(t_file*, tmp, NULL);
 	FT_INIT(int, verif, 0);
 	FT_INIT(int, loop, 0);
-	if (!(args = build_args_list(argv, store)))
-		return (NULL);
 	store->len_print = create_int_tab(9);
+	args = build_args_list(argv, store);
+	FT_INIT(t_file*, start_args, args);
 //	print_list(args);
 //	return (NULL);
 	while (args)
@@ -51,7 +51,6 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 		loop = 0;
 //		ft_printf("TEST1\n");
 		verif = build_list(args->name, args->rights, store, &files);
-//		ft_printf("TEST2\n");
 		if (verif && store->add_args)
 		{
 			add = store->add_args;
@@ -60,9 +59,16 @@ char 		**parse_args(char **argv, t_file *files, t_store *store)
 			args->next = add;
 			ft_lstadd_end_ls(&args, tmp);
 		}
+		if (args->next)
+			store->len_print = create_int_tab(9);
 		args = args->next;
 	}
-	if (store->start_list)
-		print_data(store, verif);
-	return (NULL);
+	if (verif)
+	{
+		print_data(store);
+		free_list(start_args);
+
+	}
+//	ft_putendl("END PRINT");
+	return (1);
 }

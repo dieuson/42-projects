@@ -16,22 +16,45 @@ void			free_struct(t_store *store)
 {
 	ft_strdel(&(store->path));
 	ft_strdel(&(store->flags));
-	free(&store->start_list);
+}
+
+void 			free_int_tab(int **tab, int nb_lines)
+{
+	int 	colonne;
+
+	colonne = 0;
+	if (!(*tab) || !nb_lines)
+		return ;
+	while (colonne < nb_lines)
+	{
+	//	free(tab[colonne]);
+	//	(tab)[colonne] = 0;
+		colonne++;
+	}
+//	free(tab);
+//	tab = 0;
 }
 
 void			free_list(t_file *files)
 {
-	FT_INIT(t_file*, tmp, NULL);
-	while ((files))
+	FT_INIT(t_file*, tmp, files);
+	while (files)
 	{
 		tmp = (files)->next;
 		ft_strdel(&(files)->path);
+		ft_strdel(&(files)->absolute_path);
 		ft_strdel(&(files)->name);
-		free_simple_tab(&(files)->date);
+		free_simple_tab(&((files)->date));
 		free(files->date);
 		ft_strdel(&(files)->rights);
-		ft_strdel(&(files)->absolute_path);
-		ft_memdel((void**)&(files));
+		if (files->private)
+			ft_strdel(&(files)->private);
+		files->size = 0;
+		files->link = 0;
+		files->directories = 0;
+		files->nb_blocks = 0;
+		if (files)
+			ft_memdel((void**)&(files));
 		files = tmp;
 	}
 	files = NULL;

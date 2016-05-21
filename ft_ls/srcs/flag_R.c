@@ -33,10 +33,10 @@ t_file 		*flag_R(t_file *files, int nb_dir, t_store *store)
 			if (tmp[ft_strlen(tmp) - 1] != '/')
 				tmp = ft_strjoin(tmp, "/");
 			if (!new)
-				MULTI(start_new, new, create_cells(tmp, store));
+				MULTI(start_new, new, create_cells(tmp, store, 0));
 			else
 			{
-				new->next = create_cells(tmp, store);
+				new->next = create_cells(tmp, store, 0);
 				new = new->next;
 			}
 		}

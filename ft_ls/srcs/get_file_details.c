@@ -7,20 +7,10 @@ char 		**get_date(struct stat infos, int type)
 	char 	*tmp;
 	struct  tm 	*ref;
 
-//	ft_putendl("GET DATE");
-
 	if (type == 1)
-	{
-//		ft_putendl("GET DATE 1 ");
 		tmp = ctime(&infos.st_mtime);
-//		ft_putendl("GET DATE after ");
-	}
 	else if (type == 2)
-	{
-//		ft_putendl("GET DATE 2 ");
 		tmp = ctime(&infos.st_atime);
-	}
-//	return (NULL);
 	date_tmp = ft_strsplit(tmp, ' ');
 	if (!date_tmp)
 		return (NULL);
@@ -32,6 +22,7 @@ char 		**get_date(struct stat infos, int type)
 	date[2] = ref->tm_mon > 6 ? ft_strsub(date_tmp[4], 0, ft_strlen(date_tmp[4]) - 1): 
 	ft_strsub(date_tmp[3], 0, (ft_strlen(date_tmp[3]) - ft_strlen(tmp)));
 	date[3] = NULL;
+	free_simple_tab(&date_tmp);
 	return (date);
 }
 
@@ -96,7 +87,7 @@ unsigned int		get_time_estamp(struct stat infos)
 {
 	unsigned int time_est;
 	
-//	time_est = infos.st_mtime;	
-	time_est = infos.st_mtimespec.tv_sec; 
+	time_est = infos.st_mtime;	
+//	time_est = infos.st_mtimespec.tv_sec; 
 	return (time_est);
 }

@@ -18,7 +18,9 @@ char			*set_sentence(int len, char *flag)
 	FT_INIT(char *, to_del, c_len);
 	c_len = ft_strjoin("%", c_len);
 	ft_strdel(&to_del);
+	to_del = c_len;
 	c_len = ft_strjoin(c_len, flag);
+	ft_strdel(&to_del);
 	return (c_len);
 }
 /*
@@ -37,24 +39,37 @@ static void		print_l(t_file *tmp, char *flags)
 	ft_printf(set_sentence((tmp->display)[7], "s "), (tmp->date)[2]);
 }*/
 
-static void		print_l2(t_file *tmp, char *flags, int *len_display)
+static void		print_l(t_file *tmp, char *flags, int *len_display)
 {
 	if (!tmp)
 		return ;
-	ft_printf("%10s ", tmp->rights);
-	ft_printf(set_sentence((len_display)[1], "d "), tmp->link);
-	ft_printf(set_sentence((len_display)[3] + 1, "s "), tmp->owner_grp);
-	if (!flags || (flags && !ft_strchr(flags, 'g')))
-		ft_printf(set_sentence((len_display)[2], "s "), tmp->owner);
-	ft_printf(set_sentence((len_display)[4] + 2, "d "), tmp->size);
-	ft_printf(set_sentence((len_display)[5], "s "), (tmp->date)[0]);
-	ft_printf(set_sentence((len_display)[6], "s "), (tmp->date)[1]);
-	ft_printf(set_sentence((len_display)[7], "s "), (tmp->date)[2]);
+	FT_INIT(char *, to_del, NULL);
+	if (flags && (ft_strchr(flags, 'l') || ft_strchr(flags, 'g')))
+	{
+		ft_printf("%10s ", tmp->rights);
+		ft_printf(to_del = set_sentence((len_display)[1], "d "), tmp->link);
+		ft_strdel(&to_del);
+		ft_printf(to_del = set_sentence((len_display)[3] + 1, "s "), tmp->owner_grp);
+		ft_strdel(&to_del);
+		if (!flags || (flags && !ft_strchr(flags, 'g')))
+			ft_printf(to_del = set_sentence((len_display)[2], "s "), tmp->owner);
+		ft_strdel(&to_del);
+		ft_printf(to_del = set_sentence((len_display)[4] + 2, "d "), tmp->size);
+		ft_strdel(&to_del);
+		ft_printf(to_del = set_sentence((len_display)[5], "s "), (tmp->date)[0]);
+		ft_strdel(&to_del);
+		ft_printf(to_del = set_sentence((len_display)[6], "s "), (tmp->date)[1]);
+		ft_strdel(&to_del);
+		ft_printf(to_del = set_sentence((len_display)[7], "s "), (tmp->date)[2]);
+		ft_strdel(&to_del);
+	}
+	ft_printf(to_del = set_sentence(len_display[8], "-s"), tmp->name);
+	ft_strdel(&to_del);
 }
 
 static void 	put_color(t_file *tmp, char *flags, int position)
 {
-	if (!flags || (flags && !ft_strchr(flags, 'c')))
+	if (!tmp || !flags || (flags && !ft_strchr(flags, 'c')))
 		return ;
 	if (!position && (tmp->rights)[0] == 'd')
 		ft_printf("\033[31m");
@@ -64,33 +79,27 @@ static void 	put_color(t_file *tmp, char *flags, int position)
 		ft_printf("\033[0m");
 }
 
-void			print_data(t_store *store, int ref)
+void			print_data(t_store *store)
 {
 	FT_INIT(t_file*, tmp, store->start_list);
-	FT_INIT(char*, path, NULL);
+	FT_INIT(char*, path, tmp->path);
 	FT_INIT(int*, len_display, tmp->display);
-	ft_printf("start fisplay\n");
+//	ft_printf("start fisplay\n");
 	while (tmp)
 	{
+		if (tmp->display && len_display)
+			free_int_tab(&len_display, 9);
 		if (tmp->display)
 			len_display = tmp->display;
-	//	if (tmp->path && store->flags && ft_strchr(store->flags, 'R'))
-	//		ft_printf("%s:\n", tmp->path);
-		/*if ((path && !ft_strcmp((store->start_list)->path, path)) || 
-		(tmp && path && ft_strcmp(tmp->path, path) &&*/
-//		if (store->argc > 1)
-			if (/*(!path && tmp->path) || */(tmp->path && path && ft_strcmp(tmp->path, path)))
-				ft_printf("%s:\n", tmp->path);
-		if (store->flags && ft_strchr(store->flags, 'l') && ((tmp->path && path && ft_strcmp(tmp->path, path)) || tmp == store->start_list))
-			ft_printf("total %d\n", tmp->nb_blocks);
-		put_color(tmp, store->flags, 0);
-		if (store->flags && (ft_strchr(store->flags, 'l') || ft_strchr(store->flags, 'g')))
+		if ((tmp->path && path && ft_strcmp(tmp->path, path)  && ft_strcmp(tmp->absolute_path, tmp->name)))
 		{
-
-			print_l2(tmp, store->flags, len_display);
-//			print_l(tmp, store->flags);
+			if (ft_printf)
+			ft_printf("%s:\n", tmp->path);
+			if (store->flags && (ft_strchr(store->flags, 'l') || ft_strchr(store->flags, 'g')))
+				ft_printf("total %d\n", tmp->nb_blocks);			
 		}
-		ft_printf(set_sentence(len_display[8], "-s"), tmp->name);
+		put_color(tmp, store->flags, 0);
+		print_l(tmp, store->flags, len_display);
 		if (store->flags && ft_strchr(store->flags, 'l') && ft_strchr(tmp->rights, 'l'))
 			ft_printf(" -> private/%s\n", tmp->private);
 		else
@@ -99,8 +108,6 @@ void			print_data(t_store *store, int ref)
 		path = tmp->path;
 		tmp = tmp->next;
 	}
-	if (ref)
-		return ;
 }
 
 void 		print_list_ls(t_file *start)

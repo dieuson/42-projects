@@ -49,45 +49,37 @@ t_file				*create_simple_cells(char *name, t_store *store)
 	return (new);
 }*/
 
-t_file				*create_cells(char *name, t_store *store)
+t_file				*create_cells(char *name, t_store *store, int type)
 {
 	struct stat		infos;
+	char *path;
 
-	FT_INIT(char*, path, ft_strjoin(store->path, name));
+	path = !type ? ft_strjoin(store->path, name) : ft_strdup(name);
 	lstat(path, &infos);
 	FT_INIT(t_file *, new, (t_file *)malloc(sizeof(t_file)));
 	new->name = ft_strdup(name);
 	new->path = ft_strdup(store->path);
 	new->absolute_path = ft_strdup(path);
-//	ft_printf("cell path =%s,\n", new->absolute_path);
-	if (store->flags && (ft_strchr(store->flags, 'l') || ft_strchr(store->flags, 'g')))
-	{
-		new->owner = get_owner(infos);
-//		ft_printf("END OWNER\n");
-		new->owner_grp = get_owner_grp(infos);
-//		ft_printf("END OWNER GRP\n");
-		if (!(new->date = get_date(infos, 1)))
-			(store->flags)[0] = '0';
-//		ft_printf("END DATE 1\n");
-	}
-//	ft_printf("CREATE 1\n");
+	new->owner = get_owner(infos);
+	new->owner_grp = get_owner_grp(infos);
+	if (!(new->date = get_date(infos, 1)))
+		(store->flags)[0] = '0';
 	new->rights = get_rights(infos);
 	new->private = NULL;
 	if (store->flags && ft_strchr(store->flags, 'l') && ft_strchr(new->rights, 'l'))
-		new->private = ft_strchr(new->name, '/') ? ft_strdup(ft_strrchr(new->name, '/') + 1) : ft_strdup(new->name);
+		new->private = ft_strrchr(new->name, '/') ? ft_strdup(ft_strrchr(new->name, '/') + 1) : ft_strdup(new->name);
 	new->time_estamp = store->flags && !ft_strchr(store->flags, 't') && 
-	ft_strchr(store->flags, 'u') ? infos.st_atimespec.tv_sec : get_time_estamp(infos);
+	ft_strchr(store->flags, 'u') ? infos.st_atime : get_time_estamp(infos);
 //	new->time_estamp = infos.st_mtimespec.tv_sec;
 //	new->time_lacc = infos.st_atimespec.tv_sec;
 //	new->time_chan = infos.st_ctimespec.tv_sec;
-	new->size = infos.st_size;
+	new->size = infos.st_size;	
 	new->link = infos.st_nlink;
 	new->display = 0;
 	new->nb_blocks = infos.st_blocks;
 	new->directories = ft_strchr(new->rights, 'd') ? 1 : 0;
 	new->next = NULL;
 	ft_strdel(&path);
-//	ft_printf("CREATE END\n");
 	return (new);
 }
 
@@ -101,16 +93,16 @@ t_file 		*build_args_list(char **argv, t_store *store)
 	FT_INIT(t_file*, start_list, NULL);
 	FT_INIT(t_file*, start_dir, NULL);
 	if (!store->argc)
-		return (tmp = create_cells(".", store));
+		return (tmp = create_cells(".", store, 0));
 	else
-		tmp = create_cells(argv[0], store) ;
+		tmp = create_cells(argv[0], store, 1) ;
 	if (tmp && tmp->directories)
 		MULTI(start_dir, dir_list, tmp);
 	else
 		MULTI(start_list, new, tmp);
 	while (store->argc && argv && argv[ligne])
 	{
-		if (!(tmp = create_cells(argv[ligne], store)))
+		if (!(tmp = create_cells(argv[ligne], store, 1)))
 		{
 			ligne++;
 			continue ;
@@ -153,25 +145,25 @@ int			build_list(char *file, char *rights, t_store *store, t_file **files)
 		: ft_strdup(file);
 	else
 		store->path = ft_strdup("./");
+//	ft_printf("store->path =%s,\n", store->path);
 	if (!(rep = opendir(file)) || (store->flags && ft_strchr(rights, 'l') && ft_strchr(store->flags, 'l')))
 	{
 		if (lstat(file, &infos) == -1)
 			return (perror_ls(file));
 //		ft_printf("ELSE 1\n");
-		new = create_cells(file, store);
+		new = create_cells(file, store, 1);
 		new->display = compare_len(store->flags, new, store->len_print);
 //		ft_printf("ELSE 2\n");
 	}
 	else
 		new = read_elements(store, &nb_dir, rep);
-//		ft_printf("build_list 1\n");
 	if (rep && closedir(rep) == -1)
 		return (perror_ls(file));
-	if (!new)
-	{
-		store->add_args = NULL;
-		return (0);
-	}
+//	if (!new)
+//	{
+//		store->add_args = NULL;
+//		return (0);
+//	}
 	if (!(*files))
 		MULTI(store->start_list, *files, sort_list(new, store));
 	else
@@ -184,6 +176,5 @@ int			build_list(char *file, char *rights, t_store *store, t_file **files)
 	store->add_args = flag_R(*files, nb_dir, store);
 	while (*files && (*files)->next)
 		*files = (*files)->next;
-//	ft_printf("build_list END\n");
 	return (1);
 }

@@ -16,10 +16,15 @@ void 		init_struct(t_store *store)
 {
 	store->start_list = NULL;
 	store->flags = NULL;
+	store->add_args = NULL;
 //	store->tab = NULL;
 	store->len_tab = 5;
 	store->argc = 0;
 	store->nb_blocks = 0;
+	store->path = "";
+	store->len_print = 0;
+	store->nb_blocks = 0;
+
 }
 
 int main (int argc, char **argv)
@@ -36,10 +41,12 @@ int main (int argc, char **argv)
 	}
 	files = NULL;
 	parse_args(argv, files, &store);
+	free_list(store.start_list);
+	free_struct(&store);
 //	print_data(&store);
 //	free_list(&(store.start_list));
 //	free_struct(&store);
-	if (argc || argv || files)
-		return (1);
+//	if (argc || argv || files)
+//		return (1);
 	return (0);	
 }

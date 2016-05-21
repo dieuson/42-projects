@@ -19,6 +19,7 @@ char			**reject_flags(char ***args, int ligne, int argc)
 		(*args)[ligne] = (*args)[ligne + 1];
 		ligne++;
 	}
+//	ft_strdel(&(*args)[ligne]);
 	(*args)[ligne] = NULL;
 	return (*args);
 }
@@ -62,7 +63,6 @@ int				store_flag(char ***argv, int argc, t_store *store, int line)
 		(store->flags)[3] = '0';
 	}
 	(store->flags)[8] = ft_strchr((*argv)[line], 'c') ? 'c' : (store->flags)[8];
-//	(store->flags)[7] = ft_strchr((*argv)[line], 'f') ? 'f' : (store->flags)[7];
 	*argv = reject_flags(&(*argv), line, argc);
 	return (1);
 }
