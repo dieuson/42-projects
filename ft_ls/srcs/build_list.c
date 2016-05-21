@@ -69,7 +69,8 @@ t_file				*create_cells(char *name, t_store *store, int type)
 	if (store->flags && ft_strchr(store->flags, 'l') && ft_strchr(new->rights, 'l'))
 		new->private = ft_strrchr(new->name, '/') ? ft_strdup(ft_strrchr(new->name, '/') + 1) : ft_strdup(new->name);
 	new->time_estamp = store->flags && !ft_strchr(store->flags, 't') && 
-	ft_strchr(store->flags, 'u') ? infos.st_atime : get_time_estamp(infos);
+	ft_strchr(store->flags, 'u') ? infos.st_atime : infos.st_mtime;
+//	time_est = infos.st_mtimespec.tv_sec; ;
 //	new->time_estamp = infos.st_mtimespec.tv_sec;
 //	new->time_lacc = infos.st_atimespec.tv_sec;
 //	new->time_chan = infos.st_ctimespec.tv_sec;
@@ -150,20 +151,18 @@ int			build_list(char *file, char *rights, t_store *store, t_file **files)
 	{
 		if (lstat(file, &infos) == -1)
 			return (perror_ls(file));
-//		ft_printf("ELSE 1\n");
 		new = create_cells(file, store, 1);
 		new->display = compare_len(store->flags, new, store->len_print);
-//		ft_printf("ELSE 2\n");
 	}
 	else
 		new = read_elements(store, &nb_dir, rep);
 	if (rep && closedir(rep) == -1)
 		return (perror_ls(file));
-//	if (!new)
-//	{
-//		store->add_args = NULL;
-//		return (0);
-//	}
+	if (!new)
+	{
+		store->add_args = NULL;
+		return (0);
+	}
 	if (!(*files))
 		MULTI(store->start_list, *files, sort_list(new, store));
 	else

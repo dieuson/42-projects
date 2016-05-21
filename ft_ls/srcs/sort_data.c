@@ -56,11 +56,8 @@ t_file 		*sort_list(t_file *files, t_store *store)
 	FT_INIT(t_file*, after, files);
 	FT_INIT(t_file*, before, files);
 	FT_INIT(t_file*, tmp, NULL);
-
-//	ft_putstr("test2\n");
 	while (after && after->next)
 	{
-//		ft_printf("after->name =%s, 	before->name =%s,\n", after->name, before->name);
 		if (compare(after, after->next, store) > 0)
 		{
 			files = (after == files) ? after->next : files;
@@ -76,6 +73,5 @@ t_file 		*sort_list(t_file *files, t_store *store)
 			after = after->next;
 		}
 	}
-//	print_list_ls(files);
 	return(files);
 }

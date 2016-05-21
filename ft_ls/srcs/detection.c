@@ -12,14 +12,13 @@
 
 #include "../includes/ft_ls.h"
 
-char			**reject_flags(char ***args, int ligne, int argc)
+static char		**reject_flags(char ***args, int ligne, int argc)
 {
 	while ((ligne + 1) < argc)
 	{
 		(*args)[ligne] = (*args)[ligne + 1];
 		ligne++;
 	}
-//	ft_strdel(&(*args)[ligne]);
 	(*args)[ligne] = NULL;
 	return (*args);
 }
@@ -37,37 +36,36 @@ int				verif_flag_a(t_store *store, char *name)
 		return (1);
 }
 
-int				store_flag(char ***argv, int argc, t_store *store, int line)
+static int			store_flag(char ***argv, int argc, t_store *store, int i)
 {
 	FT_INIT(int, colonne, 1);
-	if (!ft_strcmp((*argv)[line], "--help"))
+	if (!ft_strcmp((*argv)[i], "--help"))
 		return (print_help());
-	while ((*argv)[line][colonne])
+	while ((*argv)[i][colonne])
 	{
-		if (!ft_strchr("lartRugcf", (*argv)[line][colonne]))
-			return (error_flags((*argv)[line][colonne]));
+		if (!ft_strchr("lartRugcf", (*argv)[i][colonne]))
+			return (error_flags((*argv)[i][colonne]));
 		colonne++;
 	}
-	if (!store->flags)
-		store->flags = ft_strdup("000000000");
-	(store->flags)[0] = ft_strchr((*argv)[line], 'l') ? 'l' : (store->flags)[0];
-	(store->flags)[1] = ft_strchr((*argv)[line], 'a') ? 'a' : (store->flags)[1];
-	(store->flags)[2] = ft_strchr((*argv)[line], 'r') ? 'r' : (store->flags)[2];
-	(store->flags)[3] = ft_strchr((*argv)[line], 't') ? 't' : (store->flags)[3];
-	(store->flags)[4] = ft_strchr((*argv)[line], 'R') ? 'R' : (store->flags)[4];
-	(store->flags)[5] = ft_strchr((*argv)[line], 'u') ? 'u' : (store->flags)[5];
-	(store->flags)[6] = ft_strchr((*argv)[line], 'g') ? 'g' : (store->flags)[6];
-	if (ft_strchr((*argv)[line], 'f'))
+	store->flags = !store->flags ? ft_strdup("000000000") : store->flags;
+	(store->flags)[0] = ft_strchr((*argv)[i], 'l') ? 'l' : (store->flags)[0];
+	(store->flags)[1] = ft_strchr((*argv)[i], 'a') ? 'a' : (store->flags)[1];
+	(store->flags)[2] = ft_strchr((*argv)[i], 'r') ? 'r' : (store->flags)[2];
+	(store->flags)[3] = ft_strchr((*argv)[i], 't') ? 't' : (store->flags)[3];
+	(store->flags)[4] = ft_strchr((*argv)[i], 'R') ? 'R' : (store->flags)[4];
+	(store->flags)[5] = ft_strchr((*argv)[i], 'u') ? 'u' : (store->flags)[5];
+	(store->flags)[6] = ft_strchr((*argv)[i], 'g') ? 'g' : (store->flags)[6];
+	if (ft_strchr((*argv)[i], 'f'))
 	{
 		(store->flags)[7] = 'f';
 		(store->flags)[3] = '0';
 	}
-	(store->flags)[8] = ft_strchr((*argv)[line], 'c') ? 'c' : (store->flags)[8];
-	*argv = reject_flags(&(*argv), line, argc);
+	(store->flags)[8] = ft_strchr((*argv)[i], 'c') ? 'c' : (store->flags)[8];
+	*argv = reject_flags(&(*argv), i, argc);
 	return (1);
 }
 
-char			**verif_double_flags(char **argv, int *argc)
+static char	**verif_double_flags(char **argv, int *argc)
 {
 	FT_INIT(int, ligne, 0);
 	FT_INIT(int, ligne2, 0);
