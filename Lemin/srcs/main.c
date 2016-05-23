@@ -12,7 +12,31 @@
 
 #include "../includes/lem_in.h"
 
-void		init_struct(t_check *check)
+static void  detect_flags(t_check *check, int argc, char **argv)
+{
+	if (argc <= 1)
+		return ;
+	FT_INIT(int, line, 1);
+	check->flags = ft_strdup("0000");
+	while (argv[line])
+	{
+		if (ft_strchr(argv[line], '-'))
+		{
+			if (ft_strchr(argv[line], 'r'))
+				(check->flags)[0] = 'r';
+			if (ft_strchr(argv[line], 'c'))
+				(check->flags)[1] = 'c';
+			if (!ft_strstr(argv[line], "--name=") && ft_strchr(argv[line], 'm'))
+				(check->flags)[2] = 'm';
+			if (ft_strstr(argv[line], "--name="))
+				if (ft_strlen(ft_strchr(argv[line], '=')) > 1)
+					check->ant_name = ft_strdup((ft_strchr(argv[line], '=') + 1));
+		}
+		line++;
+	}
+}
+
+static void	 init_struct(t_check *check, int argc, char **argv)
 {
 	check->ants = 0;
 	check->start = 0;
@@ -26,6 +50,9 @@ void		init_struct(t_check *check)
 	check->start_list = NULL;
 	check->posibilites = NULL;
 	check->neighbor_tab = NULL;
+	check->flags = NULL;
+	check->ant_name = ft_strdup("L");
+	detect_flags(check, argc, argv);
 }
 
 int			nb_ants(char *line, t_check *check, long int laps)
@@ -77,7 +104,7 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 	return (1);
 }
 
-int			main(void)
+int			main(int argc, char **argv)
 {
 	char		*line;
 	t_check		check;
@@ -86,7 +113,7 @@ int			main(void)
 	cells = NULL;
 	line = NULL;
 	FT_INIT(int, verif, 1);
-	init_struct(&check);
+	init_struct(&check, argc, argv);
 	while (verif)
 	{
 		verif = get_next_line(0, &line);

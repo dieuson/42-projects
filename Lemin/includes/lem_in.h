@@ -47,10 +47,14 @@ typedef struct				s_check
 	int						*line_length;
 	char					***neighbor_tab;
 	char					**posibilites;
+	char 					*flags;
+	char 					*ant_name;
 	t_cells					*start_list;
 }							t_check;
 
+int 						print_shining_ants(t_check *check, char *route);
 void						print_tab(char ***tab);
+void 						print_bonus(t_check *check, char **good_roads, t_ref *ref, int i);
 void						print_simple_tab(char **tab);
 int							check_nb_args(char *line);
 int							find_way(t_check *check);

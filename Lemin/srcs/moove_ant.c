@@ -88,22 +88,21 @@ int			moove_ants(t_check *check, t_ref *ref, char **good_roads)
 		if (ref->nb_ants_ref <= check->ants)
 			set_to_start(&route, check, good_roads, ref);
 		verif_someone = verif_someone_lemin(check);
-		ft_putstr(route);
-		ft_putstr("\n");
+		if (!print_shining_ants(check, route))
+			ft_putendl(route);
 		ft_memdel((void*)&route);
 		nb_loops++;
 	}
+	print_bonus(check, good_roads, ref, nb_loops);
 	return (0);
 }
 
 int			distrib_moove_ant(t_check *check)
 {
 	t_ref	ref;
-	t_cells	*tmp;
 
 	FT_INIT(char**, good_roads, NULL);
-	tmp = check->start_list;
-	ref.name_ref = "L";
+	ref.name_ref = check->ant_name;
 	ref.nb_ants_ref = 1;
 	good_roads = store_good_ways(check);
 	put_route(check, good_roads);
@@ -111,7 +110,5 @@ int			distrib_moove_ant(t_check *check)
 	store_length_line(good_roads, &check->line_length_min);
 	moove_ants(check, &ref, good_roads);
 	free_simple_tab(&good_roads);
-	if (ref.nb_ants_ref || tmp)
-		return (1);
-	return (0);
+	return (1);
 }
