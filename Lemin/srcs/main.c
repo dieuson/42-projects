@@ -6,13 +6,13 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 09:11:07 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 16:27:45 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/05/24 11:29:42 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-static void  detect_flags(t_check *check, int argc, char **argv)
+static void		detect_flags(t_check *check, int argc, char **argv)
 {
 	if (argc <= 1)
 		return ;
@@ -30,13 +30,14 @@ static void  detect_flags(t_check *check, int argc, char **argv)
 				(check->flags)[2] = 'm';
 			if (ft_strstr(argv[line], "--name="))
 				if (ft_strlen(ft_strchr(argv[line], '=')) > 1)
-					check->ant_name = ft_strdup((ft_strchr(argv[line], '=') + 1));
+					check->ant_name =
+						ft_strdup((ft_strchr(argv[line], '=') + 1));
 		}
 		line++;
 	}
 }
 
-static void	 init_struct(t_check *check, int argc, char **argv)
+static void		init_struct(t_check *check, int argc, char **argv)
 {
 	check->ants = 0;
 	check->start = 0;
@@ -55,7 +56,7 @@ static void	 init_struct(t_check *check, int argc, char **argv)
 	detect_flags(check, argc, argv);
 }
 
-int			nb_ants(char *line, t_check *check, long int laps)
+int				nb_ants(char *line, t_check *check, long int laps)
 {
 	FT_INIT(int, i, 0);
 	FT_INIT(long int, nb, 0);
@@ -75,7 +76,7 @@ int			nb_ants(char *line, t_check *check, long int laps)
 	return (1);
 }
 
-int			check_lemin(char *line, t_check *check, t_cells **cells)
+int				check_lemin(char *line, t_check *check, t_cells **cells)
 {
 	FT_INIT(int, nb_args, check_nb_args(line));
 	if (!line)
@@ -104,7 +105,7 @@ int			check_lemin(char *line, t_check *check, t_cells **cells)
 	return (1);
 }
 
-int			main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	char		*line;
 	t_check		check;
