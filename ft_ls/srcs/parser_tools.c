@@ -1,16 +1,24 @@
 #include "../includes/ft_ls.h"
 
+int 		*reset_int_tab(int *tab, int len)
+{
+	int line;
+
+	line = 0;
+ 	while (tab && len && line < len)
+ 	{
+ 		tab[line] = 0;
+ 		line++;
+ 	}
+ 	return (tab);
+}
+
 int 		*create_int_tab(int len)
 {
 	int 	*fraiche;
 
-	FT_INIT(int, line, 0);
  	fraiche = (int*)malloc(sizeof(int) * len);
- 	while (line < len)
- 	{
- 		fraiche[line] = 0;
- 		line++;
- 	}
+ 	fraiche = reset_int_tab(fraiche, len);
  	return (fraiche);
 }
 

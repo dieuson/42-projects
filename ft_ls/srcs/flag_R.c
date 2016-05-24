@@ -17,6 +17,18 @@ void		ft_lstadd_end_ls(t_file **alst, t_file *new)
 		*alst = new;
 }
 
+t_file	*cat_args_list(t_file *args, t_store *store)
+{
+	FT_INIT(t_file*, add, NULL);
+	FT_INIT(t_file*, tmp, NULL);
+	add = store->add_args;
+	store->argc = 2;
+	tmp = args->next;
+	args->next = add;
+	ft_lstadd_end_ls(&args, tmp);
+	return (args);
+}
+
 t_file 		*flag_R(t_file *files, int nb_dir, t_store *store)
 {
 	FT_INIT(t_file*, new, NULL);

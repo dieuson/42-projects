@@ -1,16 +1,16 @@
 #include "../includes/ft_ls.h"
 
-char 		**get_date(struct stat infos, int type)
+char 		**get_date(struct stat infos, char *flags)
 {
 	char 	**date_tmp;
 	char 	**date;
 	char 	*tmp;
 	struct  tm 	*ref;
 
-	if (type == 1)
-		tmp = ctime(&infos.st_mtime);
-	else if (type == 2)
+	if (flags && flags[5] == 'u')
 		tmp = ctime(&infos.st_atime);
+	else
+		tmp = ctime(&infos.st_mtime);
 	date_tmp = ft_strsplit(tmp, ' ');
 	if (!date_tmp)
 		return (NULL);
@@ -26,22 +26,16 @@ char 		**get_date(struct stat infos, int type)
 	return (date);
 }
 
-char		*get_owner(struct stat infos)
+t_file		*get_owners(struct stat infos, t_file *new)
 {
 	struct passwd	*owner;
+	struct group	*owner_grp;
 
-	if (!(owner = getpwuid(infos.st_uid)))
-		return (NULL);
-	return (owner->pw_name);
-}
-
-char		*get_owner_grp(struct stat infos)
-{
-	struct group	*owner;
-
-	if (!(owner = getgrgid(infos.st_gid)))
-		return (NULL);
-	return (owner->gr_name);
+	owner_grp = getgrgid(infos.st_gid);
+	owner = getpwuid(infos.st_uid);
+	new->owner = owner ? owner->pw_name : NULL; 
+	new->owner_grp = owner_grp ? owner_grp->gr_name : NULL; 
+	return (new);
 }
 
 char 		get_file_type(struct stat infos)
@@ -83,11 +77,18 @@ char 		*get_rights(struct stat infos)
     return (rights);
 }
 
-unsigned int		get_time_estamp(struct stat infos)
+t_file		*get_integers_data(struct stat infos, t_file *new, char *flags)
 {
-	unsigned int time_est;
-	
-	time_est = infos.st_mtime;	
-//	time_est = infos.st_mtimespec.tv_sec; 
-	return (time_est);
+	new->time_estamp = flags && 
+	ft_strchr(flags, 'u') ? infos.st_atime : infos.st_mtime;
+//	time_est = infos.st_mtimespec.tv_sec; ;
+//	new->time_estamp = infos.st_mtimespec.tv_sec;
+//	new->time_lacc = infos.st_atimespec.tv_sec;
+//	new->time_chan = infos.st_ctimespec.tv_sec;
+	new->size = infos.st_size;	
+	new->link = infos.st_nlink;
+	new->display = 0;
+	new->nb_blocks = infos.st_blocks;
+	new->directories = ft_strchr(new->rights, 'd') ? 1 : 0;
+	return (new);
 }

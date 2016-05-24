@@ -8,22 +8,22 @@ static int		compare_date(t_file *cell1, t_file *cell2)
 	return (dif);
 }
 
-static int 		compare(t_file *s1, t_file *s2, t_store *store)
+static int 		compare(t_file *s1, t_file *s2, char *flags)
 {
-	if (store->flags)
+	if (flags)
 	{
-		if (ft_strchr(store->flags, 't'))
+		if (flags[3] == 't' || (flags[3] == 't' && flags[5] == 'u') || (flags[0] == '0' && flags[5] == 'u'))
 		{
-			if (ft_strchr(store->flags, 'r') && compare_date(s1, s2) > 0)
+			if (ft_strchr(flags, 'r') && compare_date(s1, s2) > 0)
 				return (1);
-			else if (!ft_strchr(store->flags, 'r') && compare_date(s1, s2) < 0)
+			else if (!ft_strchr(flags, 'r') && compare_date(s1, s2) < 0)
 				return (1);
 		}
-		else if (ft_strchr(store->flags, 'f'))
+		else if (ft_strchr(flags, 'f'))
 			return (0);
-		else if (ft_strchr(store->flags, 'r') && ft_strcmp(s1->name, s2->name) < 0)
+		else if (ft_strchr(flags, 'r') && ft_strcmp(s1->name, s2->name) < 0)
 			return (1);
-		else if (!ft_strchr(store->flags, 'r') && ft_strcmp(s1->name, s2->name) > 0)
+		else if (!ft_strchr(flags, 'r') && ft_strcmp(s1->name, s2->name) > 0)
 				return (1);
 	}
 	else
@@ -58,7 +58,7 @@ t_file 		*sort_list(t_file *files, t_store *store)
 	FT_INIT(t_file*, tmp, NULL);
 	while (after && after->next)
 	{
-		if (compare(after, after->next, store) > 0)
+		if (compare(after, after->next, store->flags) > 0)
 		{
 			files = (after == files) ? after->next : files;
 			before->next = after->next;
