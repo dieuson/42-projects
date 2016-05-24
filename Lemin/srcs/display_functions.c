@@ -6,13 +6,13 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:45:17 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 16:06:26 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/05/24 11:28:25 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-void 		print_bonus(t_check *check, char **good_roads, t_ref *ref, int i)
+void				print_bonus(t_check *check, char **tab, t_ref *ref, int i)
 {
 	if (!check->flags)
 		return ;
@@ -29,20 +29,20 @@ void 		print_bonus(t_check *check, char **good_roads, t_ref *ref, int i)
 		ft_putendl("roads :");
 		while (nb_loops <= calc_last_ligne(check, ref))
 		{
-			ft_putendl(good_roads[nb_loops]);
+			ft_putendl(tab[nb_loops]);
 			nb_loops++;
 		}
 	}
 }
 
-t_cells		*find_ant_nb(int nb, t_check *check)
+t_cells				*find_ant_nb(int nb, t_check *check)
 {
 	t_cells	*tmp;
 
 	tmp = check->start_list;
 	while (tmp)
 	{
-		if (tmp->someone && ft_atoi(ft_strrchr(tmp->someone, 
+		if (tmp->someone && ft_atoi(ft_strrchr(tmp->someone,
 		check->ant_name[ft_strlen(check->ant_name) - 1]) + 1) == nb)
 			return (tmp);
 		tmp = tmp->next;
@@ -50,7 +50,7 @@ t_cells		*find_ant_nb(int nb, t_check *check)
 	return (NULL);
 }
 
-static char 	*join_route(char *tmp, char *ref)
+static char			*join_route(char *tmp, char *ref)
 {
 	FT_INIT(char *, to_del, tmp);
 	FT_INIT(int, i, ft_atoi(ft_strchr(tmp, '-') - 1));
@@ -72,7 +72,8 @@ static char 	*join_route(char *tmp, char *ref)
 	ft_strdel(&to_del);
 	return (tmp);
 }
-int 			print_shining_ants(t_check *check, char *route)
+
+int					print_shining_ants(t_check *check, char *route)
 {
 	if (!check->flags || !route)
 		return (0);
@@ -93,7 +94,7 @@ int 			print_shining_ants(t_check *check, char *route)
 	return (1);
 }
 
-void		print_route(char **route, char *someone, char *name)
+void				print_route(char **route, char *someone, char *name)
 {
 	char	*to_del;
 
