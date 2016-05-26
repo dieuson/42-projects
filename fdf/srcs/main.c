@@ -29,8 +29,8 @@ t_node *create_cell(int x, int y, int value)
 {
 	FT_INIT(t_node *, new, NULL);
 	new = (t_node*)malloc(sizeof(t_node));
-	new->x = x;
-	new->y = y;
+	new->x = x * 10;
+	new->y = y * 10;
 	new->value = value;
 	new->next = NULL;
 	new->prev = NULL;
@@ -97,13 +97,14 @@ int 			parser(int fd, t_cloud *data, t_node *nodes)
 
 int 			main(int argc, char **argv)
 {
-    //void 		*mlx;
-   // void 		*win;
+    void 		*mlx;
+    void 		*win;
     int 		fd;
     t_cloud 	data;
     t_node 		nodes;
-    //mlx = mlx_init();
-    //win = mlx_new_window(mlx, 400, 400, "mlx 42");
+    FT_INIT(t_node*, tmp , NULL);
+    mlx = mlx_init();
+    win = mlx_new_window(mlx, 400, 400, "mlx 42");
     init_struct(&data);
     if (!(fd = open(argv[1], O_RDONLY)))
     {
@@ -118,8 +119,13 @@ int 			main(int argc, char **argv)
     if (!parser(fd, &data, &nodes))
     	return (0);
     close(fd);
-  //  mlx_pixel_put(mlx,win, 200, 200, 0x00FFFFFF);
-  //  mlx_loop(mlx);
+    tmp = data.start_node;
+    while (tmp->next)
+    {
+		mlx_pixel_put(mlx,win, tmp->x, tmp->y, 0x00FFFFFF + tmp->value);
+		tmp = tmp->next;
+    }
+	mlx_loop(mlx);
 	//ft_putendl("");
     return (0);
 }
