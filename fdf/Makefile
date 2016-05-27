@@ -19,8 +19,9 @@ OS = $(shell uname)
 CC = gcc
 CFLAGS  = -g -Wall -Wextra -Werror -Ofast
 
-FDF_FILES = main.c get_next_line.c
-SRCS = $(FDF)main.c $(GNL)get_next_line.c
+FDF_FILES = main.c get_next_line.c parser.c display.c build_list.c math.c
+SRCS = $(FDF)main.c $(GNL)get_next_line.c $(FDF)parser.c $(FDF)display.c \
+$(FDF)build_list.c $(FDF)math.c
 
 BIN = $(FDF_FILES:.c=.o)
 OBJECTS = $(SRCS:.c=.o)
