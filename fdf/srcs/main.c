@@ -8,8 +8,8 @@ void 			init_struct(t_cloud *data)
 	data->pos_x = 0;
 	data->zoom = 1;
     data->mlx = mlx_init();
-    data->win_x = 640;
-    data->win_y = 480;
+    data->win_x = 500;
+    data->win_y = 500;
     data->win = mlx_new_window(data->mlx, data->win_x, data->win_y, "mlx 42");
 }
 

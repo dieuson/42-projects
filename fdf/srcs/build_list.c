@@ -4,12 +4,18 @@ t_node *create_cell(int x, int y, int value, t_cloud *data)
 {
 	FT_INIT(t_node *, new, NULL);
 	new = (t_node*)malloc(sizeof(t_node));
-	new->x = x;
-	new->y = y;
+	new->x = x*30 + data->win_x / 2;
+	new->y = y*30  + data->win_y / 2;
+//	new->x = x;
+//	new->y = y;
 	new->z = value;
+//	new->z = 10;
+//	new->z = value ? 0x00FF0000 : 0x00FFFFFF;
 	new = get_3d_pos(new, data);
 	new->next = NULL;
 	new->prev = NULL;
+	if (data)
+		new->next = NULL;
 	return (new);
 }
 
