@@ -35,6 +35,9 @@ typedef struct				s_cloud
 	double 					pos_x;
 	double 					pos_y;
 	double					zoom;
+	double					e_x;
+	double					e_y;
+	double					e_z;
 	int 					win_x;
 	int 					win_y;
 	void 					*mlx;

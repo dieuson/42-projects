@@ -79,15 +79,22 @@ t_node *get_3d_pos(t_node *new, t_cloud *data)
 //		tmp_z *= all->depth;
 //	FT_INIT(double, e_x, data->win_x / 2);
 //	FT_INIT(double, e_y, data->win_y / 2);
-	FT_INIT(double, e_z, 1);
-	FT_INIT(double, e_x, 0);
-	FT_INIT(double, e_y, 0);
+	FT_INIT(double, e_z, data->e_z);
+	FT_INIT(double, e_x, data->e_x);
+	FT_INIT(double, e_y, data->e_y);
 	FT_INIT(double, x_mod, 0);
 	FT_INIT(double, y_mod, 0);
 	FT_INIT(double, z_mod, 0);
-	FT_INIT(double, x, fabs(new->x - e_x));
-	FT_INIT(double, y, fabs(new->y - e_y));
-	FT_INIT(double, z, fabs(tmp_z - e_z));
+	FT_INIT(double, x, new->x - e_x);
+	FT_INIT(double, y, new->y - e_y);
+	FT_INIT(double, z, tmp_z - e_z);
+	FT_INIT(double, Cx, opcos(e_x));
+	FT_INIT(double, Sx, opsin(e_x));
+	FT_INIT(double, Cy, opcos(e_y));
+	FT_INIT(double, Sy, opsin(e_y));
+	FT_INIT(double, Cz, opcos(e_z));
+	FT_INIT(double, Sz, opsin(e_z));
+
 	/*
 	x_mod = cos(e_y) * (sin(e_z) * y
 		+ cos(e_z) * x) - (sin(e_y) * z);
@@ -98,7 +105,7 @@ t_node *get_3d_pos(t_node *new, t_cloud *data)
 	z_mod = cos(e_x) * (cos(e_y) * z
 		+ (sin(e_y) * (sin(e_z) * y
 		+ cos(e_z) * x))) - sin(e_x)
-		* (cos(e_z) * y - sin(e_z) * x);*/
+		* (cos(e_z) * y - sin(e_z) * x);*//*
 	x_mod = opcos(e_y) * (opsin(e_z) * y
 		+ opcos(e_z) * x) - (opsin(e_y) * z);
 	y_mod = opsin(e_x) * (opcos(e_y) * z
@@ -108,12 +115,19 @@ t_node *get_3d_pos(t_node *new, t_cloud *data)
 	z_mod = opcos(e_x) * (opcos(e_y) * z
 		+ (opsin(e_y) * (opsin(e_z) * y
 		+ opcos(e_z) * x))) - opsin(e_x)
-		* (opcos(e_z) * y - opsin(e_z) * x);
+		* (opcos(e_z) * y - opsin(e_z) * x);*/
 //	point->print = z_mod > 0 && all->zoom >= 0 ? 1 : 0;
 
-	new->x = fabs(((e_z * x_mod) / z_mod) - e_x);
-	new->y = fabs(((e_z * y_mod) / z_mod) - e_y);
+	x_mod = (Cy * (Sz * y + Cz * x)) - (Sy * z);
+	y_mod = Sx * (Cy * z + Sy * (Sz * y + Cz * x)) + Cx * (Cz * y - Sz * x);
+	z_mod = Cx * (Cy * z + Sy * (Sz * y + Cz * x)) + Sx * (Cz * y - Sz * x);
 
+
+	new->x = ((e_z * x_mod) / z_mod) - e_x;
+	new->y = ((e_z * y_mod) / z_mod) - e_y;
+
+//	new->x -= 150;
+//	new->y += 600;
 //	new->x = ((10 / z_mod) * x_mod) * data->zoom;
 //	new->y = ((10 / z_mod) * y_mod) * data->zoom;
 //	new->x = ((10 / z_mod) * x_mod) * data->zoom + data->win_x / 2;

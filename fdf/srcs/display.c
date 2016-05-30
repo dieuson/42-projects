@@ -40,15 +40,15 @@ void 	draw_lines(t_node *tmp, t_cloud *data)
 	//else
 	//	coeff_dir = 0;
 	printf("coef =%f\n", coeff_dir); 
-	p =  y - M * x;
+	p =  y - (M * x);
 	printf("y =%f, x =%f, x->next =%f, p =%f, \n", y, x, (tmp->next)->x, p);
-	while (x <= (tmp->next)->x)
+	while (x < (tmp->next)->x)
 	{
+		y = M * (tmp->next)->x + p;
 		mlx_pixel_put(data->mlx, data->win , x * data->zoom, 
     	y * data->zoom,  0x00FF0000);
 //   	printf("x =%f, x->next =%f, y =%f, coeff_dir =%f, \n", x, (tmp->next)->x, y, coeff_dir);
 		x ++;
-		y = M * x + p;
 	//	y += incr;
 	}
 	if (data)

@@ -10,8 +10,8 @@ t_node *create_cell(int x, int y, int value, t_cloud *data)
 //	new->y = y;
 	new->z = value;
 //	new->z = 10;
-//	new->z = value ? 0x00FF0000 : 0x00FFFFFF;
 	new = get_3d_pos(new, data);
+//	new->z = value ? 0x00FF0000 : 0x00FFFFFF;
 	new->next = NULL;
 	new->prev = NULL;
 	if (data)
