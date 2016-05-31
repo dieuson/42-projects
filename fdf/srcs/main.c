@@ -24,7 +24,7 @@ int 			error(char *name)
 	ft_putendl("Usage: ./fdf [file] [options]");
 	return (0);
 }
-
+/*
 void 			apply_fctn(t_cloud *data, , t_node (*f)(t_node* , t_cloud*))
 {
 	FT_INIT(t_node*, start_list, data->start_node);
@@ -34,7 +34,7 @@ void 			apply_fctn(t_cloud *data, , t_node (*f)(t_node* , t_cloud*))
 		start_list = start_list->next;
 	}
 
-}
+}*/
 
 
 int 			distrib_key(int key_value, t_cloud *data)

@@ -56,7 +56,7 @@ int					read_all(int const fd, char **line)
 		reste[(fd % 256)] = ft_strjoin(reste[(fd % 256)], buf);
 	else if (!reste[fd % 256])
 		reste[(fd % 256)] = ft_strdup(buf);
-	free(buf);
+	free(&buf);
 	ft_memdel((void**)&tmp);
 	ret = line_to_return(&reste[(fd % 256)], line, val);
 	if (ret == -1 || val == -1)

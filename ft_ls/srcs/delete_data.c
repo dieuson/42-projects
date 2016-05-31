@@ -18,21 +18,10 @@ void			free_struct(t_store *store)
 	ft_strdel(&(store->flags));
 }
 
-void 			free_int_tab(int **tab, int nb_lines)
+void			free_int_tab(int **tab, int nb_lines)
 {
-	int 	colonne;
-
-	colonne = 0;
 	if (!(*tab) || !nb_lines)
 		return ;
-	while (colonne < nb_lines)
-	{
-	//	free(tab[colonne]);
-	//	(tab)[colonne] = 0;
-		colonne++;
-	}
-//	free(tab);
-//	tab = 0;
 }
 
 void			free_list(t_file *files)

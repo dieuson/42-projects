@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/05/31 15:44:41 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/05/31 15:44:44 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_ls.h"
 
 t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
@@ -19,14 +31,14 @@ t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
 		}
 		store->nb_blocks += new->nb_blocks;
 		store->len_print = compare_len(store->flags, new, store->len_print);
-		if (store->flags && ft_strchr(store->flags, 'R') 
+		if (store->flags && ft_strchr(store->flags, 'R')
 		&& ft_strcmp(new->name, ".") && ft_strcmp(new->name, ".."))
 			(*nb_dir) += ft_strchr(new->rights, 'd') ? 1 : 0;
 	}
 	return (start_new);
 }
 
-int		parse_args(char **argv, t_file *files, t_store *store)
+int			parse_args(char **argv, t_file *files, t_store *store)
 {
 	FT_INIT(t_file*, args, NULL);
 	FT_INIT(int, verif, 0);
@@ -40,14 +52,7 @@ int		parse_args(char **argv, t_file *files, t_store *store)
 		verif = build_list(args->name, args->rights, store, &files);
 		if (verif && store->add_args)
 			args = cat_args_list(args, store);
-/*		{
-			add = store->add_args;
-			store->argc = 2;
-			tmp = args->next;
-			args->next = add;
-			ft_lstadd_end_ls(&args, tmp);
-		}
-*/		if (args->next)
+		if (args->next)
 			store->len_print = create_int_tab(9);
 		args = args->next;
 	}

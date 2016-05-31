@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_file_details.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/05/31 15:33:47 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/05/31 15:38:27 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_ls.h"
 
-char 		**get_date(struct stat infos, char *flags)
+char		**get_date(struct stat infos, char *flags)
 {
-	char 	**date_tmp;
-	char 	**date;
-	char 	*tmp;
-	struct  tm 	*ref;
+	char		**date_tmp;
+	char		**date;
+	char		*tmp;
+	struct tm	*ref;
 
 	if (flags && flags[5] == 'u')
 		tmp = ctime(&infos.st_atime);
@@ -19,8 +31,9 @@ char 		**get_date(struct stat infos, char *flags)
 	date[1] = ft_strdup(date_tmp[2]);
 	tmp = ft_strrchr(date_tmp[3], ':');
 	ref = gmtime(&infos.st_mtime);
-	date[2] = ref->tm_mon > 6 ? ft_strsub(date_tmp[4], 0, ft_strlen(date_tmp[4]) - 1): 
-	ft_strsub(date_tmp[3], 0, (ft_strlen(date_tmp[3]) - ft_strlen(tmp)));
+	date[2] = ref->tm_mon > 6 ? ft_strsub(date_tmp[4], 0,
+	ft_strlen(date_tmp[4]) - 1) : ft_strsub(date_tmp[3], 0,
+	(ft_strlen(date_tmp[3]) - ft_strlen(tmp)));
 	date[3] = NULL;
 	free_simple_tab(&date_tmp);
 	return (date);
@@ -33,12 +46,12 @@ t_file		*get_owners(struct stat infos, t_file *new)
 
 	owner_grp = getgrgid(infos.st_gid);
 	owner = getpwuid(infos.st_uid);
-	new->owner = owner ? owner->pw_name : NULL; 
-	new->owner_grp = owner_grp ? owner_grp->gr_name : NULL; 
+	new->owner = owner ? owner->pw_name : NULL;
+	new->owner_grp = owner_grp ? owner_grp->gr_name : NULL;
 	return (new);
 }
 
-char 		get_file_type(struct stat infos)
+char		get_file_type(struct stat infos)
 {
 	if (S_ISDIR(infos.st_mode))
 		return ('d');
@@ -58,9 +71,9 @@ char 		get_file_type(struct stat infos)
 		return ('-');
 }
 
-char 		*get_rights(struct stat infos)
+char		*get_rights(struct stat infos)
 {
-	char 	*rights;
+	char	*rights;
 
 	rights = ft_strnew(11);
 	rights[0] = get_file_type(infos);
@@ -74,18 +87,15 @@ char 		*get_rights(struct stat infos)
 	rights[8] = infos.st_mode & S_IWOTH ? 'w' : '-';
 	rights[9] = infos.st_mode & S_IXOTH ? 'x' : '-';
 	rights[10] = '\0';
-    return (rights);
+	return (rights);
 }
 
 t_file		*get_integers_data(struct stat infos, t_file *new, char *flags)
 {
-	new->time_estamp = flags && 
-	ft_strchr(flags, 'u') ? infos.st_atime : infos.st_mtime;
-//	time_est = infos.st_mtimespec.tv_sec; ;
-//	new->time_estamp = infos.st_mtimespec.tv_sec;
-//	new->time_lacc = infos.st_atimespec.tv_sec;
-//	new->time_chan = infos.st_ctimespec.tv_sec;
-	new->size = infos.st_size;	
+	new->time_estamp = flags &&
+	ft_strchr(flags, 'u') ? infos.st_atimespec.tv_sec
+	: infos.st_mtimespec.tv_sec;
+	new->size = infos.st_size;
 	new->link = infos.st_nlink;
 	new->display = 0;
 	new->nb_blocks = infos.st_blocks;

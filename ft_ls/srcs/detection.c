@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 14:16:58 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/05/16 14:20:18 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/05/31 15:22:23 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int				verif_flag_a(t_store *store, char *name)
 {
 	if (name[0] == '.')
 	{
-		if (store->flags && (ft_strchr(store->flags, 'a') || ft_strchr(store->flags, 'f')))
+		if (store->flags && (ft_strchr(store->flags, 'a')
+		|| ft_strchr(store->flags, 'f')))
 			return (1);
 		else
 			return (0);
@@ -36,7 +37,7 @@ int				verif_flag_a(t_store *store, char *name)
 		return (1);
 }
 
-static int			store_flag(char ***argv, int argc, t_store *store, int i)
+static int		store_flag(char ***argv, int argc, t_store *store, int i)
 {
 	FT_INIT(int, colonne, 1);
 	if (!ft_strcmp((*argv)[i], "--help"))
@@ -65,7 +66,7 @@ static int			store_flag(char ***argv, int argc, t_store *store, int i)
 	return (1);
 }
 
-static char	**verif_double_flags(char **argv, int *argc)
+static char		**verif_double_flags(char **argv, int *argc)
 {
 	FT_INIT(int, ligne, 0);
 	FT_INIT(int, ligne2, 0);
