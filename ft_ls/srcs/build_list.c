@@ -33,6 +33,7 @@ t_file			*create_cells(char *name, t_store *store, int type)
 		new->private = ft_strrchr(new->name, '/') ?
 			ft_strdup(ft_strrchr(new->name, '/') + 1) : ft_strdup(new->name);
 	new = get_integers_data(infos, new, flags);
+	store->nb_blocks += new->nb_blocks;
 	new->next = NULL;
 	ft_strdel(&path);
 	return (new);
@@ -79,6 +80,7 @@ t_file			*build_args_list(char **argv, t_store *store)
 	start_new = start_files;
 	if (start_dir)
 		ft_lstadd_end_ls(&start_new, start_dir);
+	store->nb_blocks = 0;
 	return (start_new);
 }
 
@@ -120,13 +122,14 @@ int				build_list(char *file, char *rights, t_store *store,
 	if (!(rep = opendir(file)) || (store->flags && ft_strchr(rights, 'l')
 	&& ft_strchr(store->flags, 'l')))
 	{
-		if (lstat(file, &infos) == -1)
+		if (lstat(file, &infos) == -1 || get_file_type(infos) == 'd')
 			return (perror_ls(file));
 		new = create_cells(file, store, 1);
 		new->display = compare_len(store->flags, new, store->len_print);
 	}
 	else
 		new = read_elements(store, &nb_dir, rep);
+	ft_printf("nb_blocks =%d,\n", new->nb_blocks);
 	if (rep && closedir(rep) == -1)
 		return (perror_ls(file));
 	return (cat_lst(new, store, list, nb_dir));

@@ -22,7 +22,6 @@ void			init_struct(t_store *store)
 	store->nb_blocks = 0;
 	store->path = "";
 	store->len_print = 0;
-	store->nb_blocks = 0;
 }
 
 int				main(int argc, char **argv)

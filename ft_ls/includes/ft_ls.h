@@ -43,7 +43,7 @@ typedef struct				s_file
 	int						size;
 	int						link;
 	int						directories;
-	unsigned int			nb_blocks;
+	int						nb_blocks;
 	struct s_file			*next;
 }							t_file;
 
@@ -58,13 +58,14 @@ typedef struct				s_store
 	char					*flags;
 	char					*path;
 	int						*len_print;
-	unsigned int			nb_blocks;
+	int						nb_blocks;
 	int						argc;
 	int						len_tab;
 	t_file					*add_args;
 	t_file					*start_list;
 }							t_store;
 
+char						get_file_type(struct stat infos);
 int							build_list(char *file, char *rights,
 							t_store *store, t_file **list);
 t_file						*build_args_list(char **argv, t_store *store);

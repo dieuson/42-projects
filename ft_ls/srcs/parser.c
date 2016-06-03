@@ -29,7 +29,6 @@ t_file		*read_elements(t_store *store, int *nb_dir, DIR *rep)
 			new->next = create_cells(fd->d_name, store, 0);
 			new = new->next;
 		}
-		store->nb_blocks += new->nb_blocks;
 		store->len_print = compare_len(store->flags, new, store->len_print);
 		if (store->flags && ft_strchr(store->flags, 'R')
 		&& ft_strcmp(new->name, ".") && ft_strcmp(new->name, ".."))
@@ -47,6 +46,7 @@ int			parse_args(char **argv, t_file *files, t_store *store)
 	FT_INIT(t_file*, start_args, args);
 	while (args)
 	{
+		ft_putendl("start");
 		store->add_args = NULL;
 		store->nb_blocks = 0;
 		verif = build_list(args->name, args->rights, store, &files);
@@ -54,6 +54,8 @@ int			parse_args(char **argv, t_file *files, t_store *store)
 			args = cat_args_list(args, store);
 		if (args->next)
 			store->len_print = create_int_tab(9);
+		ft_putendl("End");
+		ft_printf("test_blocks =%d,\n", args->nb_blocks);
 		args = args->next;
 	}
 	if (store->start_list)

@@ -65,9 +65,20 @@ static void		put_color(t_file *tmp, char *flags, int position)
 		ft_printf("\033[0m");
 }
 
-static void		print_path(t_file *tmp, char *path, char *flags)
+static void		print_path(t_file *tmp, char *path, char *flags, int type)
 {
-	if ((tmp->path && path && ft_strcmp(tmp->path, path)
+	if (tmp && type && tmp->path && path && ft_strcmp(tmp->absolute_path, tmp->name))
+	{
+		if (!ft_strcmp(tmp->path, "./"))
+			ft_printf("%s:\n", ".");
+		else if (!ft_strcmp(tmp->path, "../"))
+			ft_printf("%s:\n", "..");
+		else
+			ft_printf("%s:\n", tmp->path);
+		if (flags && (ft_strchr(flags, 'l') || ft_strchr(flags, 'g')))
+			ft_printf("total %d\n", tmp->nb_blocks);
+	}
+	else if (!type && (tmp->path && path && ft_strcmp(tmp->path, path)
 	&& ft_strcmp(tmp->absolute_path, tmp->name)))
 	{
 		if (!ft_strcmp(tmp->path, "./"))
@@ -86,15 +97,17 @@ void			print_data(t_store *store)
 	FT_INIT(t_file*, tmp, store->start_list);
 	FT_INIT(char*, path, tmp->path);
 	FT_INIT(int*, len_display, tmp->display);
+	print_path(tmp, path, store->flags, 1);
 	while (tmp)
 	{
 		if (tmp->display && len_display)
 			free_int_tab(&len_display, 9);
 		if (tmp->display)
 			len_display = tmp->display;
-		print_path(tmp, path, store->flags);
+		print_path(tmp, path, store->flags, 0);
 		put_color(tmp, store->flags, 0);
 		print_l(tmp, store->flags, len_display);
+	//	ft_printf(" nb_blocks =%d,", tmp->nb_blocks);
 		if (store->flags && ft_strchr(store->flags, 'l')
 		&& ft_strchr(tmp->rights, 'l'))
 			ft_printf(" -> private/%s\n", tmp->private);
