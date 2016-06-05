@@ -35,149 +35,35 @@ double		opmod(double n, double base)
 	return (n < 0.0 ? fmod(((fmod(n, base)) + base), base) : fmod(n, base));
 }
 
-
-
-double 	get_dx(t_node *tmp)
-{
-	double dx;
-
-	FT_INIT(double, x, tmp->x);
-	FT_INIT(double, y, tmp->y);
-	FT_INIT(double, z, tmp->z);
-	dx = cos(y) * ((sin(z) * y + cos(z) * x) 
-	- (sin(y) * z));
-	return (dx);
-}
-
-double 	get_dy(t_node *tmp)
-{
-	double dy;
-
-	FT_INIT(double, x, tmp->x);
-	FT_INIT(double, y, tmp->y);
-	FT_INIT(double, z, tmp->z);
-	dy = sin(x) * (cos(y) * z + (sin(y) * (sin(z) * y + cos(z) * x)) 
-		+ cos(x) * ((cos(z) * y) - (sin(z) * x)));
-	return (dy);
-}
-
-double 	get_dz(t_node *tmp)
-{
-	double dz;
-
-	FT_INIT(double, x, tmp->x);
-	FT_INIT(double, y, tmp->y);
-	FT_INIT(double, z, tmp->z);
-	dz = cos(x) * (cos(y) * z + sin(y) * (sin(z) * y + cos(z) * x)) - sin(x) * (cos(z) * y - sin(z) * x);
-	return (dz);
-}
-
 t_node *get_3d_pos(t_node *new, t_cloud *data)
 {
-	FT_INIT(double, tmp_z, new->z);
-//	if (tmp_z)
-//		tmp_z *= all->depth;
-//	FT_INIT(double, e_x, data->win_x / 2);
-//	FT_INIT(double, e_y, data->win_y / 2);
-	FT_INIT(double, e_z, data->e_z);
-	FT_INIT(double, e_x, data->e_x);
-	FT_INIT(double, e_y, data->e_y);
+	FT_INIT(double, campos_z, -10);
+	FT_INIT(double, campos_x, 0);
+	FT_INIT(double, campos_y, 0);
+	FT_INIT(double, camang_z, 0);
+	FT_INIT(double, camang_x, 0);
+	FT_INIT(double, camang_y, 0);
 	FT_INIT(double, x_mod, 0);
 	FT_INIT(double, y_mod, 0);
 	FT_INIT(double, z_mod, 0);
-	FT_INIT(double, x, new->x - e_x);
-	FT_INIT(double, y, new->y - e_y);
-	FT_INIT(double, z, tmp_z - e_z);
-	FT_INIT(double, Cx, opcos(e_x));
-	FT_INIT(double, Sx, opsin(e_x));
-	FT_INIT(double, Cy, opcos(e_y));
-	FT_INIT(double, Sy, opsin(e_y));
-	FT_INIT(double, Cz, opcos(e_z));
-	FT_INIT(double, Sz, opsin(e_z));
-
-	/*
-	x_mod = cos(e_y) * (sin(e_z) * y
-		+ cos(e_z) * x) - (sin(e_y) * z);
-	y_mod = sin(e_x) * (cos(e_y) * z
-		+ (sin(e_y) * (sin(e_z) * y
-		+ cos(e_z) * x))) + cos(e_x)
-		* (cos(e_z) * y - sin(e_z) * x);
-	z_mod = cos(e_x) * (cos(e_y) * z
-		+ (sin(e_y) * (sin(e_z) * y
-		+ cos(e_z) * x))) - sin(e_x)
-		* (cos(e_z) * y - sin(e_z) * x);*//*
-	x_mod = opcos(e_y) * (opsin(e_z) * y
-		+ opcos(e_z) * x) - (opsin(e_y) * z);
-	y_mod = opsin(e_x) * (opcos(e_y) * z
-		+ (opsin(e_y) * (opsin(e_z) * y
-		+ opcos(e_z) * x))) + opcos(e_x)
-		* (opcos(e_z) * y - opsin(e_z) * x);
-	z_mod = opcos(e_x) * (opcos(e_y) * z
-		+ (opsin(e_y) * (opsin(e_z) * y
-		+ opcos(e_z) * x))) - opsin(e_x)
-		* (opcos(e_z) * y - opsin(e_z) * x);*/
-//	point->print = z_mod > 0 && all->zoom >= 0 ? 1 : 0;
+	FT_INIT(double, x, new->x - campos_x);
+	FT_INIT(double, y, new->y - campos_y);
+	FT_INIT(double, z, new->z - campos_z);
+	FT_INIT(double, Cx, opcos(camang_x));
+	FT_INIT(double, Sx, opsin(camang_x));
+	FT_INIT(double, Cy, opcos(camang_y));
+	FT_INIT(double, Sy, opsin(camang_y));
+	FT_INIT(double, Cz, opcos(camang_z));
+	FT_INIT(double, Sz, opsin(camang_z));
 
 	x_mod = (Cy * (Sz * y + Cz * x)) - (Sy * z);
-	y_mod = Sx * (Cy * z + Sy * (Sz * y + Cz * x)) + Cx * (Cz * y - Sz * x);
-	z_mod = Cx * (Cy * z + Sy * (Sz * y + Cz * x)) + Sx * (Cz * y - Sz * x);
-
-
-	new->x = ((e_z * x_mod) / z_mod) - e_x;
-	new->y = ((e_z * y_mod) / z_mod) - e_y;
-
-//	new->x -= 150;
-//	new->y += 600;
-//	new->x = ((10 / z_mod) * x_mod) * data->zoom;
-//	new->y = ((10 / z_mod) * y_mod) * data->zoom;
-//	new->x = ((10 / z_mod) * x_mod) * data->zoom + data->win_x / 2;
-//	new->y = ((10 / z_mod) * y_mod) * data->zoom + data->win_y / 2;
-//	printf("x =%f, y =%f,\n", new->x, new->y);
-	if (data)
-		return (new);
+	y_mod = (Sx * (Cy * z + Sy * (Sz * y + Cz * x))) + (Cx * (Cz * y - Sz * x));
+	z_mod = (Cx * (Cy * z + Sy * (Sz * y + Cz * x))) - (Sx * (Cz * y - Sz * x));
+	printf("x_mod =%f, y_mod =%f, z_mod =%f,\n", x_mod, y_mod, z_mod);
+	printf("x =%f, y =%f, z =%f,\n", new->x, new->y, new->z);
+//	if (data)
+//		new->x_2d = (-10 * x_mod) / z_mod;
+	new->x_2d = (-10 * x_mod) / z_mod - data->win_x / 2;
+	new->y_2d = (-10 * y_mod) / z_mod - data->win_y / 2;
 	return (new);
-}
-/*
-t_node *get_3d_pos(t_node *new)
-{
-//	double tmp_x;
-//	double tmp_y;
-//	double tmp_z;
-	double e_x;
-	double e_y;
-	double e_z;
-
-	e_x = 100;
-	e_y = 100;
-	e_z = 500;
-
-//	new->x = (e_z * (new->x - e_x)) / (e_z + new->z);
-//	new->y = (e_z * (new->y - e_y)) / (e_z + new->z);
-
-//		a ---> new
-// 		c ---> camera
-
-			Yeux.z * (Point.x – Yeux.x)
-Resultat.x = ————————————— + Yeux.x
-			Yeux.z + Point.z
-
-
-//	tmp_x = get_dx(new);
-//	tmp_y = get_dy(new);
-//	tmp_z = get_dz(new);
-
-//new->x = (e_z * (new->x - e_x)) / (e_z + new->z) + e_x;
-//new->y = (e_z * (new->y - e_y)) / (e_z + new->z) + e_y;
-
-//	new->x = (e_z / tmp_z) * tmp_x - e_x;
-//	new->y = (e_z / tmp_z) * tmp_x - e_y;
-//	new->z = get_dz(new);
-//	new->x = fabs(new->x - new->y) * (500/2);
-//	new->x = fabs(new->x + new->y) * (500/2);;
-//	new->x =(new->x - new->z)/sqrt(2);
-//    new->y =(new->x + 2 * new->y + new->z)/sqrt(6);
-//	new->z = 0;
-//screen.x = map.x * TILE_WIDTH_HALF - map.y * TILE_WIDTH_HALF;
-//screen.y = map.x * TILE_HEIGHT_HALF + map.y * TILE_HEIGHT_HALF;
-	return (new);
-}*/
+}	

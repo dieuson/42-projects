@@ -8,8 +8,8 @@ void 			init_struct(t_cloud *data)
 	data->pos_x = 0;
 	data->e_x = 0;
 	data->e_y = 0;
-	data->e_z = 0;
-	data->zoom = 1;
+	data->e_z = -10;
+	data->zoom = -0.5;
     data->mlx = mlx_init();
     data->win_x = 500;
     data->win_y = 500;
@@ -24,18 +24,6 @@ int 			error(char *name)
 	ft_putendl("Usage: ./fdf [file] [options]");
 	return (0);
 }
-/*
-void 			apply_fctn(t_cloud *data, , t_node (*f)(t_node* , t_cloud*))
-{
-	FT_INIT(t_node*, start_list, data->start_node);
-	while (start_list->next)
-	{
-		start_list = f(start_list, start_list->x, start_list->y, start_list->z); 	
-		start_list = start_list->next;
-	}
-
-}*/
-
 
 int 			distrib_key(int key_value, t_cloud *data)
 {
@@ -47,20 +35,7 @@ int 			distrib_key(int key_value, t_cloud *data)
 		mlx_clear_window(data->mlx, data->win);
 	    draw_points(data->start_node, data);
 	}
-	else if (key_value == 65362)
-	{
-		data->e_x += 0.1;
-		mlx_clear_window(data->mlx, data->win);
-	    draw_points(data->start_node, data);
-	}
-	else if (key_value == 65364)
-	{
-		data->e_x -= 0.1;
-		mlx_clear_window(data->mlx, data->win);
-	    draw_points(data->start_node, data);
-	}
-
-//	printf("key =%d,\n", key_value);
+	printf("key =%d,\n", key_value);
 	return (0);
 }
 

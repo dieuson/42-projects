@@ -26,6 +26,8 @@ typedef struct				s_node
 	double 					x;
 	double 					z;
 	double 					y;
+	double 					x_2d;
+	double 					y_2d;
 	struct s_node			*next;
 	struct s_node			*prev;
 }							t_node;
@@ -38,8 +40,8 @@ typedef struct				s_cloud
 	double					e_x;
 	double					e_y;
 	double					e_z;
-	int 					win_x;
-	int 					win_y;
+	double 					win_x;
+	double 					win_y;
 	void 					*mlx;
     void 					*win;
 	t_node 					*start_node;
@@ -50,7 +52,7 @@ int 						distrib_key(int key_value, t_cloud *data);
 void					 	draw_points(t_node *start_list, t_cloud *data);
 t_node 						*get_3d_pos(t_node *new, t_cloud *data);
 int 						parser(int fd, t_cloud *data, t_node *nodes);
-t_node 						*build_list(char *line, int y, t_cloud *data);
+t_node 						*build_list(char *line, double y, t_cloud *data);
 void 						print_list(t_node *start_list);
 
 #endif
