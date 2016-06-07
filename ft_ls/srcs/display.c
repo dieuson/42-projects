@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 14:20:34 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/05/16 14:20:36 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/06 15:28:34 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static void		print_l(t_file *tmp, char *flags, int *len_display)
 		ft_printf("%10s ", tmp->rights);
 		ft_printf(del = set_sentence((len_display)[1], "d "), tmp->link);
 		ft_strdel(&del);
-		ft_printf(del = set_sentence((len_display)[3] + 1, "s "),
-														tmp->owner_grp);
+		ft_printf(del = set_sentence((len_display)[2], "s "), tmp->owner);
 		ft_strdel(&del);
 		if (!flags || (flags && !ft_strchr(flags, 'g')))
-			ft_printf(del = set_sentence((len_display)[2], "s "), tmp->owner);
+			ft_printf(del = set_sentence((len_display)[3] + 1, "s "),
+			tmp->owner_grp);
 		ft_strdel(&del);
 		ft_printf(del = set_sentence((len_display)[4] + 2, "d "), tmp->size);
 		ft_strdel(&del);
@@ -65,9 +65,10 @@ static void		put_color(t_file *tmp, char *flags, int position)
 		ft_printf("\033[0m");
 }
 
-static void		print_path(t_file *tmp, char *path, char *flags, int type)
+static void		p_path(t_file *tmp, char *path, char *flags, t_store *store)
 {
-	if (tmp && type && tmp->path && path && ft_strcmp(tmp->absolute_path, tmp->name))
+	if (tmp && store->type && ft_strcmp(tmp->absolute_path, tmp->name) &&
+	(store->nb_directories > 1 || (store->nb_directories && store->nb_files)))
 	{
 		if (!ft_strcmp(tmp->path, "./"))
 			ft_printf("%s:\n", ".");
@@ -78,8 +79,8 @@ static void		print_path(t_file *tmp, char *path, char *flags, int type)
 		if (flags && (ft_strchr(flags, 'l') || ft_strchr(flags, 'g')))
 			ft_printf("total %d\n", tmp->nb_blocks);
 	}
-	else if (!type && (tmp->path && path && ft_strcmp(tmp->path, path)
-	&& ft_strcmp(tmp->absolute_path, tmp->name)))
+	else if (!store->type && ft_strcmp(tmp->path, path) &&
+	ft_strcmp(tmp->absolute_path, tmp->name))
 	{
 		if (!ft_strcmp(tmp->path, "./"))
 			ft_printf("\n%s:\n", ".");
@@ -97,17 +98,16 @@ void			print_data(t_store *store)
 	FT_INIT(t_file*, tmp, store->start_list);
 	FT_INIT(char*, path, tmp->path);
 	FT_INIT(int*, len_display, tmp->display);
-	print_path(tmp, path, store->flags, 1);
 	while (tmp)
 	{
 		if (tmp->display && len_display)
 			free_int_tab(&len_display, 9);
 		if (tmp->display)
 			len_display = tmp->display;
-		print_path(tmp, path, store->flags, 0);
+		p_path(tmp, path, store->flags, store);
+		store->type = 0;
 		put_color(tmp, store->flags, 0);
 		print_l(tmp, store->flags, len_display);
-	//	ft_printf(" nb_blocks =%d,", tmp->nb_blocks);
 		if (store->flags && ft_strchr(store->flags, 'l')
 		&& ft_strchr(tmp->rights, 'l'))
 			ft_printf(" -> private/%s\n", tmp->private);

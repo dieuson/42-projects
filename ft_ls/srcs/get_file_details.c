@@ -93,11 +93,8 @@ char		*get_rights(struct stat infos)
 t_file		*get_integers_data(struct stat infos, t_file *new, char *flags)
 {
 	new->nb_blocks = infos.st_blocks;
-//	ft_printf("nb_blocks =%d,\n", new->nb_blocks);
-	new->time_estamp = flags &&	ft_strchr(flags, 'u') ? infos.st_atime
-	: infos.st_mtime;
-//	ft_strchr(flags, 'u') ? infos.st_atimespec.tv_sec
-//	: infos.st_mtimespec.tv_sec;
+	new->time_estamp = flags && ft_strchr(flags, 'u') ?
+	infos.st_atimespec.tv_sec : infos.st_mtimespec.tv_sec;
 	new->size = infos.st_size;
 	new->link = infos.st_nlink;
 	new->display = 0;

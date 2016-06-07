@@ -107,7 +107,7 @@ static	int		cat_lst(t_file *new, t_store *store, t_file **lst, int nb_dir)
 }
 
 int				build_list(char *file, char *rights, t_store *store,
-	t_file **list)
+				t_file **list)
 {
 	struct stat infos;
 
@@ -129,7 +129,6 @@ int				build_list(char *file, char *rights, t_store *store,
 	}
 	else
 		new = read_elements(store, &nb_dir, rep);
-	ft_printf("nb_blocks =%d,\n", new->nb_blocks);
 	if (rep && closedir(rep) == -1)
 		return (perror_ls(file));
 	return (cat_lst(new, store, list, nb_dir));

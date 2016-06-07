@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 19:23:14 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/12 19:23:17 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/06 11:57:54 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdarg.h>
 # include <wchar.h>
 # include "../libft/includes/libft.h"
-#include <stdint.h>
+# include <stdint.h>
 
 typedef struct		s_docker
 {

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_simple_tab.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/06 11:58:26 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/06/06 12:00:07 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./includes/libft.h"
 
-void 		free_simple_tab(char ***tab)
+void		free_simple_tab(char ***tab)
 {
-	int 	colonne;
+	int		colonne;
 
 	colonne = 0;
 	while ((*tab) && (*tab)[colonne])
@@ -15,9 +27,9 @@ void 		free_simple_tab(char ***tab)
 	*tab = NULL;
 }
 
-char 		**copy_simple_tab(char **src, char **dest)
+char		**copy_simple_tab(char **src, char **dest)
 {
-	int 	colonne;
+	int		colonne;
 
 	colonne = 0;
 	while (src && src[colonne])
@@ -29,10 +41,10 @@ char 		**copy_simple_tab(char **src, char **dest)
 	return (dest);
 }
 
-char 		**new_simple_tab(char ***tab)
+char		**new_simple_tab(char ***tab)
 {
-	char 	**fraiche_tab;
-	int 	colonne;
+	char	**fraiche_tab;
+	int		colonne;
 
 	colonne = 0;
 	if (!tab || !(*tab))

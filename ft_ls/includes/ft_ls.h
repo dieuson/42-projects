@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 16:48:37 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 16:56:00 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/06 15:29:10 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct				s_file
 	int						link;
 	int						directories;
 	int						nb_blocks;
+	int						type;
 	struct s_file			*next;
 }							t_file;
 
@@ -61,6 +62,9 @@ typedef struct				s_store
 	int						nb_blocks;
 	int						argc;
 	int						len_tab;
+	int						nb_directories;
+	int						nb_files;
+	int						type;
 	t_file					*add_args;
 	t_file					*start_list;
 }							t_store;

@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 19:03:46 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/03/12 19:03:49 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/06 12:04:13 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-void 				free_simple_tab(char ***tab);
-void 				free_tab(char ****tab);
-char 				**new_simple_tab(char ***tab);
-char 				***new_tab(char ****tab);
+void				free_simple_tab(char ***tab);
+void				free_tab(char ****tab);
+char				**new_simple_tab(char ***tab);
+char				***new_tab(char ****tab);
 
 void				ft_bzero(void *s, size_t n);
 void				*ft_memset(void *b, int c, size_t len);

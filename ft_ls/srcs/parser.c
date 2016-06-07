@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 15:44:41 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/05/31 15:44:44 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/06 15:27:32 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,17 @@ int			parse_args(char **argv, t_file *files, t_store *store)
 	FT_INIT(t_file*, start_args, args);
 	while (args)
 	{
-		ft_putendl("start");
 		store->add_args = NULL;
 		store->nb_blocks = 0;
+		if (ft_strchr(args->rights, 'd'))
+			store->nb_directories++;
+		else
+			store->nb_files++;
 		verif = build_list(args->name, args->rights, store, &files);
 		if (verif && store->add_args)
 			args = cat_args_list(args, store);
-		if (args->next)
+		if (verif && args->next)
 			store->len_print = create_int_tab(9);
-		ft_putendl("End");
-		ft_printf("test_blocks =%d,\n", args->nb_blocks);
 		args = args->next;
 	}
 	if (store->start_list)
