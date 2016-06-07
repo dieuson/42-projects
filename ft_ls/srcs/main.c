@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 16:46:11 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/04/29 16:46:12 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/07 09:58:50 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,7 @@ int				main(int argc, char **argv)
 
 	init_struct(&store);
 	if (!detect_flags(&argv, argc, &store))
-	{
-		free_list(store.start_list);
-		free_struct(&store);
 		return (0);
-	}
 	files = NULL;
 	parse_args(argv, files, &store);
 	free_list(store.start_list);
