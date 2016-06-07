@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   math.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/07 10:32:47 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/06/07 13:38:30 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fdf.h"
 
 double		opcos(double n)
@@ -37,33 +49,44 @@ double		opmod(double n, double base)
 
 t_node *get_3d_pos(t_node *new, t_cloud *data)
 {
-	FT_INIT(double, campos_z, -10);
-	FT_INIT(double, campos_x, 0);
-	FT_INIT(double, campos_y, 0);
-	FT_INIT(double, camang_z, 0);
-	FT_INIT(double, camang_x, 0);
-	FT_INIT(double, camang_y, 0);
+	FT_INIT(double, campos_z, data->e_z);
+	FT_INIT(double, campos_x, data->e_x);
+	FT_INIT(double, campos_y, data->e_y);
+	FT_INIT(double, camang_z, data->ang_z);
+	FT_INIT(double, camang_x, data->ang_x);
+	FT_INIT(double, camang_y, data->ang_y);
 	FT_INIT(double, x_mod, 0);
 	FT_INIT(double, y_mod, 0);
 	FT_INIT(double, z_mod, 0);
 	FT_INIT(double, x, new->x - campos_x);
 	FT_INIT(double, y, new->y - campos_y);
 	FT_INIT(double, z, new->z - campos_z);
-	FT_INIT(double, Cx, opcos(camang_x));
-	FT_INIT(double, Sx, opsin(camang_x));
-	FT_INIT(double, Cy, opcos(camang_y));
-	FT_INIT(double, Sy, opsin(camang_y));
-	FT_INIT(double, Cz, opcos(camang_z));
-	FT_INIT(double, Sz, opsin(camang_z));
+	FT_INIT(double, Cx, cos(camang_x));
+	FT_INIT(double, Sx, sin(camang_x));
+	FT_INIT(double, Cy, cos(camang_y));
+	FT_INIT(double, Sy, sin(camang_y));
+	FT_INIT(double, Cz, cos(camang_z));
+	FT_INIT(double, Sz, sin(camang_z));
 
 	x_mod = (Cy * (Sz * y + Cz * x)) - (Sy * z);
-	y_mod = (Sx * (Cy * z + Sy * (Sz * y + Cz * x))) + (Cx * (Cz * y - Sz * x));
-	z_mod = (Cx * (Cy * z + Sy * (Sz * y + Cz * x))) - (Sx * (Cz * y - Sz * x));
-	printf("x_mod =%f, y_mod =%f, z_mod =%f,\n", x_mod, y_mod, z_mod);
-	printf("x =%f, y =%f, z =%f,\n", new->x, new->y, new->z);
+	y_mod = (Sx * ((Cy * z) + Sy * ((Sz * y) + Cz * x))) + (Cx * ((Cz * y) - (Sz * x)));
+	z_mod = (Cx * ((Cy * z) + Sy * ((Sz * y) + Cz * x))) + (Sx * ((Cz * y) - (Sz * x)));
+//	printf("x_mod =%f, y_mod =%f, z_mod =%f,\n", x_mod, y_mod, z_mod);
+//	printf("x =%f, y =%f, z =%f,\n", new->x, new->y, new->z);
 //	if (data)
 //		new->x_2d = (-10 * x_mod) / z_mod;
-	new->x_2d = (-10 * x_mod) / z_mod - data->win_x / 2;
+	new->x_2d = (-10 * x_mod) / z_mod	 - data->win_x / 2;
 	new->y_2d = (-10 * y_mod) / z_mod - data->win_y / 2;
 	return (new);
-}	
+}
+
+t_node *set_3d_pos(t_node *head, t_cloud *data)
+{
+	FT_INIT(t_node*, tmp, head);
+	while (tmp)
+	{
+		tmp = get_3d_pos(tmp, data);
+		tmp = tmp->next;
+	}
+	return (head);
+}
