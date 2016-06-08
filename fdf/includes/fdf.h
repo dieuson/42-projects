@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 15:44:54 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/05/24 11:31:51 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/08 10:53:09 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ typedef struct				s_node
 	struct s_node			*next;
 	struct s_node			*prev;
 }							t_node;
+
+typedef struct				s_disp
+{
+	double 					x0;
+	double 					y0;
+	double 					x1;
+	double 					y1;
+	double					inc_x;
+	double					inc_y;
+	double					dx;
+	double					dy;
+}							t_disp;
 
 typedef struct				s_cloud
 {

@@ -6,7 +6,7 @@
 #    By: alhote <alhote@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/18 19:06:17 by alhote            #+#    #+#              #
-#    Updated: 2016/05/19 16:22:58 by alhote           ###   ########.fr        #
+#    Updated: 2016/06/07 14:11:32 by dvirgile         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ OBJECTS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): 
+$(NAME):
 	@printf "\033[31mCompilation $(NAME):\033[0m"
 	@make -C $(LIBFT)
 	@$(CC) $(CFLAGS) $(SRCS) $(INCLUDES) -c

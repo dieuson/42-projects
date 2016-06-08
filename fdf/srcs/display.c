@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 10:33:06 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/07 14:00:40 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/08 12:31:09 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,101 +27,110 @@ void 	print_list(t_node *start_list)
 	}
 }
 
-void Bresenham(double x0, double y0, double x1, double y1, t_cloud *data, int inc_y)
+void		draw_line1(t_disp *disp, t_cloud *data)
 {
-	int x;
-	int y = y0;
-	int dx = x1 - x0;
-	int dy = y1 - y0;
-	int incrE = 2 * dy ;
-	int incrNE = 2 * (dy - dx);
-	int e = 2 * (dy - dx);
-	for(x = x0; x <= x1 ; x++)
+	FT_INIT(int, i, 0);
+	FT_INIT(double, e, 2 * disp->dy - disp->dx);
+	FT_INIT(double, inc1, 2 * (disp->dy -disp->dx));
+	FT_INIT(double, inc2, 2 * disp->dy);
+	FT_INIT(double, x, disp->x0);
+	FT_INIT(double, y, disp->y0);
+	mlx_pixel_put(data->mlx, data->win , x, y, 0x00FFFFFF);
+	while (i < disp->dx)
 	{
-		mlx_pixel_put(data->mlx, data->win , x, y, 0x00FFFFFF);
-		if(e >= 0)
+		if (e >= 0)
 		{
-			y += 1 * inc_y;
-			e += incrNE;
+			y += disp->inc_y;
+			e += inc1;
 		}
 		else
-			e += incrE;
+			e += inc2;
+		x += disp->inc_x;
+		mlx_pixel_put(data->mlx, data->win , x, y, 0x00FFFFFF);
+		i++;
 	}
 }
 
-void Bresenham_inv(double x0, double y0, double x1, double y1, t_cloud *data, int inc_x)
+void		draw_line2(t_disp *disp, t_cloud *data)
 {
-	int x = x0;
-	int y = y0;
-	int dx = x1 - x0;
-	int dy = y1 - y0;
-	int incrE = 2 * dy ;
-	int incrNE = 2 * (dx - dy);
-	int e = 2 * (dx - dy);
-	while (y <= y1)
+	FT_INIT(int, i, 0);
+	FT_INIT(double, e, 2 * disp->dx - disp->dy);
+	FT_INIT(double, inc1, 2 * (disp->dx -disp->dy));
+	FT_INIT(double, inc2, 2 * disp->dx);
+	FT_INIT(double, x, disp->x0);
+	FT_INIT(double, y, disp->y0);
+	mlx_pixel_put(data->mlx, data->win , x, y, 0x00FFFFFF);
+	while (i < disp->dy)
 	{
-		mlx_pixel_put(data->mlx, data->win , x, y, 0x00FFFFFF);
-		if(e >= 0)
+		if (e >= 0)
 		{
-			x += 1 * inc_x;
-			e += incrNE;
+			x += disp->inc_x;
+			e += inc1;
 		}
 		else
-			e += incrE;
-		y += 1;
+			e += inc2;
+		y += disp->inc_y;
+		mlx_pixel_put(data->mlx, data->win , x, y, 0x00FFFFFF);
+		i++;
 	}
 }
 
-void BresenhamGeneral(double x0, double y0, double x1, double y1, t_cloud *data)
+void bres (t_disp *disp, t_cloud *data)
 {
-	int dx = x1 - x0;
-	int dy = y1 - y0;
-	int IncX, IncY;
-	if (dx > 0)
-		IncX = 1;
-	else if (dx < 0)
-	{
-		IncX = -1;
-		dx = -dx;
-	}
+	disp->dx = fabs(disp->x1 - disp->x0);
+	disp->dy = fabs(disp->y1 - disp->y0);
+	disp->inc_x = disp->x1 < disp->x0 ? -1 : 1;
+	disp->inc_y = disp->y1 < disp->y0 ? -1 : 1;
+
+	if (disp->dx > disp->dy)
+		draw_line1(disp, data);
 	else
-		IncX = 0;
-	if(dy > 0)
-		IncY = 1;
-	else if (dy < 0)
-	{
-		IncY = -1;
-		dy = -dy;
-	}
-	else
-		IncY = 0;
-	if (dx > dy)
-		Bresenham(x0, y0, x1, y1, data, IncY);
-	else
-		Bresenham_inv(x0, y0, x1, y1, data, IncX);
+		draw_line2(disp, data);
+}
+
+t_disp *create_disp_node(t_node *n_0, t_node *n_1, t_cloud *data)
+{
+	FT_INIT(t_disp *, new, NULL);
+	new = (t_disp*)malloc(sizeof(t_disp));
+	new->x0 = n_0->x_2d * data->zoom;
+	new->y0 = n_0->y_2d * data->zoom;
+	new->x1 = n_1->x_2d * data->zoom;
+	new->y1 = n_1->y_2d * data->zoom;
+	return (new);
 }
 
 void	draw_verticaly(t_node *start_list, t_cloud *data)
 {
 	FT_INIT(t_node*, tmp , start_list);
-	FT_INIT(t_node*, tmp_1 , tmp);
-	FT_INIT(double, x0, 0);
-	FT_INIT(double, x1, 0);
-	FT_INIT(double, y0, 0);
-	FT_INIT(double, y1, 0);
+	FT_INIT(t_node*, tmp_1 , NULL);
+	FT_INIT(t_disp *, disp, NULL);
     while (tmp)
     {
 		tmp_1 = tmp->next;
-		while (tmp_1 && tmp_1->x != tmp->x && tmp_1->y != tmp->y + 1)
+		while (tmp_1 && tmp_1->y != (tmp->y + 1))
 			tmp_1 = tmp_1->next;
+		while (tmp_1 && tmp_1->y == (tmp->y + 1) && tmp_1->x != tmp->x)
+			tmp_1 = tmp_1->next;
+		if (tmp_1 && (tmp_1->y != (tmp->y + 1) || tmp_1->x != tmp->x))
+		{
+			while (tmp_1 && tmp->prev && tmp_1->y > (tmp->y + 1))
+			{
+				ft_putstr("bad y\n");
+				printf("tmp_1->x =%f, tmp_1->y =%f,\n", tmp_1->x, tmp_1->y);
+				tmp_1 = tmp_1->prev;
+			}
+		}
+//			while (tmp_1 && tmp_1->y != (tmp->y + 1))
+//				tmp_1 = tmp_1->prev;
+//	while (tmp_1 && tmp_1->x != tmp->x && tmp_1->y == (tmp->y + 1))
+//			tmp_1 = tmp_1->next;
+//		if (tmp_1 && tmp_1->x != tmp->x && tmp_1->y == tmp->y + 1)
+//			tmp_1 = tmp_1->prev;
 		if (tmp_1)
 		{
-			x0 = tmp->x_2d * data->zoom;
-			y0 = tmp->y_2d * data->zoom;
-			y1 = tmp_1->y_2d * data->zoom;
-			x1 = tmp_1->x_2d * data->zoom;
-//			if (x0 == x1)
-				BresenhamGeneral(x0, y0, x1, y1, data);
+			disp = create_disp_node(tmp, tmp_1, data);
+			bres(disp, data);
+			free(&disp);
 		}
 		tmp = tmp->next;
     }
@@ -131,23 +140,18 @@ void 	draw_points(t_node *start_list, t_cloud *data)
 {
 	FT_INIT(t_node*, tmp , start_list);
 	FT_INIT(t_node*, next , NULL);
-	FT_INIT(double, x0, 0);
-	FT_INIT(double, x1, 0);
-	FT_INIT(double, y0, 0);
-	FT_INIT(double, y1, 0);
+	FT_INIT(t_disp *, disp, NULL);
     while (tmp)
     {
     	next = tmp->next;
-		x0 = tmp->x_2d * data->zoom;
-		y0 = tmp->y_2d * data->zoom;
-    	mlx_pixel_put(data->mlx, data->win , tmp->x_2d * data->zoom, tmp->y_2d * data->zoom, 0x00FFFFFF);
+    	mlx_pixel_put(data->mlx, data->win , tmp->x_2d * data->zoom,
+		tmp->y_2d * data->zoom, 0x00FFFFFF);
 		if (next)
 		{
-			y1 = next->y_2d * data->zoom;
-			x1 = next->x_2d * data->zoom;
-//			if (y1 == y0)
-				BresenhamGeneral(x0, y0, x1, y1, data);
-//			Bresenham(x0, y0, x1, y1, data);
+			disp = create_disp_node(tmp, next, data);
+			if (next->y == tmp->y)
+				bres(disp, data);
+			free(disp);
 		}
 		tmp = tmp->next;
     }

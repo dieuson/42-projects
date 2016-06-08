@@ -1,16 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_list.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/08 11:54:59 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/06/08 12:32:11 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fdf.h"
 
 t_node *create_cell(double x, double y, double value)
 {
 	FT_INIT(t_node *, new, NULL);
-	FT_INIT(double, coef, 30);
 	new = (t_node*)malloc(sizeof(t_node));
-	new->x = x * coef;
-	new->y = y * coef;
-//	new->x = x;
-//	new->y = y;
+	new->x = x;
+	new->y = y;
 	new->z = value;
-//	new->z = 10;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);

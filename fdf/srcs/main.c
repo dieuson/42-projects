@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/08 09:46:15 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/06/08 09:46:16 by dvirgile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fdf.h"
 
 void 			init_struct(t_cloud *data)
@@ -66,7 +78,7 @@ int 			main(int argc, char **argv)
 
     init_struct(&data);
     if (argc <= 1 || argc >= 3)
-    	return (argc <= 1 ? error("Too few arguments") 
+    	return (argc <= 1 ? error("Too few arguments")
     		: error("Too many arguments"));
 	if (argc != 2)
     	return (error("Error parameters"));

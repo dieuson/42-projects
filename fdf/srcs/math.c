@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 10:32:47 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/07 13:38:30 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/08 11:56:18 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ t_node *get_3d_pos(t_node *new, t_cloud *data)
 	FT_INIT(double, x_mod, 0);
 	FT_INIT(double, y_mod, 0);
 	FT_INIT(double, z_mod, 0);
-	FT_INIT(double, x, new->x - campos_x);
-	FT_INIT(double, y, new->y - campos_y);
+	FT_INIT(double, x, new->x*30 - campos_x);
+	FT_INIT(double, y, new->y*30 - campos_y);
 	FT_INIT(double, z, new->z - campos_z);
 	FT_INIT(double, Cx, cos(camang_x));
 	FT_INIT(double, Sx, sin(camang_x));
@@ -71,11 +71,8 @@ t_node *get_3d_pos(t_node *new, t_cloud *data)
 	x_mod = (Cy * (Sz * y + Cz * x)) - (Sy * z);
 	y_mod = (Sx * ((Cy * z) + Sy * ((Sz * y) + Cz * x))) + (Cx * ((Cz * y) - (Sz * x)));
 	z_mod = (Cx * ((Cy * z) + Sy * ((Sz * y) + Cz * x))) + (Sx * ((Cz * y) - (Sz * x)));
-//	printf("x_mod =%f, y_mod =%f, z_mod =%f,\n", x_mod, y_mod, z_mod);
-//	printf("x =%f, y =%f, z =%f,\n", new->x, new->y, new->z);
-//	if (data)
-//		new->x_2d = (-10 * x_mod) / z_mod;
-	new->x_2d = (-10 * x_mod) / z_mod	 - data->win_x / 2;
+
+	new->x_2d = (-10 * x_mod) / z_mod - data->win_x / 2;
 	new->y_2d = (-10 * y_mod) / z_mod - data->win_y / 2;
 	return (new);
 }
