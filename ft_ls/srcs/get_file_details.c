@@ -6,19 +6,23 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 15:33:47 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/05/31 15:38:27 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/10 10:45:14 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+#define SIX_MONTH 15778800
 
 char		**get_date(struct stat infos, char *flags)
 {
 	char		**date_tmp;
 	char		**date;
 	char		*tmp;
-	struct tm	*ref;
+	long int	time_stamp;
 
+	time_stamp = flags && ft_strchr(flags, 'u') ?
+		infos.st_atimespec.tv_sec : infos.st_mtimespec.tv_sec - time(NULL);
+	time_stamp = time_stamp < 0 ? -time_stamp : time_stamp;
 	if (flags && flags[5] == 'u')
 		tmp = ctime(&infos.st_atime);
 	else
@@ -30,8 +34,7 @@ char		**get_date(struct stat infos, char *flags)
 	date[0] = ft_strdup(date_tmp[1]);
 	date[1] = ft_strdup(date_tmp[2]);
 	tmp = ft_strrchr(date_tmp[3], ':');
-	ref = gmtime(&infos.st_mtime);
-	date[2] = ref->tm_mon > 6 ? ft_strsub(date_tmp[4], 0,
+	date[2] = time_stamp > SIX_MONTH ? ft_strsub(date_tmp[4], 0,
 	ft_strlen(date_tmp[4]) - 1) : ft_strsub(date_tmp[3], 0,
 	(ft_strlen(date_tmp[3]) - ft_strlen(tmp)));
 	date[3] = NULL;
@@ -86,6 +89,10 @@ char		*get_rights(struct stat infos)
 	rights[7] = infos.st_mode & S_IROTH ? 'r' : '-';
 	rights[8] = infos.st_mode & S_IWOTH ? 'w' : '-';
 	rights[9] = infos.st_mode & S_IXOTH ? 'x' : '-';
+	if (S_IXOTH)
+		rights[9] = infos.st_mode & S_ISVTX ? 't' : '-';
+	else
+		rights[9] = infos.st_mode & S_ISVTX ? 'T' : '-';
 	rights[10] = '\0';
 	return (rights);
 }

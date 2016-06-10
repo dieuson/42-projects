@@ -6,14 +6,13 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 16:48:37 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/07 10:29:14 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/10 08:49:58 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 # include "../srcs/ft_printf/includes/ft_printf.h"
-# include <attr/xattr.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
