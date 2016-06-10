@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 15:33:47 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/10 10:45:14 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/10 10:55:51 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char		**get_date(struct stat infos, char *flags)
 	char		*tmp;
 	long int	time_stamp;
 
-	time_stamp = flags && ft_strchr(flags, 'u') ?
-		infos.st_atimespec.tv_sec : infos.st_mtimespec.tv_sec - time(NULL);
+	time_stamp = (flags && ft_strchr(flags, 'u') ?
+				  infos.st_atimespec.tv_sec : infos.st_mtimespec.tv_sec) - time(NULL);
 	time_stamp = time_stamp < 0 ? -time_stamp : time_stamp;
 	if (flags && flags[5] == 'u')
 		tmp = ctime(&infos.st_atime);

@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 14:20:34 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/06 15:28:34 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/10 11:48:31 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,33 @@ static void		print_l(t_file *tmp, char *flags, int *len_display)
 		ft_printf(del = set_sentence((len_display)[7], "s "), (tmp->date)[2]);
 		ft_strdel(&del);
 	}
-	ft_printf(del = set_sentence(len_display[8], "-s"), tmp->name);
+	ft_printf(("%-s"), tmp->name);
 	ft_strdel(&del);
 }
 
-static void		put_color(t_file *tmp, char *flags, int position)
+static char		*put_color(t_file *tmp, char *flags, int position)
 {
+	struct stat infos;
+	ssize_t r;
+
+	FT_INIT(char*, link_name, NULL);
+	if (!position && flags && ft_strchr(flags, 'l')
+		&& ft_strchr(tmp->rights, 'l'))
+	{
+		lstat(tmp->absolute_path, &infos);
+		link_name = ft_strnew(infos.st_size + 1);
+		r = readlink(tmp->absolute_path, link_name, infos.st_size + 1);
+		link_name[r] = '\0';
+	}
 	if (!tmp || !flags || (flags && !ft_strchr(flags, 'c')))
-		return ;
+		return (link_name);
 	if (!position && (tmp->rights)[0] == 'd')
 		ft_printf("\033[31m");
 	else if (!position && (tmp->rights)[0] == 'l')
 		ft_printf("\033[32m");
 	if (position && ((tmp->rights)[0] == 'd' || (tmp->rights)[0] == 'l'))
 		ft_printf("\033[0m");
+	return (link_name);
 }
 
 static void		p_path(t_file *tmp, char *path, char *flags, t_store *store)
@@ -97,6 +110,7 @@ void			print_data(t_store *store)
 {
 	FT_INIT(t_file*, tmp, store->start_list);
 	FT_INIT(char*, path, tmp->path);
+	FT_INIT(char*, link_name, NULL);
 	FT_INIT(int*, len_display, tmp->display);
 	while (tmp)
 	{
@@ -106,11 +120,14 @@ void			print_data(t_store *store)
 			len_display = tmp->display;
 		p_path(tmp, path, store->flags, store);
 		store->type = 0;
-		put_color(tmp, store->flags, 0);
+		link_name = put_color(tmp, store->flags, 0);
 		print_l(tmp, store->flags, len_display);
 		if (store->flags && ft_strchr(store->flags, 'l')
-		&& ft_strchr(tmp->rights, 'l'))
-			ft_printf(" -> private/%s\n", tmp->private);
+		&& ft_strchr(tmp->rights, 'l') && link_name)
+		{
+			ft_printf(" -> %s\n", link_name);
+			ft_strdel(&link_name);
+		}
 		else
 			ft_putendl("");
 		put_color(tmp, store->flags, 1);
