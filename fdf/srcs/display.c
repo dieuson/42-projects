@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 10:33:06 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/08 12:31:09 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/10 10:14:32 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	draw_verticaly(t_node *start_list, t_cloud *data)
 			tmp_1 = tmp_1->next;
 		while (tmp_1 && tmp_1->y == (tmp->y + 1) && tmp_1->x != tmp->x)
 			tmp_1 = tmp_1->next;
-		if (tmp_1 && (tmp_1->y != (tmp->y + 1) || tmp_1->x != tmp->x))
+/*		if (tmp_1 && (tmp_1->y != (tmp->y + 1) || tmp_1->x != tmp->x))
 		{
 			while (tmp_1 && tmp->prev && tmp_1->y > (tmp->y + 1))
 			{
@@ -119,14 +119,14 @@ void	draw_verticaly(t_node *start_list, t_cloud *data)
 				printf("tmp_1->x =%f, tmp_1->y =%f,\n", tmp_1->x, tmp_1->y);
 				tmp_1 = tmp_1->prev;
 			}
-		}
+			}*/
 //			while (tmp_1 && tmp_1->y != (tmp->y + 1))
 //				tmp_1 = tmp_1->prev;
 //	while (tmp_1 && tmp_1->x != tmp->x && tmp_1->y == (tmp->y + 1))
 //			tmp_1 = tmp_1->next;
 //		if (tmp_1 && tmp_1->x != tmp->x && tmp_1->y == tmp->y + 1)
 //			tmp_1 = tmp_1->prev;
-		if (tmp_1)
+		if (tmp_1 && tmp_1->x == tmp->x)
 		{
 			disp = create_disp_node(tmp, tmp_1, data);
 			bres(disp, data);
@@ -146,7 +146,7 @@ void 	draw_points(t_node *start_list, t_cloud *data)
     	next = tmp->next;
     	mlx_pixel_put(data->mlx, data->win , tmp->x_2d * data->zoom,
 		tmp->y_2d * data->zoom, 0x00FFFFFF);
-		if (next)
+		if (next && next->y == tmp->y)
 		{
 			disp = create_disp_node(tmp, next, data);
 			if (next->y == tmp->y)
