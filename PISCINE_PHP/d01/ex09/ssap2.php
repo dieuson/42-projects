@@ -7,9 +7,7 @@
 		$tab1 = array();
 		foreach ($tab as $key)
 		{
-			if (!$key)
-				unset($tab[$i]);
-			else
+			if ($key)
 			{
 				$tab1[$i] = $key;
 				$i++;

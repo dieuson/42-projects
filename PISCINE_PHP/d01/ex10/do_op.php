@@ -7,9 +7,7 @@
 		$tab1 = array();
 		foreach ($tab as $key)
 		{
-			if (!$key || strstr($key, "./do_op.php") || strstr($key, "do_op.php"))
-				unset($tab[$i]);
-			else
+			if ($key && !strstr($key, "./do_op.php") && !strstr($key, "do_op.php"))
 			{
 				$tab1[$i] = $key;
 				$i++;
@@ -32,6 +30,5 @@
 		$result = $tab[0] / $tab[2];
 	if ($tab[1] == '%')
 		$result = $tab[0] % $tab[2];
-	if ($result)
-		print("$result\n");
+	print("$result\n");
 ?>
