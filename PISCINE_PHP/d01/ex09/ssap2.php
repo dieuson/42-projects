@@ -46,13 +46,28 @@
 		return $tab;
 	}
 
+	function ft_isalpha($char, $type)
+	{
+		if ($type == 0)
+		{
+			if (($char >= 'a' && $char <= 'z') || ($char >= 'A' && $char <= 'Z'))
+				return (1);
+		}
+		else if ($type == 1)
+		{
+			if ($char >= '0' && $char <= '9')
+				return (1);
+		}
+		return (0);
+	}
+
 	function display_in_order($tab)
 	{
 		$i = 0;
 		$tmp = array();
 		foreach ($tab as $key)
 		{
-			if (ctype_alpha($key))
+			if (ft_isalpha($key, 0))
 				print("$key\n");
 			else
 			{
@@ -64,7 +79,7 @@
 		$i = 0;
 		foreach ($tmp as $key)
 		{
-			if (ctype_alnum($key))
+			if (ft_isalpha($key, 1))
 				print("$key\n");
 			else
 			{
