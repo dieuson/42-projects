@@ -1,24 +1,18 @@
 #!/usr/bin/php
 <?PHP
-	if ($argc > 1)
-		exit ();
-	while ($line = fgets(STDIN))
-	{
-/*		$regex = preg_replace('@(<a[^>]*?>).*?(<)@si', "$1ALLO$2", $line);
-		$regex = preg_replace('#(title=")(.*)"#', '$1TITLE"', $regex);*/
-		$regex = preg_replace_callback('@<a[^>]*?>(.*?)<@si', 
-		function ($matches) 
-		{
-//			print_r($matches);
-			$to_up = preg_replace('/$matches[1]/', strtoupper($matches[1]), $matches[0]);
-//			print("to_up =$to_up\n");
-			return  $to_up;
-		}, $line);
-//		$regex = preg_replace_callback(
-//		"'s/a\(.*\)a/{\1}/g'",
-//		function ($matches) {
-//			return strtoupper($matches[0]);
-//		}, $line);
-		echo "$regex\n";
-	}
+if ($argc != 2)
+	exit();
+$line = file_get_contents($argv[1]);
+$line = preg_replace_callback("/<a (.*?)<\/a>/is", function ($matched)
+{
+	$modified_sentence = $matched[0];
+	$modified_sentence = preg_replace_callback("/title=\"(.*?)\"/is", function ($str) 
+		{ return "title=\"".strtoupper($str[1])."\""; 
+		}, $modified_sentence);
+	$modified_sentence = preg_replace_callback("/>(.+?)</s", function ($str) 
+		{ return strtoupper($str[0]); 
+		}, $modified_sentence);
+	return $modified_sentence;
+}, $line);
+echo $line;
 ?>
