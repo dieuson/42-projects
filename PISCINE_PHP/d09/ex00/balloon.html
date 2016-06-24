@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Ex 00</title>
+	</head>
+	<body style=background-color:pink>
+	<style>
+	#balloon {
+	    height: 200px;
+	    width: 200px;
+	    margin-left: 20vw;
+	    margin-top: 20vh;
+	    border-radius: 100%;
+	    background-color: red;
+	}
+	</style>
+	<div id="balloon"  onclick="Balloon_Click()" onmouseleave="go_down()"></div>
+	<script type="text/javascript">
+		var doc = document.getElementById('balloon');
+		var color = "red";
+
+		function go_down()
+		{
+			var del_height = doc.offsetHeight - 5;
+			var del_width = doc.offsetWidth - 5;
+			if (color == "red")
+			{
+				doc.setAttribute("style", "background-color: blue");
+				color = "blue";
+			}
+			else if (color == "blue")
+			{
+				doc.setAttribute("style", "background-color: green");
+				color = "green";
+			}
+			else if (color == "green")
+			{
+				doc.setAttribute("style", "background-color: red");
+				color = "red";
+			}
+			if (del_height > 200)
+			{
+				doc.style.height = del_height + "px";
+				doc.style.width = del_width + "px";			
+			}
+		}
+		function Balloon_Click()
+		{
+			var add_height = doc.offsetHeight + 10;
+			var add_width = doc.offsetWidth + 10;
+			if (color == "red")
+			{
+				doc.setAttribute("style", "background-color: green");
+				color = "green";
+			}
+			else if (color == "green")
+			{
+				doc.setAttribute("style", "background-color: blue");
+				color = "blue";
+			}
+			else if (color == "blue")
+			{
+				doc.setAttribute("style", "background-color: red");
+				color = "red";
+			}
+			if (add_height < 420)
+			{
+				doc.style.height = add_height + "px";
+				doc.style.width = add_width + "px";			
+			}
+			else
+			{
+				doc.style.height = 200 + "px";
+				doc.style.width = 200 + "px";	
+			}
+		}
+	</script
+	</body>
+</html>

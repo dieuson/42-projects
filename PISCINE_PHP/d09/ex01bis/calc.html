@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Ex01bis</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	</head>
+	<body style=background-color:pink>
+	<style>
+		#zone1{
+
+		}
+		#zone2{
+
+		}
+		#button{
+
+		}
+	</style>
+	<input id="zone1" type="text" value=""/>
+	<select id="sign">
+		<option>+</option>
+		<option>-</option>
+		<option>*</option>
+		<option>/</option>
+		<option>%</option>
+	</select>
+	<input id="zone2" type="text" value=""/>
+	<input id="button" type="button" value="Try me !"/>	
+	<script>
+		$(document).ready(function()
+		{
+			setInterval('alert("Please, use me...")', 30000);
+			$('#button').click(function()
+			{
+				var nb_1 = $("#zone1").val();
+				var nb_2 = $("#zone2").val();
+				var sign = $("#sign").val();
+				if (nb_1 < 0 || nb_2 < 0 || isNaN(nb_1) || isNaN(nb_2))
+				{
+					alert("Error :(");
+					console.log("Error :(");
+					return ;
+				}
+				if (nb_2 == 0 && (sign == "/" || sign == "%"))
+				{
+					alert("It’s over 9000!");
+					console.log("It’s over 9000!");
+					return ;
+				}
+				nb_1 = parseInt(nb_1, 10);
+				nb_2 = parseInt(nb_2, 10);
+				if (sign == "+")
+					result = nb_1 + nb_2;
+				if (sign == "-")
+					result = nb_1 - nb_2;
+				if (sign == "*")
+					result = nb_1 * nb_2;
+				if (sign == "/")
+					result = nb_1 / nb_2;
+				if (sign == "%")
+					result = nb_1 % nb_2;
+				console.log(result);
+				alert(result);
+			})
+		});
+	</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
