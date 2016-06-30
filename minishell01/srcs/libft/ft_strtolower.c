@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strtolower.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/30 10:32:23 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 10:32:32 by dvirgile         ###   ########.fr       */
+/*   Created: 2016/03/12 19:11:22 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 19:11:25 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL_H
-# define	MINISHELL_H
-# include <unistd.h>
+#include "./includes/libft.h"
 
+char	*ft_strtolower(char *str)
+{
+	int i;
 
-
-#endif
+	i = 0;
+	if (str)
+	{
+		while (str[i])
+		{
+			str[i] = ft_tolower(str[i]);
+			i++;
+		}
+	}
+	return (str);
+}

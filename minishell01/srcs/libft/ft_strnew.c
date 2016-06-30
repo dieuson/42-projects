@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/30 10:32:23 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 10:32:32 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/27 15:38:05 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/01/07 15:49:34 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL_H
-# define	MINISHELL_H
-# include <unistd.h>
+#include "./includes/libft.h"
 
+char				*ft_strnew(size_t size)
+{
+	char			*str;
 
-
-#endif
+	if (!(str = (char *)malloc(sizeof(char) * size + 1)))
+		return (NULL);
+	bzero(str, (size + 1));
+	return (str);
+}

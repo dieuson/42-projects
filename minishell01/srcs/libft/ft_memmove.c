@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/30 10:32:23 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 10:32:32 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/26 13:41:09 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/01/07 15:55:40 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL_H
-# define	MINISHELL_H
-# include <unistd.h>
+#include "./includes/libft.h"
 
+void					*ft_memmove(void *dst, const void *src, size_t len)
+{
+	char		*temp;
 
-
-#endif
+	if (len > 0)
+	{
+		temp = ft_strnew(len);
+		ft_memcpy(temp, (char*)src, len);
+		ft_memcpy(dst, temp, len);
+		free(temp);
+		return (dst);
+	}
+	return (NULL);
+}

@@ -1,19 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/30 10:32:23 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 10:32:32 by dvirgile         ###   ########.fr       */
+/*   Created: 2016/03/12 19:00:44 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 19:00:44 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL_H
-# define	MINISHELL_H
-# include <unistd.h>
+#include "./includes/libft.h"
 
+int		ft_sqrt(int nb)
+{
+	int		x;
+	int		i;
 
-
-#endif
+	i = 0;
+	x = 1;
+	while (i <= (nb / 2))
+	{
+		if (x * x == nb)
+			return (x);
+		x = (x + nb / x) / 2;
+		i++;
+	}
+	return (0);
+}

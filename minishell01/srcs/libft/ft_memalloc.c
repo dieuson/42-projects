@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/30 10:32:23 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 10:32:32 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/27 15:00:07 by dvirgile          #+#    #+#             */
+/*   Updated: 2015/11/27 15:17:57 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL_H
-# define	MINISHELL_H
-# include <unistd.h>
+#include "./includes/libft.h"
 
+void				*ft_memalloc(size_t size)
+{
+	void			*fraiche;
+	char			*b;
+	unsigned int	i;
 
-
-#endif
+	i = 0;
+	fraiche = malloc(size);
+	if (fraiche == NULL)
+		return (NULL);
+	b = (char *)fraiche;
+	while (i < size)
+	{
+		b[i] = 0;
+		i++;
+	}
+	fraiche = (void *)b;
+	return (fraiche);
+}

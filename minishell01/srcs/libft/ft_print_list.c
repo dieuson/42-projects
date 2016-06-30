@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_print_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/30 10:32:23 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 10:32:32 by dvirgile         ###   ########.fr       */
+/*   Created: 2016/03/12 18:51:41 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 18:51:44 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL_H
-# define	MINISHELL_H
-# include <unistd.h>
+#include "./includes/libft.h"
 
+void	ft_print_list(t_list **alst)
+{
+	t_list	*tmp;
 
-
-#endif
+	tmp = *alst;
+	if (alst != NULL && *alst != NULL)
+	{
+		if (ft_strlen((char*)tmp->content) < 20)
+			tmp = tmp->next;
+		while (tmp->next != NULL)
+		{
+			ft_putendl((char*)tmp->content);
+			tmp = tmp->next;
+		}
+		ft_putendl((char*)tmp->content);
+	}
+}

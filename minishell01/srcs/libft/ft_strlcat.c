@@ -1,19 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   strlcat.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/30 10:32:23 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 10:32:32 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/24 09:43:26 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/01/07 15:38:01 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL_H
-# define	MINISHELL_H
-# include <unistd.h>
+#include "./includes/libft.h"
 
+size_t				ft_strlcat(char *dst, const char *src, size_t size)
+{
+	unsigned int	dest_len;
+	unsigned int	i;
+	unsigned int	e;
 
-
-#endif
+	e = 0;
+	i = 0;
+	dest_len = 0;
+	while (dst[i] != '\0' && i < size)
+	{
+		i++;
+		dest_len++;
+	}
+	while (src[e] != '\0' && i < size - 1)
+	{
+		dst[i] = src[e];
+		i++;
+		e++;
+	}
+	if (i < size)
+		dst[i] = '\0';
+	return (dest_len + ft_strlen(src));
+}

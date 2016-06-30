@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_recursive_pow.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/30 10:32:23 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 10:32:32 by dvirgile         ###   ########.fr       */
+/*   Created: 2016/03/12 18:54:21 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/03/12 18:54:25 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL_H
-# define	MINISHELL_H
-# include <unistd.h>
+#include "./includes/libft.h"
 
+int		ft_recursive_pow(int n, int power)
+{
+	int result;
 
-
-#endif
+	result = n;
+	if (power == 0)
+		return (1);
+	else if (power < 0)
+		return (0);
+	if (n == 0)
+		return (0);
+	result = result * ft_recursive_pow(n, power - 1);
+	return (result);
+}

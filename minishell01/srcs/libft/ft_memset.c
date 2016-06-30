@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/30 10:32:23 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 10:32:32 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/11/26 15:07:13 by dvirgile          #+#    #+#             */
+/*   Updated: 2015/11/26 16:04:27 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL_H
-# define	MINISHELL_H
-# include <unistd.h>
+#include "./includes/libft.h"
 
+void				*ft_memset(void *s, int c, size_t n)
+{
+	unsigned int	i;
+	char			*box;
 
-
-#endif
+	i = 0;
+	box = (char *)s;
+	while (i < n)
+	{
+		box[i] = c;
+		i++;
+	}
+	s = (void *)box;
+	return (s);
+}
