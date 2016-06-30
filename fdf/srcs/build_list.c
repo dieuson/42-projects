@@ -41,9 +41,11 @@ t_node *build_list(char *line, double y, t_cloud *data)
 			new->prev = new;
 			new = new->next;
 		}
+		printf("x=%f, y=%f,\n",x,y);
 		i++;
 		x++;
 	}
 	start_node = set_3d_pos(start_node, data);
+	ft_putstr("\n");
 	return (start_node);
 }

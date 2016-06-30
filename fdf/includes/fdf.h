@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 15:44:54 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/08 10:53:09 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/27 10:52:28 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct				s_cloud
 	double 					ang_y;
 	double 					ang_z;
 	double					zoom;
+	double					zoom_simon;
+	double 					depth;
 	double					e_x;
 	double					e_y;
 	double					e_z;

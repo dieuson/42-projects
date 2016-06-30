@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 14:20:34 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/10 11:48:31 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/06/27 10:04:51 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static void		print_l(t_file *tmp, char *flags, int *len_display)
 
 static char		*put_color(t_file *tmp, char *flags, int position)
 {
-	struct stat infos;
-	ssize_t r;
+	struct stat	infos;
+	ssize_t		r;
 
 	FT_INIT(char*, link_name, NULL);
 	if (!position && flags && ft_strchr(flags, 'l')
@@ -104,6 +104,7 @@ static void		p_path(t_file *tmp, char *path, char *flags, t_store *store)
 		if (flags && (ft_strchr(flags, 'l') || ft_strchr(flags, 'g')))
 			ft_printf("total %d\n", tmp->nb_blocks);
 	}
+	store->type = 0;
 }
 
 void			print_data(t_store *store)
@@ -119,7 +120,6 @@ void			print_data(t_store *store)
 		if (tmp->display)
 			len_display = tmp->display;
 		p_path(tmp, path, store->flags, store);
-		store->type = 0;
 		link_name = put_color(tmp, store->flags, 0);
 		print_l(tmp, store->flags, len_display);
 		if (store->flags && ft_strchr(store->flags, 'l')
