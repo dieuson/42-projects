@@ -2,7 +2,7 @@
 <?PHP
 	if ($argc <= 1)
 		exit ();
-	$regex = "Cette phrase contient des  espaces et des tabulations";
+	$regex = $argv[1];
 	while (preg_match('/\t/',$regex) || preg_match('/  /',$regex))
 	{
 		$regex = preg_replace('/\t/', ' ', $regex);

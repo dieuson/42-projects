@@ -49,6 +49,9 @@ double		opmod(double n, double base)
 
 t_node *get_3d_pos(t_node *new, t_cloud *data)
 {
+	FT_INIT(double, tmp_z, new->z);
+	if (tmp_z)
+		tmp_z *= data->depth;
 	FT_INIT(double, campos_z, data->e_z);
 	FT_INIT(double, campos_x, data->e_x);
 	FT_INIT(double, campos_y, data->e_y);
@@ -60,7 +63,7 @@ t_node *get_3d_pos(t_node *new, t_cloud *data)
 	FT_INIT(double, z_mod, 0);
 	FT_INIT(double, x, new->x*30 - campos_x);
 	FT_INIT(double, y, new->y*30 - campos_y);
-	FT_INIT(double, z, new->z - campos_z);
+	FT_INIT(double, z, tmp_z - campos_z);
 	FT_INIT(double, Cx, cos(camang_x));
 	FT_INIT(double, Sx, sin(camang_x));
 	FT_INIT(double, Cy, cos(camang_y));
@@ -69,11 +72,14 @@ t_node *get_3d_pos(t_node *new, t_cloud *data)
 	FT_INIT(double, Sz, sin(camang_z));
 
 	x_mod = (Cy * (Sz * y + Cz * x)) - (Sy * z);
-	y_mod = (Sx * ((Cy * z) + Sy * ((Sz * y) + Cz * x))) + (Cx * ((Cz * y) - (Sz * x)));
-	z_mod = (Cx * ((Cy * z) + Sy * ((Sz * y) + Cz * x))) + (Sx * ((Cz * y) - (Sz * x)));
+	y_mod = (Sx * (Cy * z + Sy * (Sz * y + Cz * x))) + (Cx * (Cz * y - Sz * x));
+	z_mod = (Cx * (Cy * z + Sy * (Sz * y + Cz * x))) - (Sx * (Cz * y - Sz * x));
 
-	new->x_2d = (-10 * x_mod) / z_mod - data->win_x / 2;
-	new->y_2d = (-10 * y_mod) / z_mod - data->win_y / 2;
+//	new->x_2d = (-10 * x_mod) / z_mod + data->win_x / 2;
+//	new->y_2d = (-10 * y_mod) / z_mod - data->win_y / 2;
+	new->x_2d = ((-10 / z_mod) * x_mod) + data->win_x / 21;
+	new->y_2d = ((-10 / z_mod) * y_mod) - data->win_y / 2;
+	printf("x_2d = %f , y_2d = %f ,\n", new->x_2d, new->y_2d);
 	return (new);
 }
 

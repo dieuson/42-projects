@@ -23,9 +23,11 @@ void 			init_struct(t_cloud *data)
 	data->e_y = 0;
 	data->e_z = -10;
 	data->zoom = -0.5;
+	data->zoom_simon = -0.2;
+	data->depth = -0.2;
     data->mlx = mlx_init();
-    data->win_x = 500;
-    data->win_y = 500;
+    data->win_x = 2000;
+    data->win_y = 2000;
     data->win = mlx_new_window(data->mlx, data->win_x, data->win_y, "mlx 42");
 }
 
@@ -42,10 +44,14 @@ int 			distrib_key(int key_value, t_cloud *data)
 {
 	if (key_value == 65307 || key_value == 53)
 		exit(0);
-	else if (key_value == 69 || key_value == 65451)
+/*	else if (key_value == 69 || key_value == 65451)
 		data->zoom += 0.1;
 	else if (key_value == 78 || key_value == 65453)
-		data->zoom -= 0.1;
+		data->zoom -= 0.1;*/
+	else if (key_value == 69 || key_value == 65451)
+		data->depth += 0.1;
+	else if (key_value == 78 || key_value == 65453)
+		data->depth -= 0.1;
 	else if (key_value == 125)
 		data->e_y += 15;
 	else if (key_value == 126)
@@ -62,6 +68,10 @@ int 			distrib_key(int key_value, t_cloud *data)
 		data->ang_x += 1;
 	else if (key_value == 121)
 		data->ang_x -= 1;
+	else if (key_value == 86)
+		data->ang_y += 1;
+	else if (key_value == 88)
+		data->ang_y -= 1;
 	printf("key =%d,\n", key_value);
 	mlx_clear_window(data->mlx, data->win);
 	set_3d_pos(data->start_node, data);
@@ -88,7 +98,8 @@ int 			main(int argc, char **argv)
     	return (error("Parsing Error"));
     close(fd);
     draw_points(data.start_node, &data);
-    mlx_key_hook(data.win, distrib_key, &data);
+    mlx_hook(data.win, 2, (1L << 0), distrib_key, &data);
+ //   mlx_key_hook(data.win, distrib_key, &data);
 	mlx_loop(data.mlx);
     return (0);
 }

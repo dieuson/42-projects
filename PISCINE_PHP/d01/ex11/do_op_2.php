@@ -56,9 +56,25 @@
 		}
 		return 1;
 	}
+
+	function verif_signs($str)
+	{
+		$verif = 0;
+		if (strchr($str, '+'))
+			$verif++;
+		if (strchr($str, '-'))
+			$verif++;
+		if (strchr($str, '*'))
+			$verif++;
+		if (strchr($str, '/'))
+			$verif++;
+		if (strchr($str, '%'))
+			$verif++;
+		return $verif;
+	}
 	if ($argc != 2)
 		exit("Incorrect Parameters\n");
-	else if (!detect_letters($argv[1]))
+	else if (!detect_letters($argv[1]) || verif_signs($argv[1]) != 1)
 		exit("Syntax Error\n");
 	$tab = get_nums($argv);
 	$sign = get_sign($argv);
