@@ -12,14 +12,14 @@
 
 NAME = minishell
 DIR_SRCS = ./srcs/
-INCLUDES = ./includes/minishell.h ./srcs/libft/includes/libft.h
+INCLUDES = ./includes/minishell.h ./srcs/libft/includes/libft.h ./srcs/get_next_line/get_next_line.h
 LIBFT = ./srcs/libft/
 
 FLAGS = -g -Wall -Wextra -Werror
 CC = gcc
 
-FILES = main.c
-SRCS = $(DIR_SRCS)main.c
+FILES = main.c get_next_line.c
+SRCS = $(DIR_SRCS)main.c srcs/get_next_line/get_next_line.c
 BIN = $(FILES:.c=.o)
 TILDE = $(SRC:.c=.c~) Makefile~
 

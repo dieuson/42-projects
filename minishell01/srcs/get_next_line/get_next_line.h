@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/30 10:32:23 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 10:32:32 by dvirgile         ###   ########.fr       */
+/*   Created: 2015/12/30 13:38:27 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/02/09 09:48:00 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL_H
-# define	MINISHELL_H
-# include <unistd.h>
-# include <stdio.h>
-# include <sys/types.h> 
-# include <sys/wait.h>
-# include "../srcs/libft/includes/libft.h"
-# include "../srcs/get_next_line/get_next_line.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# include "../libft/includes/libft.h"
+# define BUFF_SIZE 16
 
-typedef struct 			s_sh_data
+typedef struct		s_docker
 {
-	int 		(*fct_tab[3])(char *cmd, char **argv);
-}						t_sh_data;
+	int pointeur;
+}					t_docker;
+
+int					get_next_line(int const fd, char **line);
 
 #endif
