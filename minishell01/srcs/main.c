@@ -5,121 +5,71 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/27 11:40:17 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/30 12:03:48 by dvirgile         ###   ########.fr       */
+/*   Created: 2016/09/05 17:43:54 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/09/05 17:43:55 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int shell_cd(char *cmd, char **argv)
+int			verif_implements(char *cmd, t_sh *data)
 {
-	if (!cmd || !argv)
-		return (0);
-	return (1);
-}
-
-int shell_ls(char *cmd, char **argv)
-{
-	if (!cmd || !argv)
-		return (0);
-	if (!ft_strcmp(argv[1], "ls"))
+	FT_INIT(char**, functions, data->imp_func);
+	FT_INIT(int, i, 0);
+	while (functions[i])
 	{
-		argv[1] = NULL;
-		cmd = "/bin/ls";
-		execve(cmd, argv, NULL);
-	}
-	return (1);
-}
-
-void init_minishell(t_sh_data *data)
-{
-	data->fct_tab[0] = &shell_cd;
-}
-
-char **lsh_read_line(char *line)
-{
-	char **commands;
-
-	commands = NULL;
-	if (!line)
-		return (NULL);
-	if (ft_strchr(line, ' '))
-		commands = ft_strsplit(line, ' ');
-	else
-	{
-		commands = (char**)malloc(sizeof(char*) * 2);
-		commands[0] = line;
-		commands[1] = NULL;
-	}
-	return (commands);
-}
-
-int lsh_launch(char **args)
-{
-	int i;
-	char *tmp;
-
-	tmp = NULL;
-	i = 0;
-	if (!args)
-		return (0);
-	while (args[i])
-	{
-		if (args[i] && !ft_strcmp(args[i], "ls"))
-		{
-			tmp = args[i];
-			args[i] = ft_strdup("/bin/ls");
-			ft_strdel(&tmp);
-		}
+		if (!ft_strcmp(cmd, functions[i]))
+			return (1);
 		i++;
 	}
-	execve(args[0], args, NULL);
-	return (1);
+	return (0);
 }
 
-int main()
+void		prompt(t_sh *data, int ret, int pid)
 {
-	t_sh_data data;
-	char *line;
-	char **commands;
-	int ret;
-	pid_t pid;
-	char *current_path;
-	char *dir_dest;
-
-	ret = 0;
-	commands = NULL;
-	line = NULL;
-	pid = 0;
-	dir_dest = "/srcs";
-	current_path = getcwd(NULL, 1024);
-	if (!current_path)
-		perror("Minishell");
-	printf("path =%s,\n", current_path);
-	dir_dest = ft_strjoin(current_path, dir_dest);
-	chdir(dir_dest);
-
-	current_path = getcwd(NULL, 1024);
-	printf("path =%s,\n", current_path);
-	init_minishell(&data);
-	ft_putstr("$> ");
+	FT_INIT(char*, line, NULL);
+	FT_INIT(char**, commands, NULL);
 	while (1)
 	{
 		ret = get_next_line(0, &line);
-		if (ret)
+		if (ret && ft_strlen(line))
 		{
-			pid = fork();
-			if (pid == 0)
+			commands = lsh_read_line(line);
+			free(line);
+			if (verif_implements(commands[0], data))
+				distrib_functions(commands, data);
+			else
 			{
-				commands = lsh_read_line(line);
-				lsh_launch(commands);
-				free_simple_tab(&commands);
+				pid = fork();
+				if (pid == 0)
+				{
+					lsh_launch(commands, data, 0);
+					exit(0);
+				}
 			}
-			ret  = 0;					
-			wait(&pid);
-			ft_putstr("\n$> ");
+			free_simple_tab(&commands);
 		}
+		wait(&pid);
+		ft_putstr("\n$> ");
 	}
+}
+
+int			main(int argc, char **argv, char **envp)
+{
+	t_sh	*data;
+
+	data = (t_sh *)malloc(sizeof(t_sh));
+	init_implement_functions(data);
+	init_env(&(data->env), envp, NULL);
+	data->bin_directories = get_bin_directories(envp);
+	ft_putstr("$> ");
+	prompt(data, 0, 0);
+	if (data->imp_func)
+		free_env(data->imp_func);
+	if (data->bin_directories)
+		free_env(data->bin_directories);
+	free(data);
+	if (argc || argv)
+		return (1);
 	return (0);
 }

@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strdup.c                                           :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/25 14:32:16 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/01/07 15:37:30 by dvirgile         ###   ########.fr       */
+/*   Created: 2016/09/05 17:46:16 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/09/05 17:46:17 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/libft.h"
 
-char		*ft_strdup(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	char	*ret;
-	int		i;
+	int nb;
 
-	i = 0;
-	if (!(ret = ft_strnew(ft_strlen(s))))
-		return (NULL);
-	while (s[i])
-	{
-		ret[i] = s[i];
-		i++;
-	}
-	ret[i] = '\0';
-	return (ret);
+	nb = 0;
+	if (!s)
+		return (0);
+	while (s[nb])
+		nb++;
+	return (nb);
 }

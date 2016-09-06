@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/06 13:36:45 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/09/06 13:36:46 by dvirgile         ###   ########.fr       */
+/*   Created: 2016/09/05 17:43:35 by dvirgile          #+#    #+#             */
+/*   Updated: 2016/09/05 17:43:35 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../includes/minishell.h"
 
-# include "../../libft/includes/libft.h"
-# define BUFF_SIZE 80
+void		free_env(char **env)
+{
+	int i;
 
-int		get_next_line(int const fd, char **line);
-
-#endif
+	i = 0;
+	while (env[i])
+	{
+		if (env[i])
+			free(env[i]);
+		i++;
+	}
+	free(env);
+}

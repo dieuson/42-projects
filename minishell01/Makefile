@@ -5,23 +5,27 @@
 #                                                     +:+ +:+         +:+      #
 #    By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/06/30 11:06:24 by dvirgile          #+#    #+#              #
-#    Updated: 2016/06/30 11:06:25 by dvirgile         ###   ########.fr        #
+#    Created: 2016/09/05 17:45:34 by dvirgile          #+#    #+#              #
+#    Updated: 2016/09/06 17:34:13 by dvirgile         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME = minishell
 DIR_SRCS = ./srcs/
-INCLUDES = ./includes/minishell.h ./srcs/libft/includes/libft.h ./srcs/get_next_line/get_next_line.h
-LIBFT = ./srcs/libft/
+INCLUDES = ./includes/minishell.h ./libft/includes/libft.h ./srcs/get_next_line/get_next_line.h
+LIBFT = ./libft/
 
-FLAGS = -g -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 CC = gcc
 
-FILES = main.c get_next_line.c
-SRCS = $(DIR_SRCS)main.c srcs/get_next_line/get_next_line.c
+FILES = main.c get_next_line.c cd.c other_cmds.c init.c free.c calls.c env.c\
+	echo.c other_cmds2_bis.c
+SRCS = $(DIR_SRCS)main.c srcs/get_next_line/get_next_line.c $(DIR_SRCS)cd.c\
+	$(DIR_SRCS)other_cmds.c $(DIR_SRCS)init.c $(DIR_SRCS)free.c $(DIR_SRCS)calls.c\
+	$(DIR_SRCS)env.c $(DIR_SRCS)echo.c $(DIR_SRCS)other_cmds2_bis.c
 BIN = $(FILES:.c=.o)
-TILDE = $(SRC:.c=.c~) Makefile~
+TILDE = $(SRC:.c=.c~) Makefile~ includes/minishell.h.gch libft/includes/libft.h.gch\
+	srcs/get_next_line/get_next_line.h.gch
 
 all: $(NAME)
 
@@ -47,6 +51,5 @@ fclean: clean
 	@rm -rf $(NAME)
 	@printf "\033[32m $(NAME) executable\033[0m\n"
 	@make -C $(LIBFT) fclean
-##	@printf "\033[32m libft.a\n\033[0m"
 
 re: fclean all
