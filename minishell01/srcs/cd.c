@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 17:42:34 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/09/06 13:56:23 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/09/13 16:19:59 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char		*get_line(char *search, char **tab)
 	return (NULL);
 }
 
-int			get_index(char *search, char **tab)
+static int	get_index(char *search, char **tab)
 {
 	FT_INIT(int, i, 0);
 	if (!tab || !search)

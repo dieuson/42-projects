@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 17:44:25 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/09/06 17:21:26 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/09/13 16:21:30 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,6 @@ int			distrib_functions(char **commands, t_sh *data)
 	else if (!ft_strcmp(commands[0], "exit"))
 		exit(EXIT_SUCCESS);
 	return (0);
-}
-
-int			verif_access_others(char *path)
-{
-	struct stat infos;
-
-	lstat(path, &infos);
-	if (access(path, F_OK) != 0)
-		return (0);
-	else if (access(path, X_OK) != 0 || !S_ISDIR(infos.st_mode))
-		return (0);
-	else if (!S_ISDIR(infos.st_mode))
-		return (0);
-	return (1);
 }
 
 static char	**one_shot(char **args, t_sh *data)

@@ -6,7 +6,7 @@
 #    By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/05 17:45:34 by dvirgile          #+#    #+#              #
-#    Updated: 2016/09/06 17:34:13 by dvirgile         ###   ########.fr        #
+#    Updated: 2016/09/13 16:27:23 by dvirgile         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -19,10 +19,11 @@ FLAGS = -Wall -Wextra -Werror
 CC = gcc
 
 FILES = main.c get_next_line.c cd.c other_cmds.c init.c free.c calls.c env.c\
-	echo.c other_cmds2_bis.c
+	echo.c other_cmds2.c quote.c
 SRCS = $(DIR_SRCS)main.c srcs/get_next_line/get_next_line.c $(DIR_SRCS)cd.c\
 	$(DIR_SRCS)other_cmds.c $(DIR_SRCS)init.c $(DIR_SRCS)free.c $(DIR_SRCS)calls.c\
-	$(DIR_SRCS)env.c $(DIR_SRCS)echo.c $(DIR_SRCS)other_cmds2_bis.c
+	$(DIR_SRCS)env.c $(DIR_SRCS)echo.c $(DIR_SRCS)other_cmds2.c \
+	$(DIR_SRCS)quote.c
 BIN = $(FILES:.c=.o)
 TILDE = $(SRC:.c=.c~) Makefile~ includes/minishell.h.gch libft/includes/libft.h.gch\
 	srcs/get_next_line/get_next_line.h.gch

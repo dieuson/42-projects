@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/31 17:25:22 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/09/06 13:48:24 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/09/13 16:26:48 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct			s_sh
 int						shell_cd(char **commands, t_sh *data);
 int						error_cd(char *domain, char *type, char *file);
 int						verif_access(char *path, char *file);
+int						verif_access_others(char *path);
 int						distrib_functions(char **commands, t_sh *data);
 
 char					**get_bin_directories(char **envp);
@@ -57,7 +58,24 @@ int						check_varname(char *var, char *to_check);
 int						env_format(char *var);
 
 int						msh_echo(t_sh *data, char **commands);
-
+char					**quote(char *line);
 char					*get_line(char *search, char **tab);
 
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 17:44:04 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/09/06 13:52:23 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/09/13 16:26:23 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 char		**lsh_read_line(char *line)
 {
-	char **commands;
-
-	commands = NULL;
+	FT_INIT(char **, commands, NULL);
 	if (!line)
 		return (NULL);
-	if (ft_strchr(line, ' '))
+	if (ft_strchr(line, '\'') || ft_strchr(line, '\"'))
+	{
+		if (!(commands = quote(line)))
+			commands = ft_strsplit(line, ' ');
+	}
+	else if (ft_strchr(line, ' ') || ft_strchr(line, '\t'))
 		commands = ft_strsplit(line, ' ');
 	else
 	{
@@ -28,6 +31,20 @@ char		**lsh_read_line(char *line)
 		commands[1] = NULL;
 	}
 	return (commands);
+}
+
+int			verif_access_others(char *path)
+{
+	struct stat infos;
+
+	lstat(path, &infos);
+	if (access(path, F_OK) != 0)
+		return (0);
+	else if (access(path, X_OK) != 0 || !S_ISDIR(infos.st_mode))
+		return (0);
+	else if (!S_ISDIR(infos.st_mode))
+		return (0);
+	return (1);
 }
 
 int			verif_access(char *path, char *file)

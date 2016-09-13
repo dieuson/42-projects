@@ -6,13 +6,13 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 17:43:54 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/09/05 17:43:55 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/09/13 16:24:18 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int			verif_implements(char *cmd, t_sh *data)
+static int	verif_implements(char *cmd, t_sh *data)
 {
 	FT_INIT(char**, functions, data->imp_func);
 	FT_INIT(int, i, 0);
@@ -25,7 +25,7 @@ int			verif_implements(char *cmd, t_sh *data)
 	return (0);
 }
 
-void		prompt(t_sh *data, int ret, int pid)
+static void	prompt(t_sh *data, int ret, int pid)
 {
 	FT_INIT(char*, line, NULL);
 	FT_INIT(char**, commands, NULL);
