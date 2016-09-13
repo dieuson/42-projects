@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/31 17:25:22 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/09/13 16:26:48 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/09/13 17:13:44 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,14 @@
 # include "../libft/includes/libft.h"
 # include "../srcs/get_next_line/get_next_line.h"
 
-# ifndef FT_INIT
-#  define FT_INIT(t, n, v) t n = v
-# endif
-
-# ifndef FT_MULTI3
-#  define FT_MULTI3(a, b, c) a = b = c
-# endif
-
 typedef struct			s_sh
 {
 	char				**env;
 	char				**imp_func;
 	char				**bin_directories;
 }						t_sh;
+
+void					error_launch(char *com);
 
 int						shell_cd(char **commands, t_sh *data);
 int						error_cd(char *domain, char *type, char *file);
@@ -62,20 +56,3 @@ char					**quote(char *line);
 char					*get_line(char *search, char **tab);
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

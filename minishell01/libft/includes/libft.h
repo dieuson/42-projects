@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 19:03:46 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/06/06 12:04:13 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/09/13 16:36:36 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+
+# ifndef FT_INIT
+#  define FT_INIT(t, n, v) t n = v
+# endif
+
+# ifndef FT_MULTI3
+#  define FT_MULTI3(a, b, c) a = b = c
+# endif
 
 void				free_simple_tab(char ***tab);
 void				free_tab(char ****tab);

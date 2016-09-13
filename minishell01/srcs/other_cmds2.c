@@ -6,11 +6,28 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 17:44:04 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/09/13 16:26:23 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/09/13 17:12:44 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void		error_launch(char *com)
+{
+	FT_INIT(int, i, 0);
+	FT_INIT(int, check, 0);
+	while (com[i])
+	{
+		if (com[i] != ' ' && com[i] != '\t')
+			check++;
+		i++;
+	}
+	if (check > 0)
+	{
+		ft_putstr_fd("minishell : command not found: ", 2);
+		ft_putendl_fd(com, 2);
+	}
+}
 
 char		**lsh_read_line(char *line)
 {

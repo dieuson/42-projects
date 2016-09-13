@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 17:43:54 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/09/13 16:24:18 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/09/13 17:10:50 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	verif_implements(char *cmd, t_sh *data)
 	FT_INIT(int, i, 0);
 	while (functions[i])
 	{
+		if (ft_strlen(cmd) == 0)
+			return (0);
 		if (!ft_strcmp(cmd, functions[i]))
 			return (1);
 		i++;

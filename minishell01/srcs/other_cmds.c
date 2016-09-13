@@ -6,7 +6,7 @@
 /*   By: dvirgile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 17:44:25 by dvirgile          #+#    #+#             */
-/*   Updated: 2016/09/13 16:21:30 by dvirgile         ###   ########.fr       */
+/*   Updated: 2016/09/13 17:14:57 by dvirgile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int			distrib_functions(char **commands, t_sh *data)
 static char	**one_shot(char **args, t_sh *data)
 {
 	FT_INIT(char*, cmd, NULL);
-
 	cmd = ft_strdup(args[0]);
 	if (execve(args[0], args, data->env) == -1)
 	{
@@ -98,7 +97,6 @@ int			lsh_launch(char **args, t_sh *data, int i)
 		}
 		i++;
 	}
-	ft_putstr_fd("minishell: command not found: ", 2);
-	ft_putendl_fd(args[0], 2);
+	error_launch(args[0]);
 	return (0);
 }
