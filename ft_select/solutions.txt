@@ -1,0 +1,4 @@
+Comment obtenir la liste d'arguments?
+On recoit directement la liste d'argument avec le tableau de argv
+
+Comment obtenir la taille du terminal?

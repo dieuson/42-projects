@@ -1,0 +1,45 @@
+Partie obligatoire:
+
+INPUT:
+	Il doit prendre une liste d'argument:
+			- nombre d'arguments indetermine
+
+LOOP:
+	Deplacement dans la liste d'arguments circulaire avec les fleches
+	
+	Selection/deselection des choix de la liste avec 'espace'
+		- Le curseur doit se positionner sur l'element suivant quand un element est selectionné
+
+	Gérer le redimensionnement de la fenetre
+
+	'echap' quitte le programme sans rien renvoyer au terminal
+
+	'delete' ou 'backspace(effacer)' 
+		- l'element pointer est effacer de la liste
+		- si il n'y a plus d'elemt dans la liste le programme reagi comme la touche 'echap'
+
+	Quand le programme est quitté la configuration par defaut du terminal est restauré peu importe la situation
+
+	Le programme s'interromp avec 'ctrl + z' et revien avec 'fg' comme il etait precedement
+
+	Si le programme est lancé avec un env vide il doit se comporter raisonnablement
+
+
+AFFICHAGE:
+	Le curseur doit se positionner sur l'element suivant quand un element est selectionné
+	La liste doit s'afficher sur plusieur colonne si la taille de la fentre ne comporte pas asew de lignes pour tout afficher en une seule colonne
+
+	Si la taille de la fenetre change:
+		- tous doit se repositionner correctement
+		- les choix selectiones doivent le rester
+		- le curseur doit etre positionner a un endroit raisonnable
+
+	Si la fenetre est trop petite:
+		- le programme ne doit pas quitter
+		- revenir a la normal lorsque la fenetre_size est suffisante
+
+	choix non-selectionne 		=> text normal
+	choix selectionne 			=> text video inverse (fond du text qui clignote)
+	position curseur	 		=> text souligné
+	choix selectonne + curseur 	=> text video inverse (fond du text qui clignote) souligné
+

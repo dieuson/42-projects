@@ -1,0 +1,77 @@
+isatty => Vérifier si un descripteur se rapporte à un terminal  
+int isatty(int desc);
+
+
+ttyname => Obtenir le nom d'un terminal , 
+Renvoie un pointeur sur le chemin d'accès
+char *ttyname(int fd);
+
+
+
+ttyslot => Trouver l'emplacement du terminal en cours dans un fichier  
+Si elle réussit, cette fonction renvoie le numéro d'entrée. Si elle échoue 
+(par exemple si aucun des descripteurs 0, 1 ou 2 n'est associé avec un terminal 
+trouvé dans la base de données), elle renvoie 0 sur Unix V6 et V7 les systèmes BSD,
+mais -1 sur les autres systèmes System V. 
+int ttyslot(void);
+
+
+ioctl => Modifie le comportement des périphériques sous-jacents des fichiers spéciaux
+int ioctl(int d, int requête, ...);
+
+
+
+getenv => Recherche dans la liste des variables d'environnement un variable nommée name,
+et renvoie un pointeur sur la chaîne value correspondante. 
+
+
+
+tcsetattr => Fixe les paramètres du terminal (à moins que le matériel sous-jacent ne 
+le prenne pas en charge) en lisant la structure termios pointée par termios_p. 
+optional_actions précise quand les changements auront lieu.
+Les fonctions termios établissent une interface générale sous forme de terminal, 
+permettant de contrôler les ports de communication asynchrone.
+tcsetattr() indique une réussite si une des modifications peut être réalisée
+int tcsetattr(int fd, int optional_actions, const struct termios *termios_p);
+
+
+
+
+tcgetattr =>
+Récupère les paramètres associés à l'objet référencé par fd et les stocke dans 
+la structure termios pointée par termios_p. Cette fonction peut être appelée par 
+un processus en arrière-plan ; néanmoins, les attributs de terminal peuvent être 
+modifiés par la suite par le processus en avant-plan.
+int tcgetattr(int fd, struct termios *termios_p);
+
+
+
+int tgetent(const char *bp, char *name);
+int tgetflag(const char *id);
+int tgetnum(const char *id);
+char *tgetstr(const char *id, char **area);
+char *tgoto(const char *cap, int col, int row);
+int tputs(const char *str, int affcnt, int (*putc)(int));
+
+The  tgetent routine loads the entry for name.  It returns
+1 on success, 0 if there is no such entry, and -1  if  the
+terminfo  database  could  not  be  found.   The emulation
+ignores the buffer pointer bp.
+
+The tgetflag routine gets the boolean  entry  for  id,  or
+zero if it is not available.
+
+The  tgetnum  routine gets the numeric entry for id, or -1
+if it is not available.
+
+The tgetstr routine returns the string entry  for  id,  or
+zero  if  it  is  not  available.  Use tputs to output the
+returned string.
+
+The tgoto routine instantiates  the  parameters  into  the
+given  capability.   The output from this routine is to be
+passed to tputs.
+
+The tputs routine is described  on  the  curs_terminfo(3X)
+manual page.  It can retrieve capabilities by either term-
+cap or terminfo name.
